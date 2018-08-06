@@ -11,7 +11,8 @@
 后端：  
 
 	Java
-	SSM框架
+	SpringBoot
+	Mybatis
 	FreeMaker
 数据库：  
 
