@@ -12,6 +12,7 @@
 
 	Java
 	SSM框架
+	FreeMaker
 数据库：  
 
 	MySQL
