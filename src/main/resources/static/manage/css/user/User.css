@@ -1,0 +1,19 @@
+
+.login {
+    text-align: center;
+    background-color: #ffffff;
+    padding-top: 8%;
+}
+
+.login .layui-form {
+    margin-left: 27%;
+    background-color: #f0f2f5;
+    width: 40%;
+    padding: 5% 8% 8% 0;
+}
+
+.login .title {
+    font-size: 26px;
+    margin-left: 24%;
+    margin-bottom: 5%;
+}
