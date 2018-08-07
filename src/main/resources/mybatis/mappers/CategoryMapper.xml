@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seven.Blog.dao.CategoryMapper">
+    <resultMap id="BaseResultMap" type="com.seven.Blog.pojo.Category">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, parent_id, status
+    </sql>
+    
+    <select id="getAllCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+    </select>
+    
+    <insert id="addCategory" parameterType="Map">
+        insert into
+        category (name, parent_id, status)
+        values(#{name}, #{parentId}, #{status})
+    </insert>
+    
+    <update id="updateCategoryByPrimaryKey" parameterType="Category">
+        update category
+        set
+        name = #{name},
+        parent_id = #{parentId},
+        status = #{status}
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteCategoryByPrimaryKey" parameterType="Integer">
+        delete from category
+        where
+        id = #{id}
+    </delete>
+
+</mapper>

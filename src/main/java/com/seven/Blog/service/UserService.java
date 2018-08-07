@@ -1,6 +1,5 @@
 package com.seven.Blog.service;
 
-import com.seven.Blog.pojo.User;
 import com.seven.Blog.response.ServerResponse;
 
 /**

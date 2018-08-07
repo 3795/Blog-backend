@@ -13,9 +13,9 @@ public enum ResponseCodeEnum {
     VERIFICATION_CODE_ERROR(13, "验证码错误"),
     ;
 
-    int code;
+    Integer code;
     String msg;
-    ResponseCodeEnum(int code, String msg) {
+    ResponseCodeEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }

@@ -17,3 +17,13 @@
     margin-left: 24%;
     margin-bottom: 5%;
 }
+
+.captchaCode-input {
+    width: 210px;
+}
+
+.captchaCode {
+    margin-left: 68%;
+    margin-top: -11%;
+    height: 38px;
+}

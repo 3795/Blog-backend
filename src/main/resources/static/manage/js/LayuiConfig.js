@@ -1,7 +1,8 @@
 // 自定义Layui产生的配置文件
-/*layui.use(['layer', 'form'], function(){
-    var layer = layui.layer
-        ,form = layui.form;
 
-    layer.msg('Hello World');
-});*/
+
+// 后台管理模板那里的动效
+layui.use('element', function(){
+    var element = layui.element;
+
+});

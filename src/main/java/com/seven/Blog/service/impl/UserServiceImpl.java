@@ -5,10 +5,12 @@ import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.User;
 import com.seven.Blog.response.ServerResponse;
 import com.seven.Blog.service.UserService;
+import com.seven.Blog.utils.Const;
 import com.seven.Blog.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created By Seven.wk
@@ -21,12 +23,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    private HttpSession session;
+
     @Override
     public ServerResponse checkLoginInfo(String account, String password) {
         password = MD5Util.MD5EncodeUtf8(password);
         User user = userMapper.selectByAccountAndPassword(account, password);
         if(user == null)
             return ServerResponse.error(ResponseCodeEnum.LOGIN_FAILED);
-        return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS);
+        return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS, user.getId());
     }
 }

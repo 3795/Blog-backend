@@ -1,0 +1,13 @@
+.category-add-form {
+    width: 80%;
+}
+
+.category-add-form .title{
+    font-size: 26px;
+    text-align: center;
+    margin: 5% 0 8% 28%;
+}
+
+.category-add-form .layui-btn {
+    margin-left: 51%;
+}
