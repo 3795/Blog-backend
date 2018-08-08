@@ -37,8 +37,15 @@
                                         </#if>
                                     </td>
                                     <td>
-                                        <a class="layui-btn layui-btn-xs">编辑</a>
-                                        <a class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
+                                        <a class="layui-btn layui-btn-primary layui-btn-xs" onclick="changeCategoryStatus(${category.id})">
+                                            <#if category.status = 0>
+                                                启用
+                                            <#else>
+                                                禁用
+                                            </#if>
+                                        </a>
+                                        <a class="layui-btn layui-btn-xs" onclick="showArea(${category.id}, '${category.name}', ${category.parentId}, ${category.status})">编辑</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="deleteCategory(${category.id})">删除</a>
                                     </td>
                                 </tr>
                                 </#list>
@@ -55,10 +62,13 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">启用</label>
+                                    <label class="layui-form-label">是否启用</label>
                                     <div class="layui-input-block">
-                                        <input type="radio" name="status" id="status" value="1" title="启用" checked>
-                                        <input type="radio" name="status" id="status" value="0" title="不启用">
+                                        <select name="status" id="status">
+                                            <option value="">请选择分类状态</option>
+                                            <option value="0">禁用</option>
+                                            <option value="1">启用</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -68,7 +78,7 @@
                                             <option value="">请选择父级分类</option>
                                             <option value="0">无</option>
                                             <#list categoryList as category>
-                                                <#if category.status != 0>
+                                                <#if category.status = 1 && category.parentId = 0 >
                                                     <option value="${category.id}">${category.name}</option>
                                                 </#if>
                                             </#list>
@@ -79,14 +89,46 @@
                             </form>
                         </div>
                     </div>
+                    <div class="layui-row" id="edit-area">
+                        <form class="layui-form category-edit-form" action="#">
+                            <p class="title">修改分类</p>
+                            <input id="editId" type="hidden">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">分类名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="name" id="editName" required  placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否启用</label>
+                                <div class="layui-input-block">
+                                    <select name="status" id="editStatus">
+                                        <option value="">请选择分类状态</option>
+                                        <option value="0">禁用</option>
+                                        <option value="1">启用</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择父级</label>
+                                <div class="layui-input-block">
+                                    <select name="parendId" id="editParentId">
+                                        <option value="">请选择父级分类</option>
+                                        <option value="0">无</option>
+                                            <#list categoryList as category>
+                                                <#if category.status = 1 && category.parentId = 0 >
+                                                    <option value="${category.id}">${category.name}</option>
+                                                </#if>
+                                            </#list>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" class="layui-btn" onclick="editCategory()">修改分类</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
         <#include "../common/Foot.ftl"/>
-        <script>
-            layui.use('form', function(){
-                var form = layui.form;
-            });
-        </script>
     </body>
 </html>

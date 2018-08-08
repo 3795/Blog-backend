@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seven.Blog.dao.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.seven.Blog.pojo.Article">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <!--INTEGER 和 DATE-->
+        <result column="status" property="status" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, title, img, summary, content, category_id, create_time, update_time, status
+    </sql>
+
+    <select id="selectedArticleByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where id = #{id}
+    </select>
+
+    <select id="getAllArticles" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+    </select>
+
+    <insert id="addArticle" parameterType="Map">
+        insert into
+        article(title, img, summary, content, category_id, status, create_time, update_time)
+        values(#{title}, #{img}, #{summary}, #{content}, #{categoryId}, #{status}, now(), now())
+    </insert>
+
+    <update id="updateArticle" parameterType="Article">
+        update article
+        set title = #{title},
+        img = #{img},
+        summary = #{summary},
+        content = #{content},
+        category_id = #{categoryId},
+        status = #{status},
+        update_time = now()
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteArticleByPrimaryKey" parameterType="Integer">
+        delete from article
+        where
+        id = #{id}
+    </delete>
+    
+    <update id="updateArticleStatusByPrimaryKey" parameterType="Integer">
+        update article set
+        status = #{status}
+        where id = #{id}
+    </update>
+</mapper>

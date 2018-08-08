@@ -14,13 +14,18 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
+    Category selectedByPrimaryKey(Integer key);
+
     List<Category> getAllCategory();
 
     int addCategory(@Param("name") String name,
                     @Param("parentId") Integer parentId,
                     @Param("status") Integer status);
 
-    int updateCategoryByPrimaryKey(Category category);
+    int updateCategory(Category category);
 
     int deleteCategoryByPrimaryKey(Integer key);
+
+    String selectedCategoryNameByPrimaryKey(Integer key);
+
 }

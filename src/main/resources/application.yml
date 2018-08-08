@@ -9,8 +9,11 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+#  servlet:
+#    multipart:
+#      location: classpath:
 server:
-  port: 8081
+  port: 80
 mybatis:
   type-aliases-package: com.seven.Blog.pojo
   mapper-locations: classpath:mybatis/mappers/*.xml

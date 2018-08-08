@@ -11,6 +11,13 @@
     <sql id="Base_Column_List">
         id, name, parent_id, status
     </sql>
+
+    <select id="selectedByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where id = #{id}
+    </select>
     
     <select id="getAllCategory" resultMap="BaseResultMap">
         select
@@ -24,7 +31,7 @@
         values(#{name}, #{parentId}, #{status})
     </insert>
     
-    <update id="updateCategoryByPrimaryKey" parameterType="Category">
+    <update id="updateCategory" parameterType="Category">
         update category
         set
         name = #{name},
@@ -38,5 +45,9 @@
         where
         id = #{id}
     </delete>
+
+    <select id="selectedCategoryNameByPrimaryKey" resultType="String" parameterType="Integer">
+        select name from category where id = #{id}
+    </select>
 
 </mapper>

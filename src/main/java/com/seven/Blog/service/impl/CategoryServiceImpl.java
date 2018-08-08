@@ -5,6 +5,7 @@ import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.response.ServerResponse;
 import com.seven.Blog.service.CategoryService;
+import com.seven.Blog.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,35 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ServerResponse updateCategory(Integer id, String name, Integer parentId, Integer status) {
         Category category = new Category(id, name, parentId, status);
-        int result = categoryMapper.updateCategoryByPrimaryKey(category);
+        int result = categoryMapper.updateCategory(category);
         if(result == 1)
             return ServerResponse.success("更新分类成功");
         return ServerResponse.error("更新分类失败");
+    }
+
+    @Override
+    public ServerResponse deleteCategory(Integer id) {
+        int result = categoryMapper.deleteCategoryByPrimaryKey(id);
+        if(result == 1)
+            return ServerResponse.success("删除分类成功");
+        return ServerResponse.error("删除分类失败");
+    }
+
+    @Override
+    public ServerResponse changeCategoryStatus(Integer id) {
+        Category category = categoryMapper.selectedByPrimaryKey(id);
+        if(category.getStatus() == Const.CategoryStatus.ABLE.getCode())
+            category.setStatus(Const.CategoryStatus.DISABLE.getCode());
+        else
+            category.setStatus(Const.CategoryStatus.ABLE.getCode());
+        int result = categoryMapper.updateCategory(category);
+        if(result == 1)
+            return ServerResponse.success("更改状态成功");
+        return ServerResponse.error("更改状态失败");
+    }
+
+    @Override
+    public String getCategoryNameById(Integer id) {
+        return categoryMapper.selectedCategoryNameByPrimaryKey(id);
     }
 }

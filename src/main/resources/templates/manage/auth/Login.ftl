@@ -21,12 +21,12 @@
                         <label class="layui-form-label">验证码</label>
                         <div class="layui-input-block">
                             <input type="text" name="captchaCode" id="captchaCode" required placeholder="请输入验证码" autocomplete="off" class="layui-input captchaCode-input">
-                            <img src="/api/util/captcha" title="验证码" alt="验证码" class="captchaCode" onclick = "this.src='/api/util/captcha?d='+new Date()*1"/>
+                            <img src="/api/captcha" title="验证码" alt="验证码" class="captchaCode" onclick = "this.src='/api/captcha?d='+new Date()*1"/>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" type="button" id="submit">登录</button>
+                            <button class="layui-btn" type="button" onclick="login()">登录</button>
                         </div>
                     </div>
                 </form>

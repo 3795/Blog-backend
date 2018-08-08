@@ -17,4 +17,10 @@ public interface CategoryService {
     ServerResponse addCategory(String name, Integer parentId, Integer status);
 
     ServerResponse updateCategory(Integer id, String name, Integer parentId, Integer status);
+
+    ServerResponse deleteCategory(Integer id);
+
+    ServerResponse changeCategoryStatus(Integer id);
+
+    String getCategoryNameById(Integer id);
 }

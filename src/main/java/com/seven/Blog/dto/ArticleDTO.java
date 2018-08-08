@@ -1,14 +1,13 @@
-package com.seven.Blog.pojo;
+package com.seven.Blog.dto;
 
 import java.util.Date;
 
 /**
  * Created By Seven.wk
- * Description: 文章实体类
- * Created At 2018/08/07
+ * Description: 文章信息传输模型
+ * Created At 2018/08/08
  */
-public class Article {
-
+public class ArticleDTO {
     private Integer id;     //文章id
 
     private String title;       //文章标题
@@ -19,15 +18,25 @@ public class Article {
 
     private String content;     //文章内容
 
-    private Integer categoryId;     //文章分类id
+    private String categoryName;     //文章分类名称
 
-    private Integer status;     //文章状态码,0为草稿，1为发表，2为回收
+    private String statusMsg;     //文章状态码,0为草稿，1为发表，2为回收
 
-    private Date createTime = new Date();        //创建时间
+    private Date createTime;        //创建时间
 
-    private Date updateTime = new Date();        //更新时间
+    private Date updateTime;        //更新时间
 
-    public Article() {
+    public ArticleDTO() {
+    }
+
+    public ArticleDTO(Integer id, String title, String img, String summary, String content, Date createTime, Date updateTime) {
+        this.id = id;
+        this.title = title;
+        this.img = img;
+        this.summary = summary;
+        this.content = content;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 
     public Integer getId() {
@@ -70,20 +79,20 @@ public class Article {
         this.content = content;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public Integer getStatus() {
-        return status;
+    public String getStatusMsg() {
+        return statusMsg;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatusMsg(String statusMsg) {
+        this.statusMsg = statusMsg;
     }
 
     public Date getCreateTime() {
@@ -100,20 +109,5 @@ public class Article {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", img='" + img + '\'' +
-                ", summary='" + summary + '\'' +
-                ", content='" + content + '\'' +
-                ", categoryId=" + categoryId +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
     }
 }

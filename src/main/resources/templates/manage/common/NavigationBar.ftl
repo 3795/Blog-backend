@@ -32,12 +32,12 @@
 <div class="layui-side layui-bg-black">
                 <div class="layui-side-scroll">
                     <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                    <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <ul class="layui-nav layui-nav-tree" >
                         <li class="layui-nav-item">
                             <a class="" href="javascript:;">文章管理</a>
                             <dl class="layui-nav-child">
-                                <dd><a href="javascript:;">新增文章</a></dd>
-                                <dd><a href="javascript:;">管理文章</a></dd>
+                                <dd><a href="/manage/article/add">新增文章</a></dd>
+                                <dd><a href="/manage/article">管理文章</a></dd>
                                 <dd><a href="javascript:;">草稿箱</a></dd>
                                 <dd><a href="">回收站</a></dd>
                             </dl>

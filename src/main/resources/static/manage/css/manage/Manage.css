@@ -11,3 +11,22 @@
 .category-add-form .layui-btn {
     margin-left: 51%;
 }
+
+.category-edit-form {
+    width: 67%;
+}
+
+.category-edit-form .title{
+    font-size: 26px;
+    text-align: center;
+    margin: 5% 0 8% 11%;
+}
+
+.category-edit-form .layui-btn {
+    margin-left: 50%;
+}
+
+.article-edit-area .option {
+    width: 30%;
+    /*float: left;*/
+}
