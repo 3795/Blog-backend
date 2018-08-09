@@ -50,4 +50,12 @@
         select name from category where id = #{id}
     </select>
 
+    <select id="getCategoriesByStatus" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where
+        status = #{status}
+    </select>
+
 </mapper>

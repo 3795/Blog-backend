@@ -14,6 +14,8 @@ public interface CategoryService {
 
     List<Category> getAllCategory();
 
+    List<Category> getAvailableCategory();
+
     ServerResponse addCategory(String name, Integer parentId, Integer status);
 
     ServerResponse updateCategory(Integer id, String name, Integer parentId, Integer status);

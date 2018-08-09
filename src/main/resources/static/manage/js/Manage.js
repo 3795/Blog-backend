@@ -172,3 +172,32 @@ function changeArticleStatus(id) {
         }
     });
 }
+
+function addArticle() {
+    var title = $("#title").val();
+    var imgPath = $("#imgPath").val();
+    var content = ueditor.getContent();
+    var summary = ueditor.getPlainTxt();
+    var categoryId = $("#categoryId").val();
+    var status = $("#status").val();
+    $.ajax({
+        url : "/api/manage/article/add",
+        type: "POST",
+        data: {"id": '-1', "title": title, "img": imgPath, "content": content,
+        "summary": summary, "categoryId": categoryId, "status": status},
+        dataType: "JSON",
+        async: false,
+        success: function (data) {
+            if(data.code === 10) {
+                window.location.href = "/manage/article";
+            }
+            else
+                alert(data.msg);
+        },
+        error: function() {
+            alert("AJAX传输失败");
+        }
+    });
+    //window.location.href = "/manage/article";
+
+}

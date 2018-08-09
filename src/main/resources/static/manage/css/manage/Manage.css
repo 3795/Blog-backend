@@ -28,5 +28,8 @@
 
 .article-edit-area .option {
     width: 30%;
-    /*float: left;*/
+}
+
+#uploadImg {
+    margin-left: 9%;
 }

@@ -28,4 +28,6 @@ public interface CategoryMapper {
 
     String selectedCategoryNameByPrimaryKey(Integer key);
 
+    List<Category> getCategoriesByStatus(Integer status);
+
 }

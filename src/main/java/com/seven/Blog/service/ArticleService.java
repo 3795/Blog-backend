@@ -17,4 +17,6 @@ public interface ArticleService {
     Article getArticleByPrimaryKey(Integer id);
 
     ServerResponse changeArticleStatus(Integer id);
+
+    ServerResponse addArticle(String title, String img, String summary, String content, String categoryId, String status);
 }

@@ -44,4 +44,13 @@ public class ArticleServiceImpl implements ArticleService {
             return ServerResponse.success("更改状态成功");
         return ServerResponse.success("更改状态失败");
     }
+
+
+    @Override
+    public ServerResponse addArticle(String title, String img, String summary, String content, String categoryId, String status) {
+        int result = articleMapper.addArticle(title, img, summary, content, categoryId, status);
+        if(result == 1)
+            return ServerResponse.success("添加文章成功");
+        return ServerResponse.success("添加文章失败");
+    }
 }

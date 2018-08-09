@@ -11,6 +11,9 @@ public enum ResponseCodeEnum {
     LOGIN_SUCCESS(11, "登录成功"),
     LOGIN_FAILED(12, "账号或密码不正确"),
     VERIFICATION_CODE_ERROR(13, "验证码错误"),
+    FILE_UPLOAD_SUCCESS(14, "文件上传成功"),
+    FILE_UPLOAD_FAILED(15, "文件上传失败"),
+    FILE_CANNOT_BE_EMPTY(16, "文件不能为空"),
     ;
 
     Integer code;

@@ -7,7 +7,29 @@ layui.use('element', function(){
 
 });
 
+//表单的渲染
 layui.use('form', function(){
     var form = layui.form;
     form.render(); //更新全部
+});
+
+//文件上传
+layui.use('upload', function(){
+    var upload = layui.upload;
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#uploadImg' //绑定元素
+        ,url: '/api/manage/upload' //上传接口
+        ,done: function(res){
+            if(res.code === 14) {
+                $("#imgPath").val(res.data);
+                $("#imgPreview").attr('src', res.data);
+            }
+            else
+                alert(res.msg);
+        }
+        ,error: function(){
+            alert("请求异常");
+        }
+    });
 });

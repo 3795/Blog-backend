@@ -29,8 +29,11 @@ public class ArticleToArticleDTO {
         ArticleDTO articleDTO = new ArticleDTO(article.getId(), article.getTitle(),
                 article.getImg(), article.getSummary(), article.getContent(),
                 article.getCreateTime(), article.getUpdateTime());
-        String categoryName = categoryService.getCategoryNameById(1);
-        articleDTO.setCategoryName(categoryName);
+        String categoryName = categoryService.getCategoryNameById(article.getCategoryId());
+        if(categoryName == null)
+            articleDTO.setCategoryName(Const.DEFAULT_CATEGORY_NAME);
+        else
+            articleDTO.setCategoryName(categoryName);
         if(article.getStatus() == Const.ArticleStatus.UNPUBLISHED.getCode())
             articleDTO.setStatusMsg(Const.ArticleStatus.UNPUBLISHED.getDesc());
         else

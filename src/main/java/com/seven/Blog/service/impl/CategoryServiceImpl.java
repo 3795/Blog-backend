@@ -27,6 +27,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> getAvailableCategory() {
+        return categoryMapper.getCategoriesByStatus(Const.CategoryStatus.ABLE.getCode());
+    }
+
+    @Override
     public ServerResponse addCategory(String name, Integer parentId, Integer status) {
         int result = categoryMapper.addCategory(name, parentId, status);
         if(result == 1)
