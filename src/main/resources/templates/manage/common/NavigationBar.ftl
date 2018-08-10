@@ -21,7 +21,7 @@
                 贤心
             </a>
             <dl class="layui-nav-child">
-                <dd><a href="">基本资料</a></dd>
+                <dd><a href="/manage/user">基本资料</a></dd>
                 <dd><a href="">安全设置</a></dd>
             </dl>
         </li>
@@ -50,7 +50,7 @@
                                 <dd><a href="">超链接</a></dd>
                             </dl>
                         </li>
-                        <li class="layui-nav-item"><a href="">导航管理</a></li>
+                        <li class="layui-nav-item"><a href="/manage/navigation">导航管理</a></li>
                         <li class="layui-nav-item"><a href="">系统设置</a></li>
                     </ul>
                 </div>

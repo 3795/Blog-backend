@@ -35,6 +35,26 @@ public class Const {
         }
     }
 
+    public enum NavigationStatus {
+        DISABLE(0, "禁用"),
+        ABLE(1, "启用"),
+        ;
+        int code;
+        String desc;
+        NavigationStatus(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
+
     /**
      * 文章发布状态
      */

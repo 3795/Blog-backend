@@ -10,7 +10,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, account, username, password, create_time
+        id, account, username, avatar
     </sql>
 
     <select id="selectByAccountAndPassword" resultMap="BaseResultMap" parameterType="Map">
@@ -21,5 +21,11 @@
         and password = #{password}
     </select>
 
+    <select id="selectedUserByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id}
+    </select>
 
 </mapper>

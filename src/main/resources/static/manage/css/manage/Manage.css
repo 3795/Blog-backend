@@ -33,3 +33,39 @@
 #uploadImg {
     margin-left: 9%;
 }
+
+.show-article {
+    /*text-align: center;*/
+}
+
+.show-article .title{
+    text-align: center;
+}
+
+.show-article .property {
+    padding: 2% 0 1% 0;
+    font-size: 16px;
+}
+
+.property .layui-col-md3 {
+    text-align: center;
+}
+
+.show-article .summary {
+    padding: 1% 0 1% 0;
+    background-color: #dfde1380;
+    font-style: italic;
+}
+
+.show-article .content {
+    padding: 1% 0 1% 0;
+}
+
+.article-pagination {
+    text-align: center;
+    padding-top: 1%;
+}
+
+.article-pagination span{
+    padding: 0 1% 0 1%;
+}

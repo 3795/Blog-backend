@@ -21,6 +21,7 @@ public interface UserMapper {
     User selectByAccountAndPassword(@Param("account") String account,
                                     @Param("password") String password);
 
+    User selectedUserByPrimaryKey(Integer id);
 
 
 }

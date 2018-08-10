@@ -30,6 +30,16 @@ public class Article {
     public Article() {
     }
 
+    public Article(Integer id, String title, String img, String summary, String content, Integer categoryId, Integer status) {
+        this.id = id;
+        this.title = title;
+        this.img = img;
+        this.summary = summary;
+        this.content = content;
+        this.categoryId = categoryId;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }

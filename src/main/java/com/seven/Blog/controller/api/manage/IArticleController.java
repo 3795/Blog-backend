@@ -1,8 +1,10 @@
 package com.seven.Blog.controller.api.manage;
 
 import com.seven.Blog.form.ArticleForm;
+import com.seven.Blog.pojo.Article;
 import com.seven.Blog.response.ServerResponse;
 import com.seven.Blog.service.ArticleService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +40,7 @@ public class IArticleController {
      * @param result
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("")
     public ServerResponse addArticle(@Valid ArticleForm articleForm,
                                      BindingResult result) {
         if(result.hasErrors()) {
@@ -48,5 +50,36 @@ public class IArticleController {
                 articleForm.getImg(), articleForm.getSummary(),
                 articleForm.getContent(), articleForm.getCategoryId(),
                 articleForm.getStatus());
+    }
+
+    /**
+     * 根据文章id值删除一个文章
+     * @param id
+     * @return
+     */
+    @DeleteMapping("{id}")
+    public ServerResponse deleteArticle(@PathVariable("id") Integer id) {
+        return articleService.deleteArticleByPrimaryKey(id);
+    }
+
+    /**
+     * 更新一篇文章
+     * @param articleForm
+     * @param result
+     * @return
+     */
+    @PutMapping("")
+    public ServerResponse updateArticle(@Valid ArticleForm articleForm,
+                                        BindingResult result) {
+        if(result.hasErrors()) {
+            return ServerResponse.error(result.getFieldError().getDefaultMessage());
+        }
+        int id= Integer.parseInt(articleForm.getId());
+        int categoryId= Integer.parseInt(articleForm.getCategoryId());
+        int status= Integer.parseInt(articleForm.getStatus());
+        Article article = new Article(id, articleForm.getTitle(),
+                articleForm.getImg(), articleForm.getSummary(),
+                articleForm.getContent(), categoryId, status);
+        return articleService.updateArticle(article);
     }
 }

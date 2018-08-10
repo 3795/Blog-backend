@@ -25,10 +25,12 @@
         where id = #{id}
     </select>
 
-    <select id="getAllArticles" resultMap="BaseResultMap">
+    <select id="getAllArticles" resultMap="BaseResultMap" parameterType="Map">
         select
         <include refid="Base_Column_List"/>
         from article
+        limit #{size}
+        offset #{offset}
     </select>
 
     <insert id="addArticle" parameterType="Map">
@@ -60,4 +62,8 @@
         status = #{status}
         where id = #{id}
     </update>
+
+    <select id="getArticleCount" resultType="Integer">
+        select count(*) from article
+    </select>
 </mapper>

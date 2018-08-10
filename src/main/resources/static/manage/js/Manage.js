@@ -2,6 +2,7 @@
 $(function () {
 
     $("#edit-area").hide();
+    $("#navigation-edit-area").hide();
 });
 
 /**
@@ -44,7 +45,7 @@ function addCategory() {
         alert("不能为空");
     else {
         $.ajax({
-            url: "/api/manage/category/add",
+            url: "/api/manage/category",
             type: "POST",
             data: {"name":name, "parentId":parentId, "status":status},
             dataType: "JSON",
@@ -133,8 +134,8 @@ function editCategory() {
         alert("不能为空");
     else {
         $.ajax({
-            url: "/api/manage/category/update",
-            type: "POST",
+            url: "/api/manage/category",
+            type: "PUT",
             data: {"id": id, "name":name, "parentId":parentId, "status":status},
             dataType: "JSON",
             async: false,
@@ -173,6 +174,9 @@ function changeArticleStatus(id) {
     });
 }
 
+/**
+ * 添加一篇文章
+ */
 function addArticle() {
     var title = $("#title").val();
     var imgPath = $("#imgPath").val();
@@ -181,7 +185,7 @@ function addArticle() {
     var categoryId = $("#categoryId").val();
     var status = $("#status").val();
     $.ajax({
-        url : "/api/manage/article/add",
+        url : "/api/manage/article",
         type: "POST",
         data: {"id": '-1', "title": title, "img": imgPath, "content": content,
         "summary": summary, "categoryId": categoryId, "status": status},
@@ -198,6 +202,181 @@ function addArticle() {
             alert("AJAX传输失败");
         }
     });
-    //window.location.href = "/manage/article";
+}
 
+/**
+ * 根据id值删除一篇文章
+ * @param id
+ */
+function deleteArticle(id) {
+    if(confirm("真的要删除吗？")) {
+        $.ajax({
+            url: '/api/manage/article/' + id,
+            type: "DELETE",
+            async: false,
+            success: function (data) {
+                if(data.code === 10)
+                    window.location.reload();
+                else
+                    alert(data.msg);
+            },
+            error: function () {
+                alert("Ajax传输失败");
+            }
+        });
+    }
+}
+
+/**
+ * 修改文章内容
+ */
+function editArticle() {
+    var id = $("#id").val();
+    var title = $("#title").val();
+    var imgPath = $("#imgPath").val();
+    var content = ueditor.getContent();
+    var summary = ueditor.getPlainTxt();
+    var categoryId = $("#categoryId").val();
+    var status = $("#status").val();
+    $.ajax({
+        url : "/api/manage/article",
+        type: "PUT",
+        data: {"id": id, "title": title, "img": imgPath, "content": content,
+            "summary": summary, "categoryId": categoryId, "status": status},
+        dataType: "JSON",
+        async: false,
+        success: function (data) {
+            if(data.code === 10) {
+                window.location.href = "/manage/article";
+            }
+            else
+                alert(data.msg);
+        },
+        error: function() {
+            alert("AJAX传输失败");
+        }
+    });
+}
+
+/**
+ * 添加一个导航
+ */
+function addNavigation() {
+    var name = $("#name").val();
+    var status = $("#status").val();
+    var link = $("#link").val();
+    var priority = $("#priority").val();
+    if(name === "" || link === "" || status === "" || priority === "")
+        alert("不能为空");
+    else {
+        $.ajax({
+            url: "/api/manage/navigation",
+            type: "POST",
+            data: {"id": '-1', "name":name, "priority":priority, "link":link, "status":status},
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                if(data.code === 10) {
+                    alert(data.msg);
+                    window.location.reload();
+                }
+                else
+                    alert(data.msg);
+            },
+            error: function () {
+                alert("Ajax传输失败");
+            }
+        });
+    }
+}
+
+/**
+ * 改变导航状态
+ * @param id
+ */
+function changeNavigationStatus(id) {
+    $.ajax({
+        url: '/api/manage/navigation/' + id,
+        type: "PATCH",
+        async: false,
+        success: function(data) {
+            if(data.code === 10 )
+                window.location.reload();
+            else
+                alert(data.msg);
+        },
+        error: function () {
+            alert('Ajax传输失败')
+        }
+    });
+}
+
+/**
+ * 显示修改导航信息的区域
+ * @param id
+ * @param name
+ * @param priority
+ * @param link
+ */
+function showNavigationArea(id, name, priority, link) {
+    $("#editId").val(id);
+    $("#editName").val(name);
+    $("#editPriority").val(priority);
+    $("#editLink").val(link);
+    $("#navigation-edit-area").show(1000);
+}
+
+/**
+ * 修改某个导航的信息
+ */
+function editNavigation() {
+    var id = $("#editId").val();
+    var name = $("#editName").val();
+    var priority = $("#editPriority").val();
+    var link = $("#editLink").val();
+    var status = $("#editStatus").val();
+    if(name === "" || priority === "" || status === "" || link === '')
+        alert("不能为空");
+    else {
+        $.ajax({
+            url: "/api/manage/navigation",
+            type: "PUT",
+            data: {"id": id, "name":name, "priority":priority, "link": link, "status":status},
+            dataType: "JSON",
+            async: false,
+            success: function(data) {
+                if(data.code === 10) {
+                    window.location.reload();
+                }
+                else
+                    alert(data.msg);
+            },
+            error: function () {
+                alert("Ajax传输失败");
+            }
+        });
+    }
+}
+
+/**
+ * 删除一个导航信息
+ * @param id
+ */
+function deleteNavigation(id) {
+    if(confirm("真的要删除吗？")) {
+        $.ajax({
+            url: '/api/manage/navigation/' + id,
+            type: "DELETE",
+            async: false,
+            success: function (data) {
+                if(data.code === 10)
+                    window.location.reload();
+                else
+                    alert(data.msg);
+            },
+            error: function () {
+                alert("Ajax传输失败");
+            }
+        });
+    }
 }

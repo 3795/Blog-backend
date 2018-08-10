@@ -22,14 +22,14 @@ public class ICategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ServerResponse add(@Param("name") String name,
                               @Param("parentId") Integer parentId,
                               @Param("status") Integer status) {
         return categoryService.addCategory(name, parentId, status);
     }
 
-    @PostMapping("/update")
+    @PutMapping("")
     public ServerResponse update(@Valid CategoryForm categoryForm,
                                  BindingResult result) {
         if(result.hasErrors()) {

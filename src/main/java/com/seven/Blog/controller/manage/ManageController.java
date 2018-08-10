@@ -3,9 +3,12 @@ package com.seven.Blog.controller.manage;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.pojo.Category;
+import com.seven.Blog.pojo.Navigation;
 import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.service.CategoryService;
+import com.seven.Blog.service.NavigationService;
 import com.seven.Blog.utils.ArticleToArticleDTO;
+import com.seven.Blog.utils.BasicUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +33,27 @@ public class ManageController {
     private ArticleService articleService;
 
     @Autowired
+    private NavigationService navigationService;
+
+    @Autowired
     private ArticleToArticleDTO converter;
 
+    /**
+     * 管理中心首页
+     * @param map
+     * @return
+     */
     @GetMapping("/index")
     public ModelAndView index(Map<String, String> map) {
         map.put("title", "信息管理");
         return new ModelAndView("manage/manage/index", map);
     }
 
+    /**
+     * 文章分类管理页面
+     * @param map
+     * @return
+     */
     @GetMapping("/category")
     public ModelAndView category(Map<String, Object> map) {
         List<Category> categoryList = categoryService.getAllCategory();
@@ -46,21 +62,89 @@ public class ManageController {
         return new ModelAndView("manage/manage/category", map);
     }
 
+    /**
+     * 文章管理页面
+     * @param map
+     * @return
+     */
     @GetMapping("/article")
-    public ModelAndView article(Map<String, Object> map) {
-        List<Article> articleList = articleService.getAllArticles();
+    public ModelAndView article(Map<String, Object> map,
+                                @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        int maxPage = articleService.getArticleCount() / size + 1;
+        page = BasicUtil.getPage(page, maxPage);
+        List<Article> articleList = articleService.getAllArticles(page, size);
         List<ArticleDTO> articleDTOList = converter.convert(articleList);
         map.put("title", "管理文章");
         map.put("articleList", articleDTOList);
+        map.put("currentPage", page);
+        map.put("maxPage", maxPage);
         return new ModelAndView("manage/manage/article", map);
     }
 
+    /**
+     * 添加文章页面
+     * @param map
+     * @return
+     */
     @GetMapping("/article/add")
     public ModelAndView addArticle(Map<String, Object> map) {
         List<Category> categoryList = categoryService.getAvailableCategory();
         map.put("title", "新增文章");
         map.put("categoryList", categoryList);
         return new ModelAndView("manage/manage/addArticle", map);
+    }
+
+    /**
+     * 查看某一篇文章
+     * @param map
+     * @param id
+     * @return
+     */
+    @GetMapping("/article/{id}")
+    public ModelAndView showArticle(Map<String, Object> map,
+                                    @PathVariable("id") Integer id) {
+        Article article = articleService.getArticleByPrimaryKey(id);
+        ArticleDTO articleDTO = converter.convert(article);
+        map.put("title", article.getTitle());
+        map.put("article", articleDTO);
+        return new ModelAndView("manage/manage/showArticle", map);
+    }
+
+    /**
+     * 编辑某一篇文章
+     * @param map
+     * @param id
+     * @return
+     */
+    @GetMapping("/article/edit/{id}")
+    public ModelAndView editArticle(Map<String, Object> map,
+                                    @PathVariable("id") Integer id) {
+        Article article = articleService.getArticleByPrimaryKey(id);
+        List<Category> categoryList = categoryService.getAvailableCategory();
+        map.put("title", article.getTitle());
+        map.put("article", article);
+        map.put("categoryList", categoryList);
+        return new ModelAndView("manage/manage/editArticle", map);
+    }
+
+    /**
+     * 导航管理页面
+     * @param map
+     * @return
+     */
+    @GetMapping("/navigation")
+    public ModelAndView navigation(Map<String, Object> map) {
+        List<Navigation> navigationList = navigationService.getAllNavigation();
+        map.put("title", "导航管理");
+        map.put("navigationList", navigationList);
+        return new ModelAndView("manage/manage/navigation", map);
+    }
+
+    @GetMapping("/user")
+    public ModelAndView user(Map<String, Object> map) {
+        map.put("title", "用户信息管理");
+        return new ModelAndView("manage/manage/user", map);
     }
 
 }

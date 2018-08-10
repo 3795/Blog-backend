@@ -12,11 +12,17 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    List<Article> getAllArticles();
+    List<Article> getAllArticles(Integer page, Integer size);
 
     Article getArticleByPrimaryKey(Integer id);
 
     ServerResponse changeArticleStatus(Integer id);
 
     ServerResponse addArticle(String title, String img, String summary, String content, String categoryId, String status);
+
+    int getArticleCount();
+
+    ServerResponse deleteArticleByPrimaryKey(Integer id);
+
+    ServerResponse updateArticle(Article article);
 }

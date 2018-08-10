@@ -15,6 +15,8 @@ public class User {
 
     private String username;
 
+    private String avatar;
+
     private String password;
 
     private Date createTime = new Date();
@@ -60,6 +62,14 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override

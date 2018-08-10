@@ -22,8 +22,9 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
-    public List<Article> getAllArticles() {
-        return articleMapper.getAllArticles();
+    public List<Article> getAllArticles(Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return articleMapper.getAllArticles(offset, size);
     }
 
     @Override
@@ -52,5 +53,26 @@ public class ArticleServiceImpl implements ArticleService {
         if(result == 1)
             return ServerResponse.success("添加文章成功");
         return ServerResponse.success("添加文章失败");
+    }
+
+    @Override
+    public int getArticleCount() {
+        return articleMapper.getArticleCount();
+    }
+
+    @Override
+    public ServerResponse deleteArticleByPrimaryKey(Integer id) {
+        int result = articleMapper.deleteArticleByPrimaryKey(id);
+        if(result == 1)
+            return ServerResponse.success("删除文章成功");
+        return ServerResponse.success("删除文章失败");
+    }
+
+    @Override
+    public ServerResponse updateArticle(Article article) {
+        int result = articleMapper.updateArticle(article);
+        if(result == 1)
+            return ServerResponse.success("更新文章成功");
+        return ServerResponse.success("更新文章失败");
     }
 }
