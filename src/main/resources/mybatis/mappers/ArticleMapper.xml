@@ -25,6 +25,14 @@
         where id = #{id}
     </select>
 
+    <select id="selectedPublishedArticleByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where id = #{id}
+        and status = 1
+    </select>
+
     <select id="getAllArticles" resultMap="BaseResultMap" parameterType="Map">
         select
         <include refid="Base_Column_List"/>
@@ -65,5 +73,19 @@
 
     <select id="getArticleCount" resultType="Integer">
         select count(*) from article
+    </select>
+
+    <select id="getPublishedArticleCount" resultType="Integer" parameterType="Integer">
+        select count(*) from article
+        where status = #{status}
+    </select>
+
+    <select id="getAllPublishedArticles" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where status = 1
+        limit #{size}
+        offset #{offset}
     </select>
 </mapper>

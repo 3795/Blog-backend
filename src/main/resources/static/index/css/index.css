@@ -1,0 +1,91 @@
+.navigation{
+    padding-top: 3%;
+    text-align: center;
+    border: solid 1px #f1f5f8;
+    border-right: 0;
+    font-size: 16px;
+    height: 100%;
+    background-color: #f1f5f8;
+    position: fixed;
+
+}
+
+.navigation .item {
+    height: 40px;
+    line-height: 40px;
+}
+
+.navigation span {
+    padding: 0 5% 0 5%;
+}
+
+.navigation .user {
+    margin-bottom: 30px;
+}
+
+.avatar {
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    border: solid 1px;
+}
+
+.main {
+    border: solid 1px #f1f5f8;
+    font-size: 16px;
+    height: 100%;
+    margin-left: 362px;
+}
+
+.main .top-bar {
+    height: 70px;
+    line-height: 70px;
+    font-size: 26px;
+    background-color: #ebf1f5;
+    padding-left: 30px;
+    font-family: "华文彩云";
+}
+
+.main .card {
+    border: solid 1px;
+    height: 200px;
+    margin-top: 40px;
+}
+
+.main .card .article {
+    height: 75%;
+}
+
+.main .card .detail {
+    height: 25%;
+}
+
+.main .card .pure {
+    text-align: center;
+    height: 200px;
+    line-height: 200px;
+    font-size: 60px;
+    font-family: "华文彩云";
+}
+
+.thumbnail {
+    margin: 15px 0 0 15px;
+    width: 200px;
+    height: 130px;
+}
+
+.card .title {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.card .summary {
+    margin-top: 5px;
+    font-size: 14px;
+    text-indent: 2em;
+}
+
+.detail .layui-col-md4 {
+    text-align: center;
+    /*padding-right: 20px;*/
+}

@@ -33,6 +33,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Article getPublishedArticleByPrimaryKey(Integer id) {
+        return articleMapper.selectedPublishedArticleByPrimaryKey(id);
+    }
+
+    @Override
     public ServerResponse changeArticleStatus(Integer id) {
         Article article = getArticleByPrimaryKey(id);
         int status;
@@ -61,6 +66,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public int getArticleCount(Integer status) {
+        return articleMapper.getPublishedArticleCount(status);
+    }
+
+    @Override
     public ServerResponse deleteArticleByPrimaryKey(Integer id) {
         int result = articleMapper.deleteArticleByPrimaryKey(id);
         if(result == 1)
@@ -74,5 +84,11 @@ public class ArticleServiceImpl implements ArticleService {
         if(result == 1)
             return ServerResponse.success("更新文章成功");
         return ServerResponse.success("更新文章失败");
+    }
+
+    @Override
+    public List<Article> getAllPublishedArticle(Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return articleMapper.getAllPublishedArticles(offset, size);
     }
 }

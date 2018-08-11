@@ -23,6 +23,8 @@ public interface ArticleMapper {
 
     Article selectedArticleByPrimaryKey(Integer id);
 
+    Article selectedPublishedArticleByPrimaryKey(Integer id);
+
     List<Article> getAllArticles(@Param("offset") Integer offset,
                                  @Param("size") Integer size);
 
@@ -34,4 +36,9 @@ public interface ArticleMapper {
                                         @Param("status") Integer status);
 
     int getArticleCount();
+
+    int getPublishedArticleCount(Integer status);
+
+    List<Article> getAllPublishedArticles(@Param("offset") Integer offset,
+                                          @Param("size") Integer size);
 }
