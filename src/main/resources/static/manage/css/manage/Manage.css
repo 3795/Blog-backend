@@ -69,3 +69,9 @@
 .article-pagination span{
     padding: 0 1% 0 1%;
 }
+
+.edit-user-info .title{
+    font-size: 24px;
+    padding-bottom: 2%;
+    text-align: center;
+}

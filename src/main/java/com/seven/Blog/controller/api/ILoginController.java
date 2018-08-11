@@ -35,6 +35,14 @@ public class ILoginController {
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
+    /**
+     * 登录操作
+     * @param account
+     * @param password
+     * @param captchaCode
+     * @param session
+     * @return
+     */
     @PostMapping("/doLogin")
     public ServerResponse doLogin(@Param("account") String account,
                                   @Param("password") String password,
@@ -50,6 +58,12 @@ public class ILoginController {
         return userService.checkLoginInfo(account, password);
     }
 
+    /**
+     * 生成验证码
+     * @param response
+     * @param session
+     * @throws IOException
+     */
     @GetMapping("/captcha")
     public void captcha(HttpServletResponse response,
                         HttpSession session) throws IOException {

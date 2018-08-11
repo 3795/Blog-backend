@@ -82,4 +82,5 @@ public class IArticleController {
                 articleForm.getContent(), categoryId, status);
         return articleService.updateArticle(article);
     }
+
 }

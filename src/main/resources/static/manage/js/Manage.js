@@ -380,3 +380,49 @@ function deleteNavigation(id) {
         });
     }
 }
+
+/**
+ * 更改用户信息
+ */
+function editUserInfo() {
+    var username = $("#username").val();
+    var imgPath = $("#imgPath").val();
+    $.ajax({
+        url: "/api/manage/user",
+        type: "PUT",
+        data: {"username": username, "avatar": imgPath},
+        dataType: "JSON",
+        async: false,
+        success: function(data) {
+            if(data.code === 10)
+                window.location.reload();
+            else
+                alert(data.msg);
+        },
+        error: function() {
+            alert("信息更新失败");
+        }
+    });
+}
+
+/**
+ * 用户退出登录
+ */
+function logout() {
+    if(confirm("确认退出？")) {
+        $.ajax({
+            url: "/api/manage/user/logout",
+            type: "GET",
+            async: false,
+            success: function(data) {
+                if(data.code === 10)
+                    window.location.href = "/manage";
+                else
+                    alert("登出失败");
+            },
+            error: function() {
+                alert("信息更新失败");
+            }
+        });
+    }
+}

@@ -28,4 +28,10 @@
         where id = #{id}
     </select>
 
+    <update id="updateUser" parameterType="Map">
+        update user
+        set username = #{username}, avatar = #{avatar}
+        where id = #{id}
+    </update>
+
 </mapper>

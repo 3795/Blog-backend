@@ -28,4 +28,17 @@ public class UserServiceImpl implements UserService {
             return ServerResponse.error(ResponseCodeEnum.LOGIN_FAILED);
         return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS, user.getId());
     }
+
+    @Override
+    public User getUser(Integer id) {
+        return userMapper.selectedUserByPrimaryKey(id);
+    }
+
+    @Override
+    public ServerResponse updateUser(Integer id, String username, String avatar) {
+        int result = userMapper.updateUser(id, username, avatar);
+        if(result == 1)
+            return ServerResponse.success("更改信息成功");
+        return ServerResponse.success("更改信息失败");
+    }
 }

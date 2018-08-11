@@ -14,6 +14,7 @@ public enum ResponseCodeEnum {
     FILE_UPLOAD_SUCCESS(14, "文件上传成功"),
     FILE_UPLOAD_FAILED(15, "文件上传失败"),
     FILE_CANNOT_BE_EMPTY(16, "文件不能为空"),
+    PERMISSION_DENIED(17, "没有权限执行此操作"),
     ;
 
     Integer code;

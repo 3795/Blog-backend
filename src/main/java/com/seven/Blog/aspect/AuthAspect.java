@@ -1,5 +1,7 @@
 package com.seven.Blog.aspect;
 
+import com.seven.Blog.enums.ResponseCodeEnum;
+import com.seven.Blog.response.ServerResponse;
 import com.seven.Blog.utils.Const;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -21,8 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class AuthAspect {
 
-    /*@Pointcut("within(com.seven.Blog.controller.manage.ManageController)")
+    @Pointcut("within(com.seven.Blog.controller.manage.ManageController)")
     public void verify() {}
+
+    @Pointcut("within(com.seven.Blog.controller.api.manage.*Controller)")
+    public void apiVerify() {}
 
     @Around("verify()")
     public Object doVerify(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -31,5 +36,14 @@ public class AuthAspect {
         if(userId == null)
             return new ModelAndView("redirect:/manage/login");
         return joinPoint.proceed();
-    }*/
+    }
+
+    @Around("apiVerify()")
+    public Object doApiVerify(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Integer userId = (Integer) request.getSession().getAttribute(Const.USER_ID);
+        if(userId == null)
+            return ServerResponse.error(ResponseCodeEnum.PERMISSION_DENIED);
+        return joinPoint.proceed();
+    }
 }

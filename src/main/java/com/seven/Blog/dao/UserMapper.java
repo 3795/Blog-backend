@@ -23,5 +23,9 @@ public interface UserMapper {
 
     User selectedUserByPrimaryKey(Integer id);
 
+    int updateUser(@Param("id") Integer id,
+                   @Param("username") String username,
+                   @Param("avatar") String avatar);
+
 
 }
