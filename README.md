@@ -1,7 +1,7 @@
 # Blog
-使用Spring技术栈做的个人博客项目
-首页地址：localhost:8100
-后台管理地址：localhost:8100/manage
+使用Spring技术栈做的个人博客项目  
+首页地址：localhost:8100  
+后台管理地址：localhost:8100/manage  
 
 # 技术栈
 前端：   
