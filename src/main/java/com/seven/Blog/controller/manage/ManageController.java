@@ -51,11 +51,12 @@ public class ManageController {
      * @return
      */
     @GetMapping("/index")
-    public ModelAndView index(Map map,
+    public ModelAndView index(Map<String, Object> map,
                               HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         map.put("title", "信息管理");
-        return new ModelAndView("manage/manage/index", map);
+        return new ModelAndView("manage/manage/Index", map);
     }
 
     /**
@@ -64,13 +65,14 @@ public class ManageController {
      * @return
      */
     @GetMapping("/category")
-    public ModelAndView category(Map map,
+    public ModelAndView category(Map<String, Object> map,
                                  HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         List<Category> categoryList = categoryService.getAllCategory();
         map.put("title", "分类管理");
         map.put("categoryList", categoryList);
-        return new ModelAndView("manage/manage/category", map);
+        return new ModelAndView("manage/manage/Category", map);
     }
 
     /**
@@ -79,11 +81,12 @@ public class ManageController {
      * @return
      */
     @GetMapping("/article")
-    public ModelAndView article(Map map,
+    public ModelAndView article(Map<String, Object> map,
                                 @RequestParam(value = "page", defaultValue = "1") Integer page,
                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
                                 HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         int maxPage = articleService.getArticleCount() / size + 1;
         page = BasicUtil.getPage(page, maxPage);
         List<Article> articleList = articleService.getAllArticles(page, size);
@@ -92,7 +95,7 @@ public class ManageController {
         map.put("articleList", articleDTOList);
         map.put("currentPage", page);
         map.put("maxPage", maxPage);
-        return new ModelAndView("manage/manage/article", map);
+        return new ModelAndView("manage/manage/Article", map);
     }
 
     /**
@@ -101,13 +104,14 @@ public class ManageController {
      * @return
      */
     @GetMapping("/article/add")
-    public ModelAndView addArticle(Map map,
+    public ModelAndView addArticle(Map<String, Object> map,
                                    HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         List<Category> categoryList = categoryService.getAvailableCategory();
         map.put("title", "新增文章");
         map.put("categoryList", categoryList);
-        return new ModelAndView("manage/manage/addArticle", map);
+        return new ModelAndView("manage/manage/AddArticle", map);
     }
 
     /**
@@ -117,15 +121,16 @@ public class ManageController {
      * @return
      */
     @GetMapping("/article/{id}")
-    public ModelAndView showArticle(Map map,
+    public ModelAndView showArticle(Map<String, Object> map,
                                     @PathVariable("id") Integer id,
                                     HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         Article article = articleService.getArticleByPrimaryKey(id);
         ArticleDTO articleDTO = converter.convert(article);
         map.put("title", article.getTitle());
         map.put("article", articleDTO);
-        return new ModelAndView("manage/manage/showArticle", map);
+        return new ModelAndView("manage/manage/ShowArticle", map);
     }
 
     /**
@@ -135,16 +140,17 @@ public class ManageController {
      * @return
      */
     @GetMapping("/article/edit/{id}")
-    public ModelAndView editArticle(Map map,
+    public ModelAndView editArticle(Map<String, Object> map,
                                     @PathVariable("id") Integer id,
                                     HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         Article article = articleService.getArticleByPrimaryKey(id);
         List<Category> categoryList = categoryService.getAvailableCategory();
         map.put("title", article.getTitle());
         map.put("article", article);
         map.put("categoryList", categoryList);
-        return new ModelAndView("manage/manage/editArticle", map);
+        return new ModelAndView("manage/manage/EditArticle", map);
     }
 
     /**
@@ -153,35 +159,35 @@ public class ManageController {
      * @return
      */
     @GetMapping("/navigation")
-    public ModelAndView navigation(Map map,
+    public ModelAndView navigation(Map<String, Object> map,
                                    HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
+        map.put("user", user);
         List<Navigation> navigationList = navigationService.getAllNavigation();
         map.put("title", "导航管理");
         map.put("navigationList", navigationList);
-        return new ModelAndView("manage/manage/navigation", map);
+        return new ModelAndView("manage/manage/Navigation", map);
     }
 
     @GetMapping("/user")
-    public ModelAndView user(Map map,
+    public ModelAndView user(Map<String, Object> map,
                              HttpSession session) {
-        map = getUser(map, session);
+        User user = getUser(session);
         map.put("title", "用户信息管理");
-        return new ModelAndView("manage/manage/user", map);
+        map.put("user", user);
+        return new ModelAndView("manage/manage/User", map);
     }
 
     /**
      * 根据Session中的值获取用户信息
-     * @param map
      * @param session
      * @return
      */
-    private Map getUser(Map<String, Object> map,
-                        HttpSession session) {
+    private User getUser(HttpSession session) {
         Integer id = (Integer) session.getAttribute(Const.USER_ID);
-        User user = userService.getUser(id);
-        map.put("user", user);
-        return map;
+        return userService.getUser(id);
     }
+
+
 
 }

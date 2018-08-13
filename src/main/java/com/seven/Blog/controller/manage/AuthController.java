@@ -26,4 +26,5 @@ public class AuthController {
         map.put("title", "请登录");
         return new ModelAndView("manage/auth/Login", map);
     }
+
 }

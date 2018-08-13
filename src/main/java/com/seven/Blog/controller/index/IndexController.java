@@ -69,7 +69,7 @@ public class IndexController {
         map.put("currentPage", page);
         map.put("maxPage", maxPage);
         map.put("url", "?page=");
-        return new ModelAndView("/index/index/templateA", map);
+        return new ModelAndView("index/index/TemplateA", map);
     }
 
     /**
@@ -89,7 +89,7 @@ public class IndexController {
         map.put("article", articleDTO);
         map.put("user", getUser());
         map.put("navigationList", getNavigation());
-        return new ModelAndView("/index/index/article", map);
+        return new ModelAndView("/index/index/Article", map);
     }
 
     /**
@@ -129,12 +129,12 @@ public class IndexController {
             List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);
             map.put("articleList", articleDTOList);
             map.put("categoryList", categoryList);
-            return new ModelAndView("/index/index/templateB", map);
+            return new ModelAndView("index/index/TemplateB", map);
         } else {        //二级分类
             List<Article> articleList = articleService.getPublishedArticleByCategoryId(category.getId(), page, size);
             List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);
             map.put("articleList", articleDTOList);
-            return new ModelAndView("/index/index/templateA", map);
+            return new ModelAndView("index/index/TemplateA", map);
         }
     }
 
@@ -148,7 +148,7 @@ public class IndexController {
         map.put("title", "404");
         map.put("user", getUser());
         map.put("navigationList", getNavigation());
-        return new ModelAndView("/index/common/404", map);
+        return new ModelAndView("index/common/404", map);
     }
 
 
