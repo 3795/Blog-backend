@@ -1,21 +1,20 @@
-<div class="layui-col-md3 navigation">
+<div class="layui-col-md2 navigation" xmlns="http://www.w3.org/1999/html">
     <div class="layui-col-md12 user">
-        <img src="/images/avatar.png" title="名字" alt="头像" class="avatar">
-        <br/><br/><h2>Seven.wk</h2><br/>
-        <p><span>我的CSDN</span><span>我的EMail</span></p>
+        <img src="${user.avatar}" title="${user.username}" alt="头像" class="avatar">
+        <br/><br/><h2>${user.username}</h2><br/>
+        <p>
+            <span><a href="https://blog.csdn.net/zai_xia" target="_blank">我的CSDN</a></span>
+            <span><a href="mailto:seven.wk@foxmail.com">我的EMail</a></span>
+        </p>
     </div>
-    <a href="#">
-        <div class="layui-col-md12 item"  onmouseover="this.style.backgroundColor='#FFFFFF'"  onmouseout="this.style.backgroundColor='#f1f5f8'">
-            Java
+    <#list navigationList as navigation>
+    <a href="${navigation.link!""}">
+        <div class="layui-col-md12 item"  onmouseover="this.style.backgroundColor='#FFFFFF'"  onmouseout="this.style.backgroundColor='rgba(232, 238, 242, 0.91)'">
+            ${navigation.name}
         </div>
     </a>
-    <div class="layui-col-md12 item">
-        算法与数据结构
-    </div>
-    <div class="layui-col-md12 item">
-        巧解
-    </div>
-    <div class="layui-col-md12 item">
-        Linux
+    </#list>
+    <div class="copyright">
+        Designed by ${user.username!Seven.wk}
     </div>
 </div>

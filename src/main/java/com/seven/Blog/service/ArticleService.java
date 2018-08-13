@@ -26,9 +26,16 @@ public interface ArticleService {
 
     int getArticleCount(Integer status);
 
+    int getArticleCountByCategoryId(Integer categoryId);
+
     ServerResponse deleteArticleByPrimaryKey(Integer id);
 
     ServerResponse updateArticle(Article article);
 
     List<Article> getAllPublishedArticle(Integer page, Integer size);
+
+    List<Article> getPublishedArticleByCategoryIds(String sql, Integer page, Integer size);
+
+    List<Article> getPublishedArticleByCategoryId(Integer categoryId, Integer page, Integer size);
+
 }

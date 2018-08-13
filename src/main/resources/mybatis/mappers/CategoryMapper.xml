@@ -58,4 +58,12 @@
         status = #{status}
     </select>
 
+    <select id="getChildCategory" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where parent_id = #{parentId}
+        and status = 1
+    </select>
+
 </mapper>

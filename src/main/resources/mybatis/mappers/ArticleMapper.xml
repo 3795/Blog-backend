@@ -37,6 +37,7 @@
         select
         <include refid="Base_Column_List"/>
         from article
+        order by id desc
         limit #{size}
         offset #{offset}
     </select>
@@ -85,7 +86,40 @@
         <include refid="Base_Column_List"/>
         from article
         where status = 1
+        order by id desc
         limit #{size}
         offset #{offset}
     </select>
+
+    <select id="getPublishedArticlesByCategoryIds" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where status = 1
+        and category_id in
+        <foreach collection="categoryIds" item="item" open="(" close=")" separator="," index="index">
+            #{item}
+        </foreach>
+        order by id desc
+        limit #{size}
+        offset #{offset}
+    </select>
+
+    <select id="getPublishedArticleCountByCategoryId" resultType="Integer" parameterType="Integer">
+        select count(*) from article
+        where category_id = #{categoryId}
+        and status = 1
+    </select>
+
+    <select id="getPublishedArticlesByCategoryId" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where status = 1
+        and category_id = #{categoryId}
+        order by id desc
+        limit #{size}
+        offset #{offset}
+    </select>
+
 </mapper>

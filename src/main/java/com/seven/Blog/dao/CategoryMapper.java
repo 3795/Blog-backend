@@ -30,4 +30,7 @@ public interface CategoryMapper {
 
     List<Category> getCategoriesByStatus(Integer status);
 
+    List<Category> getChildCategory(Integer parentId);
+
+
 }

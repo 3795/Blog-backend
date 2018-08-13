@@ -15,3 +15,4 @@ mybatis:
   type-aliases-package: com.seven.Blog.pojo
   mapper-locations: classpath:mybatis/mappers/*.xml
 
+

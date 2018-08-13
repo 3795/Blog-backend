@@ -15,6 +15,8 @@ public class FileUtil {
 
     private static final String sysPath = "./src/main/resources/static/images";
 
+    private static final String imgServerName = "http://img.develop.com";
+
     /**
      * 获得文件上传后的名称
      * @param originalFilename
@@ -33,7 +35,7 @@ public class FileUtil {
         File destination = new File(sysPath + imgName);
         FileUtils.copyInputStreamToFile(file.getInputStream(), destination);
         if(FTPUtil.uploadFile(destination)) {
-            imgPath = "http://img.develop.com" + imgName;
+            imgPath = imgServerName + imgName;
             destination.delete();
         }
         return imgPath;

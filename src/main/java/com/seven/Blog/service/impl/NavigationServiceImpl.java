@@ -27,6 +27,11 @@ public class NavigationServiceImpl implements NavigationService {
     }
 
     @Override
+    public List<Navigation> getAvailableNavigation() {
+        return navigationMapper.getNavigationByStatus(Const.NavigationStatus.ABLE.getCode());
+    }
+
+    @Override
     public ServerResponse addNavigation(String name, Integer priority, String link, Integer status) {
         int result = navigationMapper.addNavigation(name, priority, link, status);
         if(result == 1)

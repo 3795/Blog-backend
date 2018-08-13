@@ -2,7 +2,13 @@ package com.seven.Blog.controller.index;
 
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
+import com.seven.Blog.pojo.Category;
+import com.seven.Blog.pojo.Navigation;
+import com.seven.Blog.pojo.User;
 import com.seven.Blog.service.ArticleService;
+import com.seven.Blog.service.CategoryService;
+import com.seven.Blog.service.NavigationService;
+import com.seven.Blog.service.UserService;
 import com.seven.Blog.utils.ArticleToArticleDTO;
 import com.seven.Blog.utils.BasicUtil;
 import com.seven.Blog.utils.Const;
@@ -28,9 +34,20 @@ public class IndexController {
     private ArticleService articleService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private NavigationService navigationService;
+
+    @Autowired
     private ArticleToArticleDTO articleToArticleDTO;
 
-    private Integer size = 5;       //设置每页默认显示4条文章
+    private Integer size = 5;       //设置每页默认显示5条文章
+
+    private Integer userId = 1;     //博主的id默认为1
 
     /**
      * 首页展示内容
@@ -41,12 +58,17 @@ public class IndexController {
     @GetMapping("")
     public ModelAndView index(Map<String, Object> map,
                               @RequestParam(value = "page", defaultValue = "1") Integer page) {
-        Integer maxPage = articleService.getArticleCount(Const.ArticleStatus.PUBLISHED.getCode());
+        Integer maxPage = (int) Math.ceil((float)articleService.getArticleCount(Const.ArticleStatus.PUBLISHED.getCode()) / size);
         page = BasicUtil.getPage(page, maxPage);
         List<Article> articleList = articleService.getAllPublishedArticle(page, size);
         List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);
         map.put("title", "NTShare");
         map.put("articleList", articleDTOList);
+        map.put("user", getUser());
+        map.put("navigationList", getNavigation());
+        map.put("currentPage", page);
+        map.put("maxPage", maxPage);
+        map.put("url", "?page=");
         return new ModelAndView("/index/index/templateA", map);
     }
 
@@ -59,13 +81,110 @@ public class IndexController {
     @GetMapping("/article/{id}")
     public ModelAndView article(Map<String, Object> map,
                                 @PathVariable("id") Integer id) {
-        Article article = articleService.getArticleByPrimaryKey(id);
+        Article article = articleService.getPublishedArticleByPrimaryKey(id);
         if(article == null)
-            //todo 跳转到404
-            return null;
+            return new ModelAndView("redirect:/404");
         ArticleDTO articleDTO = articleToArticleDTO.convert(article);
         map.put("title", articleDTO.getTitle());
         map.put("article", articleDTO);
+        map.put("user", getUser());
+        map.put("navigationList", getNavigation());
         return new ModelAndView("/index/index/article", map);
     }
+
+    /**
+     * 展示分类下的文章
+     * @param map
+     * @param id
+     * @return
+     */
+    @GetMapping("/category/{id}")
+    public ModelAndView category(Map<String, Object> map,
+                                 @PathVariable("id") Integer id,
+                                 @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        Category category = categoryService.getCategoryById(id);
+        if(category == null)
+            return new ModelAndView("redirect:/404");
+
+        map.put("user", getUser());
+        map.put("navigationList", getNavigation());
+        map.put("title", category.getName());
+        map.put("category", category);
+
+        //获取分页的相关数据
+        int maxPage = (int) Math.ceil((float)getArticleCountByCategory(category, 0) / size);
+        page = BasicUtil.getPage(page, maxPage);
+
+        map.put("currentPage", page);
+        map.put("maxPage", maxPage);
+        map.put("url", "/category/" + id + "?page=");
+
+        if(category.getParentId() == 0) {       //一级分类
+            String sql = "";
+            List<Category> categoryList = categoryService.getChildCategory(category.getId());
+            for(Category categoryItem : categoryList) {
+                sql = sql + categoryItem.getId() + ",";
+            }
+            List<Article> articleList = articleService.getPublishedArticleByCategoryIds(sql, page, size);
+            List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);
+            map.put("articleList", articleDTOList);
+            map.put("categoryList", categoryList);
+            return new ModelAndView("/index/index/templateB", map);
+        } else {        //二级分类
+            List<Article> articleList = articleService.getPublishedArticleByCategoryId(category.getId(), page, size);
+            List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);
+            map.put("articleList", articleDTOList);
+            return new ModelAndView("/index/index/templateA", map);
+        }
+    }
+
+    /**
+     * 404页面
+     * @param map
+     * @return
+     */
+    @GetMapping("/404")
+    public ModelAndView notFound(Map<String, Object> map) {
+        map.put("title", "404");
+        map.put("user", getUser());
+        map.put("navigationList", getNavigation());
+        return new ModelAndView("/index/common/404", map);
+    }
+
+
+    /**
+     * 获取博主的信息
+     * @return
+     */
+    private User getUser() {
+        return userService.getUser(userId);
+    }
+
+    /**
+     * 获得启用的导航
+     * @return
+     */
+    private List<Navigation> getNavigation() {
+        return navigationService.getAvailableNavigation();
+    }
+
+    /**
+     * 获得文章数
+     * @param category
+     * @param count
+     * @return
+     */
+    private Integer getArticleCountByCategory(Category category, int count) {
+        if(category.getParentId() == 0) {
+            List<Category> categoryList = categoryService.getChildCategory(category.getId());
+            for(Category categoryItem : categoryList) {
+                count = getArticleCountByCategory(categoryItem, count);
+            }
+            return count;
+        } else {
+            count += articleService.getArticleCountByCategoryId(category.getId());
+            return count;
+        }
+    }
+
 }

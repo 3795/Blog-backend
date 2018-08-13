@@ -7,7 +7,7 @@
                 <!-- 内容主体区域 -->
                 <div style="padding: 15px;">
                     <div class="layui-row">
-                        <div class="layui-col-md8">
+                        <div class="layui-col-md9">
                             <table class="layui-table">
                                 <colgroup>
                                     <col width="150">
@@ -54,7 +54,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="layui-col-md4">
+                        <div class="layui-col-md3">
                             <form class="layui-form category-add-form" action="#">
                                 <p class="title">添加导航</p>
                                 <div class="layui-form-item">

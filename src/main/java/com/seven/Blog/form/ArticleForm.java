@@ -55,8 +55,8 @@ public class ArticleForm {
     }
 
     public String getSummary() {
-        if(summary.length() > 108)
-            return summary.substring(0, 108);
+        if(summary.length() > 115)
+            return summary.substring(0, 115) + "...";
         return summary + "...";
     }
 

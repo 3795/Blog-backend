@@ -32,6 +32,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> getChildCategory(Integer parentId) {
+        return categoryMapper.getChildCategory(parentId);
+    }
+
+    @Override
+    public Category getCategoryById(Integer id) {
+        return categoryMapper.selectedByPrimaryKey(id);
+    }
+
+    @Override
     public ServerResponse addCategory(String name, Integer parentId, Integer status) {
         int result = categoryMapper.addCategory(name, parentId, status);
         if(result == 1)

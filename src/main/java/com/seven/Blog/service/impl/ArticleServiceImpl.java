@@ -71,6 +71,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public int getArticleCountByCategoryId(Integer categoryId) {
+        return articleMapper.getPublishedArticleCountByCategoryId(categoryId);
+    }
+
+    @Override
     public ServerResponse deleteArticleByPrimaryKey(Integer id) {
         int result = articleMapper.deleteArticleByPrimaryKey(id);
         if(result == 1)
@@ -90,5 +95,18 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getAllPublishedArticle(Integer page, Integer size) {
         int offset = (page - 1) * size;
         return articleMapper.getAllPublishedArticles(offset, size);
+    }
+
+    @Override
+    public List<Article> getPublishedArticleByCategoryIds(String sql, Integer page, Integer size) {
+        String[] categoryIds = sql.split(",");
+        int offset = (page - 1) * size;
+        return articleMapper.getPublishedArticlesByCategoryIds(categoryIds, offset, size);
+    }
+
+    @Override
+    public List<Article> getPublishedArticleByCategoryId(Integer categoryId, Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return articleMapper.getPublishedArticlesByCategoryId(categoryId, offset, size);
     }
 }

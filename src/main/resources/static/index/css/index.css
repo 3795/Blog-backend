@@ -1,18 +1,23 @@
+body{
+    font-family: "华文楷体";
+}
+
 .navigation{
-    padding-top: 3%;
+    padding-top: 2%;
     text-align: center;
     border: solid 1px #f1f5f8;
     border-right: 0;
     font-size: 16px;
     height: 100%;
-    background-color: #f1f5f8;
+    background-color: rgba(232, 238, 242, 0.91);
     position: fixed;
-
+    box-shadow: 4px 0 8px rgba(173, 176, 178, 0.9);
 }
 
 .navigation .item {
-    height: 40px;
-    line-height: 40px;
+    height: 55px;
+    line-height: 55px;
+    font-size: 18px;
 }
 
 .navigation span {
@@ -24,8 +29,8 @@
 }
 
 .avatar {
-    width: 135px;
-    height: 135px;
+    width: 125px;
+    height: 125px;
     border-radius: 50%;
     border: solid 1px;
 }
@@ -33,30 +38,54 @@
 .main {
     border: solid 1px #f1f5f8;
     font-size: 16px;
-    height: 100%;
-    margin-left: 362px;
+    margin-left: 249px;
+    /*margin-left: 22%;*/
+    padding-bottom: 80px;
+    background-color: #f1f5f8;
 }
 
 .main .top-bar {
     height: 70px;
     line-height: 70px;
-    font-size: 26px;
     background-color: #ebf1f5;
     padding-left: 30px;
-    font-family: "华文彩云";
+    font-family: "华文新魏";
+}
+
+.top-bar .title {
+    font-size: 26px;
+    float: left;
+}
+
+.top-bar .search {
+    float: right;
+    width: 300px;
+    margin-right: 30px;
+    margin-top: 16px;
+}
+
+.top-bar .search .layui-input {
+    border: 0;
+    border-radius: 25px;
 }
 
 .main .card {
-    border: solid 1px;
-    height: 200px;
+    height: 230px;
     margin-top: 40px;
+    padding-right: 10px;
+    background-color: #ffffff;
+    transition: box-shadow 1s;
 }
 
-.main .card .article {
+.main .card:hover {
+    box-shadow: 10px 10px 10px #dde3e7;
+}
+
+.main .card .above {
     height: 75%;
 }
 
-.main .card .detail {
+.main .card .below {
     height: 25%;
 }
 
@@ -68,24 +97,100 @@
     font-family: "华文彩云";
 }
 
+.main .card .mix {
+    text-align: center;
+    height: 200px;
+    font-size: 60px;
+    font-family: "华文彩云";
+    padding-top: 70px;
+}
+
+.main .card .child-category {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.main .card .child-category .item{
+    padding: 0 40px 0 40px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    float: left;
+    transition: color 0.5s, font-size 0.5s;
+}
+
+.main .card .child-category .item:hover{
+    color: #0a79db;
+    font-size: 24px;
+}
+
 .thumbnail {
     margin: 15px 0 0 15px;
-    width: 200px;
-    height: 130px;
+    width: 225px;
+    height: 150px;
 }
 
 .card .title {
     margin-top: 10px;
     font-size: 20px;
+    transition: margin-left 1s;
+}
+
+.card .title:hover {
+    margin-left: 20px;
 }
 
 .card .summary {
     margin-top: 5px;
-    font-size: 14px;
+    font-size: 16px;
     text-indent: 2em;
 }
 
-.detail .layui-col-md4 {
+.below .layui-col-md4 {
     text-align: center;
-    /*padding-right: 20px;*/
+}
+
+.article {
+    margin-top: 30px;
+    padding: 10px 10px 30px 10px;
+    background-color: #ffffff;
+}
+
+.article .title {
+    font-size: 26px;
+    text-align: center;
+}
+
+.article .content {
+    font-size: 18px;
+    /*height: 100%;*/
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 18px;
+}
+
+
+.pagination .layui-btn {
+    background-color: #b5bbbf;
+}
+
+.not-found {
+    height: 100%;
+    text-align: center;
+    line-height: 500px;
+    font-size: 60px;
+    font-family: "华文彩云";
+}
+
+.copyright {
+    position: absolute;
+    bottom: 50px;
+    left: 56px;
+    color: #858585;
 }

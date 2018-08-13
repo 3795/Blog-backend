@@ -9,8 +9,13 @@
                     <div class="layui-row">
                         <div class="layui-col-md-offset2 layui-col-md8">
                             <div class="layui-col-md12 card">
-                                <div class="pure">
-                                    ${(category.name)!"NTShare"}
+                                <div class="mix">
+                                    ${(category.name)}
+                                        <div class="child-category">
+                                            <#list categoryList as category>
+                                                <a href="/category/${category.id}"><div class="item">${category.name}</div></a>
+                                            </#list>
+                                        </div>
                                 </div>
                             </div>
 

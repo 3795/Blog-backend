@@ -22,6 +22,8 @@ public interface NavigationMapper {
 
     List<Navigation> getAllNavigation();
 
+    List<Navigation> getNavigationByStatus(Integer status);
+
     Navigation selectedByPrimaryKey(Integer key);
 
     int deleteNavigationByPrimaryKey(Integer key);

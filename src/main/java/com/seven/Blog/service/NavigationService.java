@@ -14,6 +14,8 @@ public interface NavigationService {
 
     List<Navigation> getAllNavigation();
 
+    List<Navigation> getAvailableNavigation();
+
     ServerResponse addNavigation(String name, Integer priority, String link, Integer status);
 
     ServerResponse updateNavigation(Navigation navigation);

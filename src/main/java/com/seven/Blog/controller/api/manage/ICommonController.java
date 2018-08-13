@@ -6,6 +6,7 @@ import com.seven.Blog.utils.Const;
 import com.seven.Blog.utils.FTPUtil;
 import com.seven.Blog.utils.FileUtil;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

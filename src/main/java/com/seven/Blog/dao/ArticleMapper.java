@@ -39,6 +39,16 @@ public interface ArticleMapper {
 
     int getPublishedArticleCount(Integer status);
 
+    int getPublishedArticleCountByCategoryId(Integer categoryId);
+
     List<Article> getAllPublishedArticles(@Param("offset") Integer offset,
                                           @Param("size") Integer size);
+
+    List<Article> getPublishedArticlesByCategoryIds(@Param("categoryIds") String[] categoryIds,
+                                                 @Param("offset") Integer offset,
+                                                 @Param("size") Integer size);
+
+    List<Article> getPublishedArticlesByCategoryId(@Param("categoryId") Integer categoryId,
+                                                    @Param("offset") Integer offset,
+                                                    @Param("size") Integer size);
 }
