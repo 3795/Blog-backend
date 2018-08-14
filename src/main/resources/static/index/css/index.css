@@ -32,14 +32,12 @@ body{
     width: 125px;
     height: 125px;
     border-radius: 50%;
-    border: solid 1px;
 }
 
 .main {
     border: solid 1px #f1f5f8;
     font-size: 16px;
     margin-left: 249px;
-    /*margin-left: 22%;*/
     padding-bottom: 80px;
     background-color: #f1f5f8;
 }

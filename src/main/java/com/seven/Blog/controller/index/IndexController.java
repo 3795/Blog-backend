@@ -145,10 +145,10 @@ public class IndexController {
      */
     @GetMapping("/404")
     public ModelAndView notFound(Map<String, Object> map) {
-        map.put("title", "404");
+        map.put("title", "Page Not Found");
         map.put("user", getUser());
         map.put("navigationList", getNavigation());
-        return new ModelAndView("index/common/404", map);
+        return new ModelAndView("index/error/404", map);
     }
 
 

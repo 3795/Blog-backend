@@ -15,7 +15,7 @@ public class FileUtil {
 
     private static final String sysPath = "./src/main/resources/static/images";
 
-    private static final String imgServerName = "http://img.develop.com";
+    private static final String imgServerName = "http://img.ntshare.cn";
 
     /**
      * 获得文件上传后的名称

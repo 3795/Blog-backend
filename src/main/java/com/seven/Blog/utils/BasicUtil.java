@@ -16,7 +16,7 @@ public class BasicUtil {
     public static Integer getPage(Integer page, Integer maxPage) {
         if(page < 1)
             page = 1;
-        if(page > maxPage)
+        if(page > maxPage && maxPage > 0)
             page = maxPage;
         return page;
     }
