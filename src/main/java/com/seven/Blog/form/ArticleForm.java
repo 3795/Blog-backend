@@ -55,8 +55,10 @@ public class ArticleForm {
     }
 
     public String getSummary() {
-        if(summary.length() > 115)
-            return summary.substring(0, 115) + "...";
+        if(summary.length() > 136)
+            summary = summary.substring(0, 136);
+        String pattern = "<img .*>";
+        summary = summary.replaceAll(pattern, "");
         return summary + "...";
     }
 
@@ -87,4 +89,5 @@ public class ArticleForm {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }
