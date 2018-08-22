@@ -5,4 +5,5 @@
     <link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon">
     <link href="/layui/css/layui.css" type="text/css" rel="stylesheet"/>
     <link href="/index/css/index.css" type="text/css" rel="stylesheet"/>
+    <link href="/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" type="text/css" rel="stylesheet"/>
 </head>

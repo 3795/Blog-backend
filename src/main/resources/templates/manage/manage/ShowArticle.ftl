@@ -27,5 +27,9 @@
     </div>
 </div>
         <#include "../common/Foot.ftl"/>
+    <script type="text/javascript" src="/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script>
+        SyntaxHighlighter.all();        //执行代码高亮
+    </script>
 </body>
 </html>

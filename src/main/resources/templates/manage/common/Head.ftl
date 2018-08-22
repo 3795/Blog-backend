@@ -7,4 +7,5 @@
     <link href="/layui/css/layui.css" type="text/css" rel="stylesheet"/>
     <link href="/manage/css/auth/Login.css" type="text/css" rel="stylesheet"/>
     <link href="/manage/css/manage/Manage.css" type="text/css" rel="stylesheet"/>
+    <link href="/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" type="text/css" rel="stylesheet"/>
 </head>
