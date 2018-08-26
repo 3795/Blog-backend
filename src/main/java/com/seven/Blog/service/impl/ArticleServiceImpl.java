@@ -109,4 +109,17 @@ public class ArticleServiceImpl implements ArticleService {
         int offset = (page - 1) * size;
         return articleMapper.getPublishedArticlesByCategoryId(categoryId, offset, size);
     }
+
+    @Override
+    public List<Article> getPublishedArticleByKeywords(String keywords, Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return articleMapper.getPublishedArticleByKeywords(keywords, offset, size);
+    }
+
+    @Override
+    public int getArticleCountByKeywords(String keywords) {
+        return articleMapper.getPublishedArticleCountByKeywords(keywords);
+    }
+
+
 }

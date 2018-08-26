@@ -4,7 +4,7 @@
             <a href="/">NTShare</a>
         </div>
         <div class="search">
-            <input type="text" name="key" id="key" required placeholder="请输入关键字" autocomplete="off" class="layui-input">
+            <input type="text" name="keywords" id="keywords" required placeholder="请输入关键字" autocomplete="off" class="layui-input">
         </div>
     </div>
 </div>

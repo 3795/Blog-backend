@@ -121,5 +121,26 @@
         limit #{size}
         offset #{offset}
     </select>
+    
+    <select id="getPublishedArticleByKeywords" resultMap="BaseResultMap" parameterType="Map">
+        select 
+        <include refid="Base_Column_List"/>
+        from article
+        where
+        title like CONCAT('%', #{keywords}, '%')
+        and
+        status = 1
+        order by create_time desc
+        limit #{size}
+        offset #{offset}
+    </select>
+
+    <select id="getPublishedArticleCountByKeywords" resultType="Integer" parameterType="String">
+        select count(*) from article
+        where
+        status = 1
+        and
+        title like CONCAT('%', #{keywords}, '%')
+    </select>
 
 </mapper>

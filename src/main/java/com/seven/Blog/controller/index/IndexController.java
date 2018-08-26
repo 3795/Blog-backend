@@ -139,6 +139,35 @@ public class IndexController {
     }
 
     /**
+     * 文章搜索功能
+     * @param map
+     * @param keywords
+     * @param page
+     * @return
+     */
+    @GetMapping("/search")
+    public ModelAndView search(Map<String, Object> map,
+                               @RequestParam(value = "keywords", defaultValue = "") String keywords,
+                               @RequestParam(value = "page", defaultValue = "1") Integer page) {
+        map.put("user", getUser());
+        map.put("navigationList", getNavigation());
+        map.put("title", "搜索");
+        map.put("keywords", keywords);
+        map.put("url", "/search?keywords=" + keywords + "&page=");
+
+        //获取分页的相关数据
+        int maxPage = (int) Math.ceil((float)articleService.getArticleCountByKeywords(keywords) / size);
+        page = BasicUtil.getPage(page, maxPage);
+        map.put("currentPage", page);
+        map.put("maxPage", maxPage);
+
+        List<Article> articleList = articleService.getPublishedArticleByKeywords(keywords, page, size);
+        List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);
+        map.put("articleList", articleDTOList);
+        return new ModelAndView("index/index/Search", map);
+    }
+
+    /**
      * 404页面
      * @param map
      * @return

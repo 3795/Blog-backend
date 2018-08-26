@@ -103,6 +103,28 @@ body{
     padding-top: 70px;
 }
 
+.main .card .search {
+    text-align: center;
+    height: 200px;
+    line-height: 200px;
+}
+
+.search-input {
+    width: 60%;
+    height: 40px;
+    border: 1px solid #3ca9df;
+    padding-left: 5px;
+}
+
+.search-button {
+    border: 1px solid #3ca9df;
+    background-color: #3ca9df;
+    color: #ffffff;
+    height: 40px;
+    width: 10%;
+    margin-left: -5px;
+}
+
 .main .card .child-category {
     height: 50px;
     line-height: 50px;

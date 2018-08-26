@@ -38,4 +38,8 @@ public interface ArticleService {
 
     List<Article> getPublishedArticleByCategoryId(Integer categoryId, Integer page, Integer size);
 
+    List<Article> getPublishedArticleByKeywords(String keywords, Integer page, Integer size);
+
+    int getArticleCountByKeywords(String keywords);
+
 }

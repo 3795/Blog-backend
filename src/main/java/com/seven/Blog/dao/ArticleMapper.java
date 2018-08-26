@@ -51,4 +51,10 @@ public interface ArticleMapper {
     List<Article> getPublishedArticlesByCategoryId(@Param("categoryId") Integer categoryId,
                                                     @Param("offset") Integer offset,
                                                     @Param("size") Integer size);
+
+    List<Article> getPublishedArticleByKeywords(@Param("keywords") String keywords,
+                                                @Param("offset") Integer offset,
+                                                @Param("size") Integer size);
+
+    int getPublishedArticleCountByKeywords(String keywords);
 }
