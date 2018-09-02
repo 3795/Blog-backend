@@ -39,7 +39,7 @@
     </delete>
 
     <update id="updateNavigation" parameterType="Navigation">
-        update Navigation
+        update navigation
         set
         name = #{name},
         priority = #{priority},
