@@ -42,6 +42,16 @@
         offset #{offset}
     </select>
 
+    <select id="getArticlesByStatus" resultMap="BaseResultMap" parameterType="Map">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where status = #{status}
+        order by id desc
+        limit #{size}
+        offset #{offset}
+    </select>
+
     <insert id="addArticle" parameterType="Map">
         insert into
         article(title, img, summary, content, category_id, status, create_time, update_time)
@@ -76,7 +86,7 @@
         select count(*) from article
     </select>
 
-    <select id="getPublishedArticleCount" resultType="Integer" parameterType="Integer">
+    <select id="getArticleCountByStatus" resultType="Integer" parameterType="Integer">
         select count(*) from article
         where status = #{status}
     </select>

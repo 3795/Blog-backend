@@ -58,7 +58,7 @@ public class IndexController {
     @GetMapping("")
     public ModelAndView index(Map<String, Object> map,
                               @RequestParam(value = "page", defaultValue = "1") Integer page) {
-        Integer maxPage = (int) Math.ceil((float)articleService.getArticleCount(Const.ArticleStatus.PUBLISHED.getCode()) / size);
+        Integer maxPage = (int) Math.ceil((float)articleService.getArticleCountByStatus(Const.ArticleStatus.PUBLISHED.getCode()) / size);
         page = BasicUtil.getPage(page, maxPage);
         List<Article> articleList = articleService.getAllPublishedArticle(page, size);
         List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);

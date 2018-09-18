@@ -38,7 +38,7 @@
                             <dl class="layui-nav-child">
                                 <dd><a href="/manage/article/add">新增文章</a></dd>
                                 <dd><a href="/manage/article">管理文章</a></dd>
-                                <dd><a href="javascript:;">草稿箱</a></dd>
+                                <dd><a href="/manage/draftbox">草稿箱</a></dd>
                                 <dd><a href="">回收站</a></dd>
                             </dl>
                         </li>

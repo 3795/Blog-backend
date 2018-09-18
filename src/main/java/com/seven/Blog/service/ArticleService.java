@@ -12,7 +12,22 @@ import java.util.List;
  */
 public interface ArticleService {
 
+    /**
+     * 获得所有的文章
+     * @param page
+     * @param size
+     * @return
+     */
     List<Article> getAllArticles(Integer page, Integer size);
+
+    /**
+     * 获取所有满足状态条件的文章
+     * @param status        文章的状态
+     * @param page      当前页码
+     * @param size      每页的条数
+     * @return
+     */
+    List<Article> getArticlesByStatus(Integer status, Integer page, Integer size);
 
     Article getArticleByPrimaryKey(Integer id);
 
@@ -24,7 +39,7 @@ public interface ArticleService {
 
     int getArticleCount();
 
-    int getArticleCount(Integer status);
+    int getArticleCountByStatus(Integer status);
 
     int getArticleCountByCategoryId(Integer categoryId);
 
