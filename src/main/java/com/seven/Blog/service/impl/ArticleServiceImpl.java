@@ -28,6 +28,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> getArticlesByStatus(Integer status, Integer page, Integer size) {
+        int offset = (page - 1) * size;
+        return articleMapper.getArticlesByStatus(status, offset, size);
+    }
+
+    @Override
     public Article getArticleByPrimaryKey(Integer id) {
         return articleMapper.selectedArticleByPrimaryKey(id);
     }
@@ -66,8 +72,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int getArticleCount(Integer status) {
-        return articleMapper.getPublishedArticleCount(status);
+    public int getArticleCountByStatus(Integer status) {
+        return articleMapper.getArticleCountByStatus(status);
     }
 
     @Override

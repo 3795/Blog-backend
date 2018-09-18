@@ -29,4 +29,10 @@ public interface NavigationMapper {
     int deleteNavigationByPrimaryKey(Integer key);
 
     int updateNavigation(Navigation navigation);
+
+    /**
+     * 获得所有导航的数量
+     * @return
+     */
+    int getNavigationCount();
 }

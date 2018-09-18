@@ -22,8 +22,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public List<Category> getAllCategory() {
-        return categoryMapper.getAllCategory();
+    public List<Category> getAllCategory(int page, int size) {
+        int offset = (page -1) * size;
+        return categoryMapper.getAllCategory(offset, size);
     }
 
     @Override
@@ -82,5 +83,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public String getCategoryNameById(Integer id) {
         return categoryMapper.selectedCategoryNameByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer getCategoryCount() {
+        return categoryMapper.getCategoryCount();
     }
 }

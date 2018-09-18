@@ -89,6 +89,24 @@
                             </form>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="layui-col-md12 article-pagination">
+                            <a href="/manage/category?page=1"><span class="layui-btn layui-btn-xs">首页</span></a>
+                            <a href="/manage/category?page=${currentPage-1}"><span class="layui-btn layui-btn-xs">上一页</span></a>
+                                <#if (maxPage > 5) >
+                                    <#list 1..5 as page>
+                                    <a href="/manage/category?page=${page}"><span class="layui-btn layui-btn-xs">${page}</span></a>
+                                    </#list>
+                                    <span class="layui-btn layui-btn-xs">...</span>
+                                <#else>
+                                    <#list 1..maxPage as page>
+                                    <a href="/manage/category?page=${page}"><span class="layui-btn layui-btn-xs">${page}</span></a>
+                                    </#list>
+                                </#if>
+                            <a href="/manage/category?page=${currentPage+1}"><span class="layui-btn layui-btn-xs">下一页</span></a>
+                            <a href="/manage/category?page=${maxPage}"><span class="layui-btn layui-btn-xs">尾页</span></a>
+                        </div>
+                    </div>
                     <div class="layui-row" id="edit-area">
                         <form class="layui-form category-edit-form" action="#">
                             <p class="title">修改分类</p>
