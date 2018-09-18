@@ -16,7 +16,8 @@ public interface CategoryMapper {
 
     Category selectedByPrimaryKey(Integer key);
 
-    List<Category> getAllCategory();
+    List<Category> getAllCategory(@Param("offset") Integer offset,
+                                  @Param("size") Integer size);
 
     int addCategory(@Param("name") String name,
                     @Param("parentId") Integer parentId,
@@ -31,6 +32,12 @@ public interface CategoryMapper {
     List<Category> getCategoriesByStatus(Integer status);
 
     List<Category> getChildCategory(Integer parentId);
+
+    /**
+     * 获得所有分类的数量
+     * @return
+     */
+    int getCategoryCount();
 
 
 }

@@ -1,9 +1,4 @@
 // 管理端的js
-$(function () {
-
-    $("#edit-area").hide();
-    $("#navigation-edit-area").hide();
-});
 
 /**
  * 用户登录操作
@@ -119,7 +114,7 @@ function deleteCategory(id) {
 function showArea(id, name, parentId, status) {
     $("#editId").val(id);
     $("#editName").val(name);
-    $("#edit-area").show(1000);
+    $(".category-edit-form").show(1000);
 }
 
 /**
@@ -323,7 +318,7 @@ function showNavigationArea(id, name, priority, link) {
     $("#editName").val(name);
     $("#editPriority").val(priority);
     $("#editLink").val(link);
-    $("#navigation-edit-area").show(1000);
+    $(".category-edit-form").show(1000);
 }
 
 /**

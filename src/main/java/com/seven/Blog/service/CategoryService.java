@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface CategoryService {
 
-    List<Category> getAllCategory();
+    List<Category> getAllCategory(int page, int size);
 
     List<Category> getAvailableCategory();
 
@@ -29,4 +29,10 @@ public interface CategoryService {
     ServerResponse changeCategoryStatus(Integer id);
 
     String getCategoryNameById(Integer id);
+
+    /**
+     * 获取所有分类的数量
+     * @return
+     */
+    Integer getCategoryCount();
 }

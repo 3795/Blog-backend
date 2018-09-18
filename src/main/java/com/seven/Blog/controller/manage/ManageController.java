@@ -1,5 +1,6 @@
 package com.seven.Blog.controller.manage;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.pojo.Category;
@@ -66,12 +67,18 @@ public class ManageController {
      */
     @GetMapping("/category")
     public ModelAndView category(Map<String, Object> map,
+                                 @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                 @RequestParam(value = "size", defaultValue = "10") Integer size,
                                  HttpSession session) {
         User user = getUser(session);
         map.put("user", user);
-        List<Category> categoryList = categoryService.getAllCategory();
+        int maxPage = (int) Math.ceil((float) categoryService.getCategoryCount() / size);
+        page = BasicUtil.getPage(page, maxPage);
+        List<Category> categoryList = categoryService.getAllCategory(page, size);
         map.put("title", "分类管理");
         map.put("categoryList", categoryList);
+        map.put("currentPage", page);
+        map.put("maxPage", maxPage);
         return new ModelAndView("manage/manage/Category", map);
     }
 
@@ -87,7 +94,7 @@ public class ManageController {
                                 HttpSession session) {
         User user = getUser(session);
         map.put("user", user);
-        int maxPage = articleService.getArticleCount() / size + 1;
+        int maxPage = (int) Math.ceil((float)articleService.getArticleCount() / size);
         page = BasicUtil.getPage(page, maxPage);
         List<Article> articleList = articleService.getAllArticles(page, size);
         List<ArticleDTO> articleDTOList = converter.convert(articleList);
@@ -164,7 +171,7 @@ public class ManageController {
                                  HttpSession session) {
         User user = getUser(session);
         map.put("user", user);
-        int maxPage = articleService.getArticleCountByStatus(Const.ArticleStatus.UNPUBLISHED.getCode()) / size + 1;
+        int maxPage = (int) Math.ceil((float)articleService.getArticleCountByStatus(Const.ArticleStatus.UNPUBLISHED.getCode()) / size);
         page = BasicUtil.getPage(page, maxPage);
         List<Article> articleList = articleService.getArticlesByStatus(Const.ArticleStatus.UNPUBLISHED.getCode(), page, size);
         List<ArticleDTO> articleDTOList = converter.convert(articleList);

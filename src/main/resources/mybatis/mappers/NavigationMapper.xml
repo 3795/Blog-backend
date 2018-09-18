@@ -54,5 +54,9 @@
         from navigation
         where id = #{id}
     </select>
+    
+    <select id="getNavigationCount" resultType="Integer">
+       select count(*) from navigation
+    </select>
 
 </mapper>
