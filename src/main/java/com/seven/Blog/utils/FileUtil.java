@@ -1,6 +1,8 @@
 package com.seven.Blog.utils;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -11,11 +13,16 @@ import java.io.IOException;
  * Description: 文件名称工具类
  * Created At 2018/08/08
  */
+@Component
 public class FileUtil {
 
     private static final String sysPath = "./src/main/resources/static/images";
 
-    private static final String imgServerName = "http://img.ntshare.cn";
+    @Autowired
+    private PropertiesUtil propertiesUtil;
+
+    @Autowired
+    private FTPUtil ftpUtil;
 
     /**
      * 获得文件上传后的名称
@@ -29,13 +36,19 @@ public class FileUtil {
         return "/" + fileName + suffix;
     }
 
-    public static String uploadImg(MultipartFile file) throws IOException {
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public String uploadImg(MultipartFile file) throws IOException {
         String imgPath = null;
         String imgName = getImgName(file.getOriginalFilename());
         File destination = new File(sysPath + imgName);
         FileUtils.copyInputStreamToFile(file.getInputStream(), destination);
-        if(FTPUtil.uploadFile(destination)) {
-            imgPath = imgServerName + imgName;
+        if(ftpUtil.uploadFile(destination)) {
+            imgPath = propertiesUtil.getImgServerName() + imgName;
             destination.delete();
         }
         return imgPath;

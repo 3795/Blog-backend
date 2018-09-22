@@ -3,14 +3,11 @@ package com.seven.Blog.controller.api.manage;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.response.ServerResponse;
 import com.seven.Blog.utils.Const;
-import com.seven.Blog.utils.FTPUtil;
 import com.seven.Blog.utils.FileUtil;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -22,6 +19,9 @@ import java.io.IOException;
 @RequestMapping("/api/manage")
 public class ICommonController {
 
+    @Autowired
+    private FileUtil fileUtil;
+
     /**
      * 文件上传API
      * @param file
@@ -31,7 +31,7 @@ public class ICommonController {
     public ServerResponse upload(@RequestParam("file") MultipartFile file) {
         if(!file.isEmpty()) {
             try {
-                String imgPath = FileUtil.uploadImg(file);
+                String imgPath = fileUtil.uploadImg(file);
                 if(imgPath != null)
                     return ServerResponse.success(ResponseCodeEnum.FILE_UPLOAD_SUCCESS, imgPath);
                 else
@@ -63,7 +63,7 @@ public class ICommonController {
         if(!file.isEmpty()) {
             try {
                 String originalFileName = file.getOriginalFilename();
-                String imgPath = FileUtil.uploadImg(file);
+                String imgPath = fileUtil.uploadImg(file);
                 result = "{\n" +
                         "    \"state\": \"SUCCESS\",\n" +
                         "    \"url\": \"" + imgPath + "\",\n" +
