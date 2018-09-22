@@ -1,6 +1,8 @@
 package com.seven.Blog.utils;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,25 +13,15 @@ import java.io.IOException;
  * Description: FTP工具类
  * Created At 2018/08/09
  */
+@Component
 public class FTPUtil {
 
-    private static final String ftpIp = "127.0.0.1";
-    private static final String ftpUsername = "root";
-    private static final String ftpPassword = "root";
-    private static final Integer ftpPort = 21;
+    @Autowired
+    private PropertiesUtil propertiesUtil;
 
-    private String ip;
-    private Integer port;
-    private String username;
-    private String password;
     private FTPClient ftpClient;
 
-    public FTPUtil(String ip, Integer port, String username, String password) {
-        this.ip = ip;
-        this.port = port;
-        this.username = username;
-        this.password = password;
-    }
+    public FTPUtil() { }
 
     /**
      * 上传文件到FTP服务器
@@ -37,9 +29,8 @@ public class FTPUtil {
      * @return
      * @throws IOException
      */
-    public static boolean uploadFile(File file) throws IOException {
-        FTPUtil ftpUtil = new FTPUtil(ftpIp, ftpPort, ftpUsername, ftpPassword);
-        return ftpUtil.uploadFile("images", file);
+    public boolean uploadFile(File file) throws IOException {
+        return uploadFile("images", file);
     }
 
     /**
@@ -52,7 +43,7 @@ public class FTPUtil {
     public boolean uploadFile(String path, File file) throws IOException {
         boolean isSuccess = false;
         FileInputStream fileInputStream = null;
-        if(connectServer(ip, port, username, password)) {
+        if(connectServer(propertiesUtil.getHost(), propertiesUtil.getPort(), propertiesUtil.getUsername(), propertiesUtil.getPassword())) {
             ftpClient.changeWorkingDirectory(path);
             ftpClient.setBufferSize(2048);
             ftpClient.setControlEncoding("UTF-8");
