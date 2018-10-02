@@ -1,4 +1,4 @@
-package com.seven.Blog.response;
+package com.seven.Blog.vo;
 
 import com.seven.Blog.enums.ResponseCodeEnum;
 

@@ -9446,7 +9446,7 @@ Pointer.prototype = {
 	},
 
 	/**
-	 * Perform a drag operation in response to a mousemove event while the mouse is down
+	 * Perform a drag operation in vo to a mousemove event while the mouse is down
 	 */
 	drag: function (e) {
 

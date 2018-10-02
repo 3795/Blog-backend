@@ -13,7 +13,7 @@ import java.util.Properties;
  * Created At 2018/08/07
  */
 @Component
-public class KaptchaConfig {
+public class KaptchaUtil {
     @Bean
     public DefaultKaptcha getDefaultKaptcha() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();

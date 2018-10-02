@@ -1,7 +1,7 @@
 package com.seven.Blog.service;
 
 import com.seven.Blog.pojo.Navigation;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 
 import java.util.List;
 

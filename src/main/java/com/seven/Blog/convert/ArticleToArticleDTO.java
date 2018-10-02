@@ -1,8 +1,9 @@
-package com.seven.Blog.utils;
+package com.seven.Blog.convert;
 
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.service.CategoryService;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +32,13 @@ public class ArticleToArticleDTO {
                 article.getCreateTime(), article.getUpdateTime());
         String categoryName = categoryService.getCategoryNameById(article.getCategoryId());
         if(categoryName == null)
-            articleDTO.setCategoryName(Const.DEFAULT_CATEGORY_NAME);
+            articleDTO.setCategoryName(ConstUtil.DEFAULT_CATEGORY_NAME);
         else
             articleDTO.setCategoryName(categoryName);
-        if(article.getStatus() == Const.ArticleStatus.UNPUBLISHED.getCode())
-            articleDTO.setStatusMsg(Const.ArticleStatus.UNPUBLISHED.getDesc());
+        if(article.getStatus() == ConstUtil.ArticleStatus.UNPUBLISHED.getCode())
+            articleDTO.setStatusMsg(ConstUtil.ArticleStatus.UNPUBLISHED.getDesc());
         else
-            articleDTO.setStatusMsg(Const.ArticleStatus.PUBLISHED.getDesc());
+            articleDTO.setStatusMsg(ConstUtil.ArticleStatus.PUBLISHED.getDesc());
         return articleDTO;
     }
 

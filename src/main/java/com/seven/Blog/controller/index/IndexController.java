@@ -9,10 +9,9 @@ import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.service.CategoryService;
 import com.seven.Blog.service.NavigationService;
 import com.seven.Blog.service.UserService;
-import com.seven.Blog.utils.ArticleToArticleDTO;
+import com.seven.Blog.convert.ArticleToArticleDTO;
 import com.seven.Blog.utils.BasicUtil;
-import com.seven.Blog.utils.Const;
-import com.seven.Blog.utils.PropertiesUtil;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +58,7 @@ public class IndexController {
     @GetMapping("")
     public ModelAndView index(Map<String, Object> map,
                               @RequestParam(value = "page", defaultValue = "1") Integer page) {
-        Integer maxPage = (int) Math.ceil((float)articleService.getArticleCountByStatus(Const.ArticleStatus.PUBLISHED.getCode()) / size);
+        Integer maxPage = (int) Math.ceil((float)articleService.getArticleCountByStatus(ConstUtil.ArticleStatus.PUBLISHED.getCode()) / size);
         page = BasicUtil.getPage(page, maxPage);
         List<Article> articleList = articleService.getAllPublishedArticle(page, size);
         List<ArticleDTO> articleDTOList = articleToArticleDTO.convert(articleList);

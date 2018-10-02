@@ -1,6 +1,5 @@
 package com.seven.Blog.controller.manage;
 
-import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.pojo.Category;
@@ -10,9 +9,9 @@ import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.service.CategoryService;
 import com.seven.Blog.service.NavigationService;
 import com.seven.Blog.service.UserService;
-import com.seven.Blog.utils.ArticleToArticleDTO;
+import com.seven.Blog.convert.ArticleToArticleDTO;
 import com.seven.Blog.utils.BasicUtil;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -171,9 +170,9 @@ public class ManageController {
                                  HttpSession session) {
         User user = getUser(session);
         map.put("user", user);
-        int maxPage = (int) Math.ceil((float)articleService.getArticleCountByStatus(Const.ArticleStatus.UNPUBLISHED.getCode()) / size);
+        int maxPage = (int) Math.ceil((float)articleService.getArticleCountByStatus(ConstUtil.ArticleStatus.UNPUBLISHED.getCode()) / size);
         page = BasicUtil.getPage(page, maxPage);
-        List<Article> articleList = articleService.getArticlesByStatus(Const.ArticleStatus.UNPUBLISHED.getCode(), page, size);
+        List<Article> articleList = articleService.getArticlesByStatus(ConstUtil.ArticleStatus.UNPUBLISHED.getCode(), page, size);
         List<ArticleDTO> articleDTOList = converter.convert(articleList);
         map.put("title", "草稿箱");
         map.put("articleList", articleDTOList);
@@ -219,7 +218,7 @@ public class ManageController {
      * @return
      */
     private User getUser(HttpSession session) {
-        Integer id = (Integer) session.getAttribute(Const.USER_ID);
+        Integer id = (Integer) session.getAttribute(ConstUtil.USER_ID);
         return userService.getUser(id);
     }
 

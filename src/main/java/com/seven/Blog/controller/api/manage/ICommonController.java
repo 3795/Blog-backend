@@ -1,8 +1,8 @@
 package com.seven.Blog.controller.api.manage;
 
 import com.seven.Blog.enums.ResponseCodeEnum;
-import com.seven.Blog.response.ServerResponse;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.vo.ServerResponse;
+import com.seven.Blog.utils.ConstUtil;
 import com.seven.Blog.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +49,7 @@ public class ICommonController {
      */
     @GetMapping("/getUeditorConfig")
     public String getUeditorConfig() {
-        return Const.ueditorConfig();
+        return ConstUtil.ueditorConfig();
     }
 
     /**

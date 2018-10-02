@@ -1,11 +1,10 @@
 package com.seven.Blog.service.impl;
 
 import com.seven.Blog.dao.NavigationMapper;
-import com.seven.Blog.pojo.Category;
 import com.seven.Blog.pojo.Navigation;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.NavigationService;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class NavigationServiceImpl implements NavigationService {
 
     @Override
     public List<Navigation> getAvailableNavigation() {
-        return navigationMapper.getNavigationByStatus(Const.NavigationStatus.ABLE.getCode());
+        return navigationMapper.getNavigationByStatus(ConstUtil.NavigationStatus.ABLE.getCode());
     }
 
     @Override
@@ -58,10 +57,10 @@ public class NavigationServiceImpl implements NavigationService {
     @Override
     public ServerResponse changeCategoryStatus(Integer id) {
         Navigation navigation = navigationMapper.selectedByPrimaryKey(id);
-        if(navigation.getStatus() == Const.NavigationStatus.ABLE.getCode())
-            navigation.setStatus(Const.NavigationStatus.DISABLE.getCode());
+        if(navigation.getStatus() == ConstUtil.NavigationStatus.ABLE.getCode())
+            navigation.setStatus(ConstUtil.NavigationStatus.DISABLE.getCode());
         else
-            navigation.setStatus(Const.NavigationStatus.ABLE.getCode());
+            navigation.setStatus(ConstUtil.NavigationStatus.ABLE.getCode());
         int result = navigationMapper.updateNavigation(navigation);
         if(result == 1)
             return ServerResponse.success("更改状态成功");

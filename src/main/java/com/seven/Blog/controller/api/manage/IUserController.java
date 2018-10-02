@@ -1,8 +1,8 @@
 package com.seven.Blog.controller.api.manage;
 
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class IUserController {
     public ServerResponse updateUser(@RequestParam("username") String username,
                                      @RequestParam("avatar") String avatar,
                                      HttpSession session) {
-        Integer id = (Integer) session.getAttribute(Const.USER_ID);
+        Integer id = (Integer) session.getAttribute(ConstUtil.USER_ID);
         return userService.updateUser(id, username, avatar);
     }
 
@@ -42,7 +42,7 @@ public class IUserController {
      */
     @GetMapping("logout")
     public ServerResponse logout(HttpSession session) {
-        session.setAttribute(Const.USER_ID, null);
+        session.setAttribute(ConstUtil.USER_ID, null);
         return ServerResponse.success("登出成功");
     }
 

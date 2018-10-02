@@ -2,9 +2,9 @@ package com.seven.Blog.service.impl;
 
 import com.seven.Blog.dao.ArticleMapper;
 import com.seven.Blog.pojo.Article;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.ArticleService;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,10 +47,10 @@ public class ArticleServiceImpl implements ArticleService {
     public ServerResponse changeArticleStatus(Integer id) {
         Article article = getArticleByPrimaryKey(id);
         int status;
-        if(article.getStatus() == Const.ArticleStatus.PUBLISHED.getCode())
-            status = Const.ArticleStatus.UNPUBLISHED.getCode();
+        if(article.getStatus() == ConstUtil.ArticleStatus.PUBLISHED.getCode())
+            status = ConstUtil.ArticleStatus.UNPUBLISHED.getCode();
         else
-            status = Const.ArticleStatus.PUBLISHED.getCode();
+            status = ConstUtil.ArticleStatus.PUBLISHED.getCode();
         int result = articleMapper.updateArticleStatusByPrimaryKey(id, status);
         if(result == 1)
             return ServerResponse.success("更改状态成功");

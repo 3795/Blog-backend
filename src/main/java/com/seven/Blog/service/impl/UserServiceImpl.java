@@ -3,7 +3,7 @@ package com.seven.Blog.service.impl;
 import com.seven.Blog.dao.UserMapper;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.User;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
 import com.seven.Blog.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,10 @@
 package com.seven.Blog.service.impl;
 
 import com.seven.Blog.dao.CategoryMapper;
-import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Category;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.CategoryService;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.utils.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAvailableCategory() {
-        return categoryMapper.getCategoriesByStatus(Const.CategoryStatus.ABLE.getCode());
+        return categoryMapper.getCategoriesByStatus(ConstUtil.CategoryStatus.ABLE.getCode());
     }
 
     @Override
@@ -70,10 +69,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ServerResponse changeCategoryStatus(Integer id) {
         Category category = categoryMapper.selectedByPrimaryKey(id);
-        if(category.getStatus() == Const.CategoryStatus.ABLE.getCode())
-            category.setStatus(Const.CategoryStatus.DISABLE.getCode());
+        if(category.getStatus() == ConstUtil.CategoryStatus.ABLE.getCode())
+            category.setStatus(ConstUtil.CategoryStatus.DISABLE.getCode());
         else
-            category.setStatus(Const.CategoryStatus.ABLE.getCode());
+            category.setStatus(ConstUtil.CategoryStatus.ABLE.getCode());
         int result = categoryMapper.updateCategory(category);
         if(result == 1)
             return ServerResponse.success("更改状态成功");

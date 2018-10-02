@@ -2,9 +2,9 @@ package com.seven.Blog.controller.api;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.seven.Blog.enums.ResponseCodeEnum;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.utils.ConstUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,12 +48,12 @@ public class ILoginController {
                                   @Param("password") String password,
                                   @Param("captchaCode") String captchaCode,
                                   HttpSession session) {
-        if(!session.getAttribute(Const.CAPTCHA_CODE).equals(captchaCode))
+        if(!session.getAttribute(ConstUtil.CAPTCHA_CODE).equals(captchaCode))
             return ServerResponse.error(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
         ServerResponse serverResponse = userService.checkLoginInfo(account, password);
         if (serverResponse.getCode() == ResponseCodeEnum.LOGIN_SUCCESS.getCode()) {
             Integer id = (Integer) serverResponse.getData();
-            session.setAttribute(Const.USER_ID, id);
+            session.setAttribute(ConstUtil.USER_ID, id);
         }
         return userService.checkLoginInfo(account, password);
     }
@@ -72,7 +72,7 @@ public class ILoginController {
         try {
             //生产验证码字符串并保存到session中
             String createText = defaultKaptcha.createText();
-            session.setAttribute(Const.CAPTCHA_CODE, createText);
+            session.setAttribute(ConstUtil.CAPTCHA_CODE, createText);
             //使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
             BufferedImage challenge = defaultKaptcha.createImage(createText);
             ImageIO.write(challenge, "jpg", jpegOutputStream);

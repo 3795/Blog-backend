@@ -5,7 +5,7 @@ package com.seven.Blog.utils;
  * Description: 系统中的常量信息
  * Created At 2018/08/07
  */
-public class Const {
+public class ConstUtil {
 
     public static final String USER_ID = "userId";
 
@@ -78,6 +78,10 @@ public class Const {
         }
     }
 
+    /**
+     * Ueditor的配置文件
+     * @return
+     */
     public static String ueditorConfig() {
         return "{\n" +
                 "        \"imageActionName\": \"uploadimage\",\n" +

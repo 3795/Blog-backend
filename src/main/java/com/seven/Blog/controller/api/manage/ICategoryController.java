@@ -1,7 +1,7 @@
 package com.seven.Blog.controller.api.manage;
 
 import com.seven.Blog.form.CategoryForm;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.CategoryService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;

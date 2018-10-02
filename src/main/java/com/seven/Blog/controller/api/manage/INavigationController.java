@@ -2,10 +2,9 @@ package com.seven.Blog.controller.api.manage;
 
 import com.seven.Blog.form.NavigationForm;
 import com.seven.Blog.pojo.Navigation;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.NavigationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 

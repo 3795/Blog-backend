@@ -1,8 +1,8 @@
 package com.seven.Blog.aspect;
 
 import com.seven.Blog.enums.ResponseCodeEnum;
-import com.seven.Blog.response.ServerResponse;
-import com.seven.Blog.utils.Const;
+import com.seven.Blog.vo.ServerResponse;
+import com.seven.Blog.utils.ConstUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -32,7 +32,7 @@ public class AuthAspect {
     @Around("verify()")
     public Object doVerify(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Integer userId = (Integer) request.getSession().getAttribute(Const.USER_ID);
+        Integer userId = (Integer) request.getSession().getAttribute(ConstUtil.USER_ID);
         if(userId == null)
             return new ModelAndView("redirect:/manage/login");
         return joinPoint.proceed();
@@ -41,7 +41,7 @@ public class AuthAspect {
     @Around("apiVerify()")
     public Object doApiVerify(ProceedingJoinPoint joinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Integer userId = (Integer) request.getSession().getAttribute(Const.USER_ID);
+        Integer userId = (Integer) request.getSession().getAttribute(ConstUtil.USER_ID);
         if(userId == null)
             return ServerResponse.error(ResponseCodeEnum.PERMISSION_DENIED);
         return joinPoint.proceed();

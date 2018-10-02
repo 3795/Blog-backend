@@ -1,7 +1,7 @@
 package com.seven.Blog.service;
 
 import com.seven.Blog.pojo.User;
-import com.seven.Blog.response.ServerResponse;
+import com.seven.Blog.vo.ServerResponse;
 
 /**
  * Created By Seven.wk
