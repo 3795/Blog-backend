@@ -28,15 +28,12 @@ public class AUserController {
     private final Integer userId = 1;
 
     @GetMapping
-    public ServerResponse getUser(HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie");
-
+    public ServerResponse getUser() {
         User user = userService.getUser(userId);
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(user, userDTO);
         return ServerResponse.success(ResponseCodeEnum.SUCCESS, userDTO);
     }
+
 
 }
