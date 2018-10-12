@@ -15,6 +15,7 @@ public enum ResponseCodeEnum {
     FILE_UPLOAD_FAILED(15, "文件上传失败"),
     FILE_CANNOT_BE_EMPTY(16, "文件不能为空"),
     PERMISSION_DENIED(17, "没有权限执行此操作"),
+    PAGE_NOT_FOUND(404, "页面不存在"),
     ;
 
     Integer code;

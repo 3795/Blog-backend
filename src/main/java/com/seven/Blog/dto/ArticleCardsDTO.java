@@ -15,16 +15,13 @@ public class ArticleCardsDTO {
 
     private Integer maxPage;        //共有多少页
 
-    private String pageUrl;     //每个页码对应的链接前缀
-
     public ArticleCardsDTO() {
     }
 
-    public ArticleCardsDTO(List<ArticleCardDTO> articleCardDTOList, Integer currentPage, Integer maxPage, String pageUrl) {
+    public ArticleCardsDTO(List<ArticleCardDTO> articleCardDTOList, Integer currentPage, Integer maxPage) {
         this.articleCardDTOList = articleCardDTOList;
         this.currentPage = currentPage;
         this.maxPage = maxPage;
-        this.pageUrl = pageUrl;
     }
 
     public List<ArticleCardDTO> getArticleCardDTOList() {
@@ -51,11 +48,4 @@ public class ArticleCardsDTO {
         this.maxPage = maxPage;
     }
 
-    public String getPageUrl() {
-        return pageUrl;
-    }
-
-    public void setPageUrl(String pageUrl) {
-        this.pageUrl = pageUrl;
-    }
 }
