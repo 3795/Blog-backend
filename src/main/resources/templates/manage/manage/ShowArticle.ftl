@@ -18,8 +18,8 @@
                     <div class="summary">
                         ${article.summary}
                     </div>
-                    <div class="content">
-                        ${article.content}
+                    <div class="content" id="content-editormd">
+                        <textarea style="display:none;">${article.content}</textarea>
                     </div>
                 </div>
             </div>
@@ -27,9 +27,26 @@
     </div>
 </div>
         <#include "../common/Foot.ftl"/>
-    <script type="text/javascript" src="/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
-    <script>
-        SyntaxHighlighter.all();        //执行代码高亮
+    <script src="/editor.md/editormd.min.js"></script>
+    <script src="/editor.md/lib/flowchart.min.js"></script>
+    <script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="/editor.md/lib/marked.min.js"></script>
+    <script src="/editor.md/lib/prettify.min.js"></script>
+    <script src="/editor.md/lib/raphael.min.js"></script>
+    <script src="/editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="/editor.md/lib/underscore.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            editormd.markdownToHTML("content-editormd", {
+                htmlDecode: "style,script,iframe", //可以过滤标签解码
+                emoji: true,
+                taskList: true,
+                tex: true,               // 默认不解析
+                flowChart: true,         // 默认不解析
+                sequenceDiagram: true, // 默认不解析
+                codeFold: true
+            });
+        })
     </script>
 </body>
 </html>

@@ -32,9 +32,17 @@
                             </div>
                         </div>
 
-                        <div class="layui-form-item" style="padding-left: 3%">
-                            <script id="container" name="content" type="text/plain">这里写你的初始化内容</script>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">文章摘要</label>
+                            <div class="layui-input-block">
+                                <textarea id="summary" class="layui-textarea">我是摘要的内容</textarea>
+                            </div>
                         </div>
+
+                            <div class="editormd" id="editormd">
+                                <textarea class="editormd-markdown-textarea" style="display:none;" id="editorContent"></textarea>
+                                <textarea class="editormd-html-textarea" id="htmlContent"></textarea>
+                            </div>
 
                         <div class="layui-form-item option">
                             <label class="layui-form-label">选择分类</label>
@@ -74,21 +82,29 @@
     </div>
 </div>
         <#include "../common/Foot.ftl"/>
-        <script src="/ueditor/ueditor.config.js" type="text/javascript"></script>
-        <script src="/ueditor/ueditor.all.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var ueditor = UE.getEditor('container', {
-                initialFrameWidth : 1190,
-                initialFrameHeight: 500
-            });
-            UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
-            UE.Editor.prototype.getActionUrl = function(action) {
-                if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
-                    return '/api/manage/ueditorUpload';
-                } else {
-                    return this._bkGetActionUrl.call(this, action);
-                }
-            }
-        </script>
+<script type="text/javascript" src="/editor.md/editormd.js"></script>
+<script type="text/javascript">
+    var testEditor;
+
+    $(function() {
+        testEditor = editormd("editormd", {
+            width   : "100%",
+            height  : 800,
+            syncScrolling : "single",
+            path    : "/editor.md/lib/",
+            saveHTMLToTextarea : true,
+            searchReplace : true,
+            emoji : true,
+            taskList : true,
+            tocm: true,
+            tex : true,
+            flowChart : true,
+            sequenceDiagram : true,
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/api/manage/editorUpload"
+        });
+    });
+    </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.utils.ConstUtil;
 import com.seven.Blog.utils.FileUtil;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,37 +45,30 @@ public class ICommonController {
     }
 
     /**
-     * 获得UEditor编辑器的配置
-     * @return
-     */
-    @GetMapping("/getUeditorConfig")
-    public String getUeditorConfig() {
-        return ConstUtil.ueditorConfig();
-    }
-
-    /**
-     * UEditor编辑器上传文件功能API
+     * editor编辑器上传图片
      * @param file
      * @return
      */
-    @PostMapping("/ueditorUpload")
-    public String ueditorUpload(@RequestParam("file") MultipartFile file) {
-        String result = "";
-        if(!file.isEmpty()) {
+    @PostMapping("/editorUpload")
+    public String editorUpload(@RequestParam(value = "editormd-image-file") MultipartFile file) {
+        JSONObject jsonObject = new JSONObject();
+        if (!file.isEmpty()) {
             try {
-                String originalFileName = file.getOriginalFilename();
                 String imgPath = fileUtil.uploadImg(file);
-                result = "{\n" +
-                        "    \"state\": \"SUCCESS\",\n" +
-                        "    \"url\": \"" + imgPath + "\",\n" +
-                        "    \"title\": \"" + originalFileName + "\",\n" +
-                        "    \"original\": \"" + originalFileName + "\"\n" +
-                        "}";
+                jsonObject.put("success", 1);
+                jsonObject.put("msg", "上传成功");
+                jsonObject.put("url", imgPath);
             } catch (IOException e) {
-                result = e.getMessage();
+                jsonObject.put("success", 1);
+                jsonObject.put("msg", "IO异常");
+                jsonObject.put("url", "");
             }
+        } else {
+            jsonObject.put("success", 0);
+            jsonObject.put("msg", "上传失败，文件不能为空");
+            jsonObject.put("url", "");
         }
-        return result;
+        return jsonObject.toString();
     }
 
 }

@@ -1,4 +1,4 @@
-<div class="layui-col-xs5 mobile-navigation " id="mobile-navigation" xmlns="http://www.w3.org/1999/html">
+<div class="layui-col-xs5 mobile-navigation " id="mobile-navigation">
     <div class="layui-row">
         <div class="layui-col-xs12 user">
             <img src="${user.avatar}" title="${user.username}" alt="头像" class="avatar">

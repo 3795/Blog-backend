@@ -175,8 +175,8 @@ function changeArticleStatus(id) {
 function addArticle() {
     var title = $("#title").val();
     var imgPath = $("#imgPath").val();
-    var content = ueditor.getContent();
-    var summary = ueditor.getPlainTxt();
+    var content = $("#editorContent").val();
+    var summary = $("#summary").val();
     var categoryId = $("#categoryId").val();
     var status = $("#status").val();
     $.ajax({
@@ -229,8 +229,8 @@ function editArticle() {
     var id = $("#id").val();
     var title = $("#title").val();
     var imgPath = $("#imgPath").val();
-    var content = ueditor.getContent();
-    var summary = ueditor.getPlainTxt();
+    var content = $("#editorContent").val();
+    var summary = $("#summary").val();
     var categoryId = $("#categoryId").val();
     var status = $("#status").val();
     $.ajax({
