@@ -530,7 +530,7 @@
 
 .editormd-form {
   color: #666;
-  margin-top: 300px;
+  /*margin-top: 300px;*/
 }
 .editormd-form label {
   float: left;
