@@ -1,6 +1,4 @@
-package com.seven.Blog.utils;
-
-import org.apache.logging.log4j.util.PropertiesUtil;
+package com.seven.Blog.util;
 
 import java.security.MessageDigest;
 

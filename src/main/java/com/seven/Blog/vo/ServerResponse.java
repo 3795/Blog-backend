@@ -1,12 +1,17 @@
 package com.seven.Blog.vo;
 
+import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.enums.ResponseCodeEnum;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Created By Seven.wk
  * Description: 服务器响应的信息
  * Created At 2018/08/06
  */
+@Getter
+@ToString
 public class ServerResponse<T> {
 
     private Integer code;       //状态码
@@ -83,25 +88,14 @@ public class ServerResponse<T> {
         return new ServerResponse(codeEnum);
     }
 
-    @Override
-    public String toString() {
-        return "ServerResponse{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
+    /**
+     * 返回失败信息
+     * @param systemException
+     * @return
+     */
+    public static ServerResponse error(SystemException systemException) {
+        return new ServerResponse(systemException.getCode(), systemException.getMessage());
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
 
 }

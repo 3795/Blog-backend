@@ -1,5 +1,8 @@
-package com.seven.Blog.utils;
+package com.seven.Blog.util;
 
+import com.seven.Blog.Exception.SystemException;
+import com.seven.Blog.enums.ResponseCodeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,16 +16,10 @@ import java.io.IOException;
  * Description: 文件名称工具类
  * Created At 2018/08/08
  */
-@Component
+@Slf4j
 public class FileUtil {
 
     private static final String sysPath = "./src/main/resources/static/images";
-
-    @Autowired
-    private PropertiesUtil propertiesUtil;
-
-    @Autowired
-    private FTPUtil ftpUtil;
 
     /**
      * 获得文件上传后的名称
@@ -42,16 +39,16 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public String uploadImg(MultipartFile file) throws IOException {
-        String imgPath = null;
+    public static String uploadImg(MultipartFile file) throws IOException {
         String imgName = getImgName(file.getOriginalFilename());
         File destination = new File(sysPath + imgName);
         FileUtils.copyInputStreamToFile(file.getInputStream(), destination);
-        if(ftpUtil.uploadFile(destination)) {
-            imgPath = propertiesUtil.getImgServerName() + imgName;
+        if (FTPUtil.uploadFile(destination)) {
             destination.delete();
+            return PropertiesUtil.getProperty("imgServerName") + imgName;
         }
-        return imgPath;
+        destination.delete();
+        throw new SystemException(ResponseCodeEnum.FILE_UPLOAD_FAILED);
     }
 
 }

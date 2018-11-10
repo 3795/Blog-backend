@@ -3,7 +3,7 @@ package com.seven.Blog.convert;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.service.CategoryService;
-import com.seven.Blog.utils.ConstUtil;
+import com.seven.Blog.util.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

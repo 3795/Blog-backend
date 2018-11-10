@@ -2,7 +2,7 @@ package com.seven.Blog.aspect;
 
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.vo.ServerResponse;
-import com.seven.Blog.utils.ConstUtil;
+import com.seven.Blog.util.ConstUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

@@ -11,7 +11,7 @@ import com.seven.Blog.pojo.Article;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.service.CategoryService;
-import com.seven.Blog.utils.BasicUtil;
+import com.seven.Blog.util.BasicUtil;
 import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

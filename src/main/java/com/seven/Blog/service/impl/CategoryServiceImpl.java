@@ -4,7 +4,7 @@ import com.seven.Blog.dao.CategoryMapper;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.CategoryService;
-import com.seven.Blog.utils.ConstUtil;
+import com.seven.Blog.util.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

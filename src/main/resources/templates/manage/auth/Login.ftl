@@ -21,7 +21,7 @@
                         <label class="layui-form-label">验证码</label>
                         <div class="layui-input-block">
                             <input type="text" name="captchaCode" id="captchaCode" required placeholder="请输入验证码" autocomplete="off" class="layui-input captchaCode-input">
-                            <img src="/api/captcha" title="验证码" alt="验证码" class="captchaCode" onclick = "this.src='/api/captcha?d='+new Date()*1"/>
+                            <img src="/blog/v1/captcha" title="验证码" alt="验证码" class="captchaCode" onclick = "this.src='/blog/v1/captcha?d='+new Date()*1"/>
                         </div>
                     </div>
                     <div class="layui-form-item">

@@ -2,7 +2,7 @@ package com.seven.Blog.controller.api.manage;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seven.Blog.enums.ResponseCodeEnum;
-import com.seven.Blog.utils.FileUtil;
+import com.seven.Blog.util.FileUtil;
 import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,26 +22,16 @@ import java.io.IOException;
 @RequestMapping("/api/manage")
 public class ICommonController {
 
-    @Autowired
-    private FileUtil fileUtil;
-
     /**
      * 文件上传API
      * @param file
      * @return
      */
     @PostMapping("/upload")
-    public ServerResponse upload(@RequestParam("file") MultipartFile file) {
+    public ServerResponse upload(@RequestParam("file") MultipartFile file) throws IOException {
         if(!file.isEmpty()) {
-            try {
-                String imgPath = fileUtil.uploadImg(file);
-                if(imgPath != null)
-                    return ServerResponse.success(ResponseCodeEnum.FILE_UPLOAD_SUCCESS, imgPath);
-                else
-                    return ServerResponse.error("上传文件遇到错误，imgPath为NULL");
-            } catch (IOException e) {
-                return ServerResponse.error(ResponseCodeEnum.FILE_UPLOAD_FAILED.getMsg() + ": " + e.getMessage());
-            }
+                String imgPath = FileUtil.uploadImg(file);
+                return ServerResponse.success(ResponseCodeEnum.FILE_UPLOAD_SUCCESS, imgPath);
         }
         return ServerResponse.error(ResponseCodeEnum.FILE_CANNOT_BE_EMPTY);
     }
@@ -56,18 +46,18 @@ public class ICommonController {
         JSONObject jsonObject = new JSONObject();
         if (!file.isEmpty()) {
             try {
-                String imgPath = fileUtil.uploadImg(file);
+                String imgPath = FileUtil.uploadImg(file);
                 jsonObject.put("success", 1);
-                jsonObject.put("msg", "上传成功");
+                jsonObject.put("msg", ResponseCodeEnum.FILE_UPLOAD_SUCCESS.getMsg());
                 jsonObject.put("url", imgPath);
-            } catch (IOException e) {
-                jsonObject.put("success", 1);
-                jsonObject.put("msg", "IO异常");
+            } catch (Exception e) {
+                jsonObject.put("success", 0);
+                jsonObject.put("msg", e.getMessage());
                 jsonObject.put("url", "");
             }
         } else {
             jsonObject.put("success", 0);
-            jsonObject.put("msg", "上传失败，文件不能为空");
+            jsonObject.put("msg", ResponseCodeEnum.FILE_CANNOT_BE_EMPTY.getMsg());
             jsonObject.put("url", "");
         }
         return jsonObject.toString();

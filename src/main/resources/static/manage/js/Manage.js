@@ -8,14 +8,13 @@ function login() {
     var password = $("#password").val();
     var captchaCode = $("#captchaCode").val();
     $.ajax({
-        url : "/api/doLogin",
+        url : "/blog/v1/login",
         type: "POST",
         data: {"account": account, "password": password, "captchaCode": captchaCode},
         dataType: "JSON",
         async: false,
         success: function(data) {
             if(data.code === 11) {
-                alert("登录成功");
                 window.location.href = "/manage/index";
             }
             else if(data.code === 13)

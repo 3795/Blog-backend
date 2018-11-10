@@ -1,11 +1,12 @@
 package com.seven.Blog.service.impl;
 
+import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.UserMapper;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.User;
 import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
-import com.seven.Blog.utils.MD5Util;
+import com.seven.Blog.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
         password = MD5Util.MD5EncodeUtf8(password);
         User user = userMapper.selectByAccountAndPassword(account, password);
         if(user == null)
-            return ServerResponse.error(ResponseCodeEnum.LOGIN_FAILED);
+            throw new SystemException(ResponseCodeEnum.LOGIN_FAILED);
         return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS, user.getId());
     }
 

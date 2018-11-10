@@ -1,4 +1,4 @@
-package com.seven.Blog.utils;
+package com.seven.Blog.util;
 
 /**
  * Created By Seven.wk

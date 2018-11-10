@@ -2,7 +2,7 @@ package com.seven.Blog.controller.api.manage;
 
 import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
-import com.seven.Blog.utils.ConstUtil;
+import com.seven.Blog.util.ConstUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

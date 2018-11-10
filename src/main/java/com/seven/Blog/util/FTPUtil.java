@@ -1,8 +1,9 @@
-package com.seven.Blog.utils;
+package com.seven.Blog.util;
 
+import com.seven.Blog.Exception.SystemException;
+import com.seven.Blog.enums.ResponseCodeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,15 +14,26 @@ import java.io.IOException;
  * Description: FTP工具类
  * Created At 2018/08/09
  */
-@Component
+@Slf4j
 public class FTPUtil {
 
-    @Autowired
-    private PropertiesUtil propertiesUtil;
-
+    private String host;
+    private int port;
+    private String username;
+    private String password;
     private FTPClient ftpClient;
 
-    public FTPUtil() { }
+    private static final String ip = PropertiesUtil.getProperty("ftp.host");
+    private static final int pt = Integer.parseInt(PropertiesUtil.getProperty("ftp.port", "21"));
+    private static final String user = PropertiesUtil.getProperty("ftp.username");
+    private static final String pwd = PropertiesUtil.getProperty("ftp.password");
+
+    public FTPUtil(String host,int port,String username,String password) {
+        this.host = host;
+        this.port = port;
+        this.username = username;
+        this.password = password;
+    }
 
     /**
      * 上传文件到FTP服务器
@@ -29,8 +41,9 @@ public class FTPUtil {
      * @return
      * @throws IOException
      */
-    public boolean uploadFile(File file) throws IOException {
-        return uploadFile("images", file);
+    public static boolean uploadFile(File file) throws IOException {
+        FTPUtil ftpUtil = new FTPUtil(ip, pt, user, pwd);
+        return ftpUtil.uploadFile("images", file);
     }
 
     /**
@@ -41,9 +54,8 @@ public class FTPUtil {
      * @throws IOException
      */
     public boolean uploadFile(String path, File file) throws IOException {
-        boolean isSuccess = false;
         FileInputStream fileInputStream = null;
-        if(connectServer(propertiesUtil.getHost(), propertiesUtil.getPort(), propertiesUtil.getUsername(), propertiesUtil.getPassword())) {
+        if(connectServer(this.host, this.port, this.username, this.password)) {
             ftpClient.changeWorkingDirectory(path);
             ftpClient.setBufferSize(2048);
             ftpClient.setControlEncoding("UTF-8");
@@ -53,9 +65,10 @@ public class FTPUtil {
             ftpClient.storeFile(file.getName(), fileInputStream);
             ftpClient.disconnect();
             fileInputStream.close();
-            isSuccess = true;
+            log.info("文件 {} 上传成功", file.getName());
+            return true;
         }
-        return isSuccess;
+        throw new SystemException(ResponseCodeEnum.CONN_FTP_FAIL);
     }
 
     /**
@@ -68,11 +81,8 @@ public class FTPUtil {
      * @throws IOException
      */
     private boolean connectServer(String ip, int port, String username, String password) throws IOException {
-        boolean isSuccess = false;
         ftpClient = new FTPClient();
         ftpClient.connect(ip, port);
-        isSuccess = ftpClient.login(username, password);
-        return isSuccess;
+        return ftpClient.login(username, password);
     }
-
 }
