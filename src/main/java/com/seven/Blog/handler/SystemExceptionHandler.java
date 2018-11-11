@@ -21,7 +21,7 @@ public class SystemExceptionHandler {
     @ExceptionHandler(SystemException.class)
     @ResponseStatus(HttpStatus.OK)
     public ServerResponse handleSystemException(SystemException se) {
-        log.error("系统异常，异常代码：{}, 异常信息： {}", se.getCode(), se.getMessage());
+        log.warn("系统异常，异常代码：{}, 异常信息： {}", se.getCode(), se.getMessage());
         return ServerResponse.error(se);
     }
 

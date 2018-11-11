@@ -22,4 +22,5 @@ public class SystemException extends RuntimeException {
         super(responseCodeEnum.getMsg());
         this.code = responseCodeEnum.getCode();
     }
+
 }

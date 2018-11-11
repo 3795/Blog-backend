@@ -5,6 +5,8 @@ import com.seven.Blog.enums.ResponseCodeEnum;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 服务器响应的信息
@@ -12,7 +14,9 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class ServerResponse<T> {
+public class ServerResponse<T> implements Serializable {
+
+    private static final long serialVersionUID = -4929052749136069903L;
 
     private Integer code;       //状态码
 

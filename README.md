@@ -34,8 +34,8 @@
 
 第三方模块：
     
-    UEditor富文本编辑器
+    Editor MarkDown编辑器
 
 开发文档：
 
-    https://www.showdoc.cc/sspace?page_id=953091663630770
+    编辑中...

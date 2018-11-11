@@ -15,7 +15,7 @@ public interface UserService {
      * @param password      密码
      * @return      用户信息
      */
-    ServerResponse checkLoginInfo(String account, String password);
+    User checkLoginInfo(String account, String password);
 
     User getUser(Integer id);
 

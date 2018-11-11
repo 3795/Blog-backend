@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.util.FileUtil;
 import com.seven.Blog.vo.ServerResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

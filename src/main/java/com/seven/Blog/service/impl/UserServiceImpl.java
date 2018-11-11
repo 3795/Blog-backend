@@ -7,6 +7,7 @@ import com.seven.Blog.pojo.User;
 import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
 import com.seven.Blog.util.MD5Util;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +17,21 @@ import org.springframework.stereotype.Service;
  * Created At 2018/08/06
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    public ServerResponse checkLoginInfo(String account, String password) {
+    public User checkLoginInfo(String account, String password) {
         password = MD5Util.MD5EncodeUtf8(password);
         User user = userMapper.selectByAccountAndPassword(account, password);
-        if(user == null)
+        if(user == null) {
+            log.warn("账号：{}", account);
             throw new SystemException(ResponseCodeEnum.LOGIN_FAILED);
-        return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS, user.getId());
+        }
+        return user;
     }
 
     @Override

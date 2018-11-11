@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+
+    <!--控制台输出日志的格式-->
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <!--信息在控制台的输出格式-->
@@ -14,11 +16,11 @@
         <!--根据范围来过滤，过滤非error级别的日志-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!--等级为error-->
-            <level>ERROR</level>
-            <!--匹配到error级别就忽略-->
-            <onMatch>DENY</onMatch>
-            <!--反之就接受-->
-            <onMismatch>ACCEPT</onMismatch>
+            <level>INFO</level>
+            <!--匹配到INFO级别就记录-->
+            <onMatch>ACCEPT</onMatch>
+            <!--反之拒绝-->
+            <onMismatch>DENY</onMismatch>
         </filter>
         <encoder>
             <!--日志文件中的信息格式-->
@@ -31,6 +33,31 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
             <fileNamePattern>D:\Develop\JavaEE\Blog\log\info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--配置WARN日志输出到文件-->
+    <appender name="fileWarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--根据范围来过滤，过滤非error级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--等级为error-->
+            <level>WARN</level>
+            <!--匹配到WARN级别就记录-->
+            <onMatch>ACCEPT</onMatch>
+            <!--反之拒绝-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <!--日志文件中的信息格式-->
+            <pattern>
+                %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略-->
+        <!--每天产生一个info信息日志-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>D:\Develop\JavaEE\Blog\log\warn.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -57,6 +84,8 @@
     <root level="info">
         <appender-ref ref="consoleLog"/>
         <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileWarnLog"/>
         <appender-ref ref="fileErrorLog" />
     </root>
+
 </configuration>

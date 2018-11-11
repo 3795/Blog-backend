@@ -32,18 +32,18 @@ public class ILoginController {
      * @param session
      * @return
      */
-    @PostMapping("/doLogin")
-    public ServerResponse doLogin(@Param("account") String account,
-                                  @Param("password") String password,
-                                  @Param("captchaCode") String captchaCode,
-                                  HttpSession session) {
-        if(!session.getAttribute(ConstUtil.CAPTCHA_CODE).equals(captchaCode))
-            return ServerResponse.error(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
-        ServerResponse serverResponse = userService.checkLoginInfo(account, password);
-        if (serverResponse.getCode() == ResponseCodeEnum.LOGIN_SUCCESS.getCode()) {
-            Integer id = (Integer) serverResponse.getData();
-            session.setAttribute(ConstUtil.USER_ID, id);
-        }
-        return userService.checkLoginInfo(account, password);
-    }
+//    @PostMapping("/doLogin")
+//    public ServerResponse doLogin(@Param("account") String account,
+//                                  @Param("password") String password,
+//                                  @Param("captchaCode") String captchaCode,
+//                                  HttpSession session) {
+//        if(!session.getAttribute(ConstUtil.CAPTCHA_CODE).equals(captchaCode))
+//            return ServerResponse.error(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
+//        ServerResponse serverResponse = userService.checkLoginInfo(account, password);
+//        if (serverResponse.getCode() == ResponseCodeEnum.LOGIN_SUCCESS.getCode()) {
+//            Integer id = (Integer) serverResponse.getData();
+//            session.setAttribute(ConstUtil.USER_ID, id);
+//        }
+//        return userService.checkLoginInfo(account, password);
+//    }
 }
