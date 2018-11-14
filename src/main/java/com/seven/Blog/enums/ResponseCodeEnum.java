@@ -21,6 +21,7 @@ public enum ResponseCodeEnum {
     FILE_CANNOT_BE_EMPTY(16, "文件不能为空"),
     PERMISSION_DENIED(17, "没有权限执行此操作"),
     CONN_FTP_FAIL(18, "连接FTP服务器失败"),
+    LOGOUT_SUCCESS(19, "退出登录成功"),
     PAGE_NOT_FOUND(404, "页面不存在"),
     ;
 
