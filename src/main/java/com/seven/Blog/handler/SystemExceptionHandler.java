@@ -26,9 +26,9 @@ public class SystemExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ServerResponse handleException(Exception e) {
         log.error("系统出错，异常信息：{}", e);
-        return ServerResponse.error(ResponseCodeEnum.PAGE_NOT_FOUND);
+        return ServerResponse.error(ResponseCodeEnum.SERVER_ERROR);
     }
 }

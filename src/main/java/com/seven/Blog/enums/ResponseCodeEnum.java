@@ -23,6 +23,7 @@ public enum ResponseCodeEnum {
     CONN_FTP_FAIL(18, "连接FTP服务器失败"),
     LOGOUT_SUCCESS(19, "退出登录成功"),
     PAGE_NOT_FOUND(404, "页面不存在"),
+    SERVER_ERROR(500, "出了小问题，紧急抢救中..."),
     ;
 
     Integer code;
