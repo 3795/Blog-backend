@@ -15,7 +15,7 @@ function login() {
         async: false,
         success: function(data) {
             if(data.code === 11) {
-                window.location.href = "/manage/index";
+                window.location.href = "/backend/index";
             }
             else if(data.code === 13)
                 alert("验证码错误");
@@ -39,7 +39,7 @@ function addCategory() {
         alert("不能为空");
     else {
         $.ajax({
-            url: "/api/manage/category",
+            url: "/api/backend/category",
             type: "POST",
             data: {"name":name, "parentId":parentId, "status":status},
             dataType: "JSON",
@@ -65,7 +65,7 @@ function addCategory() {
  */
 function changeCategoryStatus(id) {
     $.ajax({
-        url: '/api/manage/category/' + id,
+        url: '/api/backend/category/' + id,
         type: "PATCH",
         async: false,
         success: function(data) {
@@ -87,7 +87,7 @@ function changeCategoryStatus(id) {
 function deleteCategory(id) {
     if(confirm("真的要删除吗？")) {
         $.ajax({
-            url: '/api/manage/category/' + id,
+            url: '/api/backend/category/' + id,
             type: "DELETE",
             async: false,
             success: function (data) {
@@ -128,7 +128,7 @@ function editCategory() {
         alert("不能为空");
     else {
         $.ajax({
-            url: "/api/manage/category",
+            url: "/api/backend/category",
             type: "PUT",
             data: {"id": id, "name":name, "parentId":parentId, "status":status},
             dataType: "JSON",
@@ -153,7 +153,7 @@ function editCategory() {
  */
 function changeArticleStatus(id) {
     $.ajax({
-        url: '/api/manage/article/' + id,
+        url: '/api/backend/article/' + id,
         type: "PATCH",
         async: false,
         success: function(data) {
@@ -179,7 +179,7 @@ function addArticle() {
     var categoryId = $("#categoryId").val();
     var status = $("#status").val();
     $.ajax({
-        url : "/api/manage/article",
+        url : "/api/backend/article",
         type: "POST",
         data: {"id": '-1', "title": title, "img": imgPath, "content": content,
         "summary": summary, "categoryId": categoryId, "status": status},
@@ -187,7 +187,7 @@ function addArticle() {
         async: false,
         success: function (data) {
             if(data.code === 10) {
-                window.location.href = "/manage/article";
+                window.location.href = "/backend/article";
             }
             else
                 alert(data.msg);
@@ -205,7 +205,7 @@ function addArticle() {
 function deleteArticle(id) {
     if(confirm("真的要删除吗？")) {
         $.ajax({
-            url: '/api/manage/article/' + id,
+            url: '/api/backend/article/' + id,
             type: "DELETE",
             async: false,
             success: function (data) {
@@ -233,7 +233,7 @@ function editArticle() {
     var categoryId = $("#categoryId").val();
     var status = $("#status").val();
     $.ajax({
-        url : "/api/manage/article",
+        url : "/api/backend/article",
         type: "PUT",
         data: {"id": id, "title": title, "img": imgPath, "content": content,
             "summary": summary, "categoryId": categoryId, "status": status},
@@ -241,7 +241,7 @@ function editArticle() {
         async: false,
         success: function (data) {
             if(data.code === 10) {
-                window.location.href = "/manage/article";
+                window.location.href = "/backend/article";
             }
             else
                 alert(data.msg);
@@ -264,7 +264,7 @@ function addNavigation() {
         alert("不能为空");
     else {
         $.ajax({
-            url: "/api/manage/navigation",
+            url: "/api/backend/navigation",
             type: "POST",
             data: {"id": '-1', "name":name, "priority":priority, "link":link, "status":status},
             dataType: "JSON",
@@ -290,7 +290,7 @@ function addNavigation() {
  */
 function changeNavigationStatus(id) {
     $.ajax({
-        url: '/api/manage/navigation/' + id,
+        url: '/api/backend/navigation/' + id,
         type: "PATCH",
         async: false,
         success: function(data) {
@@ -333,7 +333,7 @@ function editNavigation() {
         alert("不能为空");
     else {
         $.ajax({
-            url: "/api/manage/navigation",
+            url: "/api/backend/navigation",
             type: "PUT",
             data: {"id": id, "name":name, "priority":priority, "link": link, "status":status},
             dataType: "JSON",
@@ -359,7 +359,7 @@ function editNavigation() {
 function deleteNavigation(id) {
     if(confirm("真的要删除吗？")) {
         $.ajax({
-            url: '/api/manage/navigation/' + id,
+            url: '/api/backend/navigation/' + id,
             type: "DELETE",
             async: false,
             success: function (data) {
@@ -382,7 +382,7 @@ function editUserInfo() {
     var username = $("#username").val();
     var imgPath = $("#imgPath").val();
     $.ajax({
-        url: "/api/manage/user",
+        url: "/api/backend/user",
         type: "PUT",
         data: {"username": username, "avatar": imgPath},
         dataType: "JSON",
@@ -405,12 +405,12 @@ function editUserInfo() {
 function logout() {
     if(confirm("确认退出？")) {
         $.ajax({
-            url: "/api/manage/user/logout",
+            url: "/api/backend/user/logout",
             type: "GET",
             async: false,
             success: function(data) {
                 if(data.code === 10)
-                    window.location.href = "/manage";
+                    window.location.href = "/backend";
                 else
                     alert("登出失败");
             },

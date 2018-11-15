@@ -16,7 +16,7 @@ import java.io.IOException;
  * Created At 2018/11/10
  */
 @RestController
-@RequestMapping("/blog/v1/")
+@RequestMapping("/blog/v1")
 @CrossOrigin
 public class UtilControllerV1 {
 

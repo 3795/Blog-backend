@@ -1,4 +1,4 @@
-package com.seven.Blog.controller.api.v1.manage;
+package com.seven.Blog.controller.api.v1.backend;
 
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.constant.SystemConstant;
@@ -22,10 +22,10 @@ import javax.servlet.http.HttpSession;
  * Created At 2018/11/10
  */
 @RestController
-@RequestMapping("/blog/v1")
+@RequestMapping("/blog/v1/backend")
 @Slf4j
 @CrossOrigin
-public class MLoginControllerV1 {
+public class BLoginControllerV1 {
 
     @Autowired
     private UserService userService;

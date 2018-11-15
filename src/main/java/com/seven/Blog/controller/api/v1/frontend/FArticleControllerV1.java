@@ -1,4 +1,4 @@
-package com.seven.Blog.controller.api.index;
+package com.seven.Blog.controller.api.v1.frontend;
 
 import com.seven.Blog.convert.ArticleToArticleCardDTO;
 import com.seven.Blog.convert.ArticleToArticleDTO;
@@ -18,13 +18,12 @@ import java.util.List;
 
 /**
  * Created By Seven.wk
- * Description: 文章服务接口
- * Created At 2018/10/04
+ * Description: 文章信息接口
+ * Created At 2018/11/15
  */
 @RestController
-@RequestMapping("/api/index/article")
-public class AArticleController {
-
+@RequestMapping("/blog/v1/article")
+public class FArticleControllerV1 {
     @Autowired
     private ArticleService articleService;
 

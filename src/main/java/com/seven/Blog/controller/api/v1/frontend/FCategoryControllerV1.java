@@ -1,4 +1,4 @@
-package com.seven.Blog.controller.api.index;
+package com.seven.Blog.controller.api.v1.frontend;
 
 import com.seven.Blog.convert.ArticleToArticleCardDTO;
 import com.seven.Blog.convert.CategoryToCategoryDTO;
@@ -20,13 +20,12 @@ import java.util.List;
 
 /**
  * Created By Seven.wk
- * Description: 提供分类服务
- * Created At 2018/10/12
+ * Description: 分类信息接口
+ * Created At 2018/11/15
  */
 @RestController
-@RequestMapping("/api/index/category")
-public class ACategoryController {
-
+@RequestMapping("/blog/v1/category")
+public class FCategoryControllerV1 {
     @Autowired
     private CategoryService categoryService;
 

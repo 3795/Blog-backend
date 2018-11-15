@@ -1,4 +1,4 @@
-package com.seven.Blog.controller.api.v1.manage;
+package com.seven.Blog.controller.api.v1.backend;
 
 import com.seven.Blog.constant.SystemConstant;
 import com.seven.Blog.enums.ResponseCodeEnum;
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  * Created At 2018/11/14
  */
 @RestController
-@RequestMapping("/blog/v1/user")
+@RequestMapping("/blog/v1/backend/user")
 @CrossOrigin
-public class MUserControllerV1 {
+public class BUserControllerV1 {
 
     /**
      * 用户退出登录

@@ -103,7 +103,7 @@
             sequenceDiagram : true,
             imageUpload : true,
             imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL : "/api/manage/editorUpload"
+            imageUploadURL : "/api/backend/editorUpload"
         });
     });
 </script>

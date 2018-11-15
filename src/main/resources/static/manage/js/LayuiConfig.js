@@ -19,7 +19,7 @@ layui.use('upload', function(){
     //执行实例
     var uploadInst = upload.render({
         elem: '#uploadImg' //绑定元素
-        ,url: '/api/manage/upload' //上传接口
+        ,url: '/api/backend/upload' //上传接口
         ,done: function(res){
             if(res.code === 14) {
                 $("#imgPath").val(res.data);

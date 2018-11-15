@@ -56,8 +56,8 @@ public class AuthAspect {
     /**
      * 访问管理系统Api时权限验证
      */
-    @Pointcut("within(com.seven.Blog.controller.api.v1.manage.*ControllerV1) &&" +
-            "!within(com.seven.Blog.controller.api.v1.manage.MLoginControllerV1)")
+    @Pointcut("within(com.seven.Blog.controller.api.v1.backend.*ControllerV1) &&" +
+            "!within(com.seven.Blog.controller.api.v1.backend.BLoginControllerV1)")
     public void apiVerify() {}
 
     @Around("apiVerify()")
