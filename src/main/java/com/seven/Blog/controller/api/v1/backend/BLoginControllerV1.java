@@ -11,7 +11,10 @@ import com.seven.Blog.util.RedisPoolUtil;
 import com.seven.Blog.vo.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,7 +27,6 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/blog/v1/backend")
 @Slf4j
-@CrossOrigin
 public class BLoginControllerV1 {
 
     @Autowired

@@ -9,7 +9,9 @@ public class SystemConstant {
 
     public static final String CAPTCHA_CODE = "captchaCode";
 
-    public static final String COOKIE_DOMAIN_NAME = "ntshare.cn";
+//    public static final String COOKIE_DOMAIN_NAME = "ntshare.cn";
+
+    public static final String COOKIE_DOMAIN_NAME = "localhost";
 
     public static final String LOGIN_TOKEN = "blog_login_token";
 

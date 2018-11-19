@@ -3,7 +3,11 @@ package com.seven.Blog.controller.api.v1.util;
 import com.seven.Blog.bo.Captcha;
 import com.seven.Blog.constant.SystemConstant;
 import com.seven.Blog.util.CaptchaUtil;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +21,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/blog/v1")
-@CrossOrigin
+@Slf4j
 public class UtilControllerV1 {
 
     @GetMapping("/captcha")
