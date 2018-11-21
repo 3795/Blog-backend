@@ -1,10 +1,16 @@
 package com.seven.Blog.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.CategoryMapper;
+import com.seven.Blog.enums.CommonStatusEnum;
+import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.CategoryService;
 import com.seven.Blog.util.ConstUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +22,7 @@ import java.util.List;
  * Created At 2018/08/07
  */
 @Service
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
@@ -87,5 +94,79 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Integer getCategoryCount() {
         return categoryMapper.getCategoryCount();
+    }
+
+    /*---------------------------二期新增---------------------------------------*/
+
+    @Override
+    public PageInfo selectAll(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Category> categoryList = categoryMapper.selectAll();
+        return new PageInfo(categoryList);
+    }
+
+    @Override
+    public Category selectById(Integer id) {
+        Category category = categoryMapper.selectById(id);
+        if (category == null) {
+            throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
+        }
+        return category;
+    }
+
+    @Override
+    public PageInfo selectByStatus(int status, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Category> categoryList = categoryMapper.selectByStatus(status);
+        return new PageInfo(categoryList);
+    }
+
+    @Override
+    public Boolean insert(Category category) {
+        int result = categoryMapper.insert(category);
+        if (result != 1) {
+            throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean update(Category category) {
+        int result = categoryMapper.update(category);
+        if (result != 1) {
+            log.warn("分类ID：{}", category.getId());
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean changeStatus(Integer id) {
+        Integer status = categoryMapper.selectStatusById(id);
+        if (status == null) {
+            throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
+        }
+        if ((int) status == CommonStatusEnum.OFF.getCode()) {
+            status = CommonStatusEnum.ON.getCode();
+        } else {
+            status = CommonStatusEnum.OFF.getCode();
+        }
+
+        int result = categoryMapper.updateStatus(id, status);
+        if (result != 1) {
+            log.warn("分类ID：{}", id);
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean delete(Integer id) {
+        int result = categoryMapper.delete(id);
+        if (result != 1) {
+            log.warn("分类ID：{}", id);
+            throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
+        }
+        return true;
     }
 }

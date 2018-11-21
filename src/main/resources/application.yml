@@ -35,10 +35,9 @@ mybatis:
   type-aliases-package: com.seven.Blog.pojo
   mapper-locations: classpath:mybatis/mappers/*.xml
 pagehelper:
-  params: count=countSql
-  dialect: mysql
   reasonable: true
   support-methods-arguments: true
+  auto-dialect: mysql
 
 
 

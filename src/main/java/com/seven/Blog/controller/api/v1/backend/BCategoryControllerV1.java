@@ -1,0 +1,88 @@
+package com.seven.Blog.controller.api.v1.backend;
+
+import com.github.pagehelper.PageInfo;
+import com.seven.Blog.enums.ResponseCodeEnum;
+import com.seven.Blog.form.CategoryForm;
+import com.seven.Blog.pojo.Category;
+import com.seven.Blog.service.CategoryService;
+import com.seven.Blog.vo.ServerResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+/**
+ * Created By Seven.wk
+ * Description: 分类管理
+ * Created At 2018/11/21
+ */
+@RestController
+@RequestMapping("/blog/v1/backend/category")
+public class BCategoryControllerV1 {
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping
+    public ServerResponse getCategories(@RequestParam(value = "status", defaultValue = "-1") Integer status,
+                                        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        PageInfo pageInfo;
+        if (status == -1) {
+            pageInfo = categoryService.selectAll(pageNum, pageSize);
+        } else {
+            pageInfo = categoryService.selectByStatus(status, pageNum, pageSize);
+        }
+        return ServerResponse.success(pageInfo);
+    }
+
+    @GetMapping("/{id}")
+    public ServerResponse getCategoryById(@PathVariable("id") Integer id) {
+        Category category = categoryService.selectById(id);
+        return ServerResponse.success(category);
+    }
+
+    @PostMapping
+    public ServerResponse createCategory(@Valid CategoryForm categoryForm,
+                                         BindingResult result) {
+        if (result.hasErrors()) {
+            return ServerResponse.error(result.getFieldError().getDefaultMessage());
+        }
+
+        Category category = new Category(categoryForm.getName(),
+                Integer.parseInt(categoryForm.getParentId()),
+                Integer.parseInt(categoryForm.getStatus()));
+
+        categoryService.insert(category);
+        return ServerResponse.success(ResponseCodeEnum.INSERT_SUCCESS);
+    }
+
+    @PutMapping
+    public ServerResponse updateCategory(@RequestParam(value = "id") Integer id,
+                                         @Valid CategoryForm categoryForm,
+                                         BindingResult result) {
+        if (result.hasErrors()) {
+            return ServerResponse.error(result.getFieldError().getDefaultMessage());
+        }
+
+        Category category = new Category(id, categoryForm.getName(),
+                Integer.parseInt(categoryForm.getParentId()),
+                Integer.parseInt(categoryForm.getStatus()));
+
+        categoryService.update(category);
+        return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS);
+    }
+
+    @PatchMapping("/{id}")
+    public ServerResponse changeCategoryStatus(@PathVariable("id") Integer id) {
+        categoryService.changeStatus(id);
+        return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS);
+    }
+
+    @DeleteMapping("/{id}")
+    public ServerResponse deleteCategory(@PathVariable(value = "id") Integer id) {
+        categoryService.delete(id);
+        return ServerResponse.success(ResponseCodeEnum.DELETE_SUCCESS);
+    }
+}

@@ -1,5 +1,9 @@
 package com.seven.Blog.form;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -7,49 +11,18 @@ import javax.validation.constraints.NotEmpty;
  * Description: 文章分类信息表单
  * Created At 2018/08/07
  */
+@Getter
+@Setter
+@NoArgsConstructor
 public class CategoryForm {
 
-    @NotEmpty(message = "ID不能为空")
-    private String id;     //分类id
-
     @NotEmpty(message = "分类名称不能为空")
-    private String name;        //分类名称
+    private String name;
 
     @NotEmpty(message = "父类ID不能为空")
-    private String parentId;    //父类id
+    private String parentId;
 
     @NotEmpty(message = "分类状态不能为空")
-    private String status;     //分类状态,0为不可用，1为可用
+    private String status;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

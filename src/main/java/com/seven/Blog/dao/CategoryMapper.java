@@ -3,6 +3,7 @@ package com.seven.Blog.dao;
 import com.seven.Blog.pojo.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Description: 文章分类Dao层
  * Created At 2018/08/07
  */
+@Repository
 @Mapper
 public interface CategoryMapper {
 
@@ -39,5 +41,23 @@ public interface CategoryMapper {
      */
     int getCategoryCount();
 
+    /*--------------------------二期新增--------------------------------*/
+
+    List<Category> selectAll();
+
+    Category selectById(Integer id);
+
+    List<Category> selectByStatus(Integer status);
+
+    Integer selectStatusById(Integer id);
+
+    int insert(Category category);
+
+    int update(Category category);
+
+    int updateStatus(@Param("id") Integer id,
+                     @Param("status") Integer status);
+
+    int delete(Integer id);
 
 }

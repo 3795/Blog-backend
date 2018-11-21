@@ -1,5 +1,6 @@
 package com.seven.Blog.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.vo.ServerResponse;
 
@@ -36,5 +37,19 @@ public interface CategoryService {
      */
     Integer getCategoryCount();
 
-    // 二期新增
+    /*---------------------------二期新增---------------------------------------*/
+
+    PageInfo selectAll(int pageNum, int pageSize);
+
+    Category selectById(Integer id);
+
+    PageInfo selectByStatus(int status, int pageNum, int pageSize);
+
+    Boolean insert(Category category);
+
+    Boolean update(Category category);
+
+    Boolean changeStatus(Integer id);
+
+    Boolean delete(Integer id);
 }

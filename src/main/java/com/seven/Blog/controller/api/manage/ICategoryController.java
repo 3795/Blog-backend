@@ -35,10 +35,11 @@ public class ICategoryController {
         if(result.hasErrors()) {
             return ServerResponse.error(result.getFieldError().getDefaultMessage());
         }
-        Integer id = Integer.parseInt(categoryForm.getId());
-        Integer parentId = Integer.parseInt(categoryForm.getParentId());
-        Integer status = Integer.parseInt(categoryForm.getStatus());
-        return categoryService.updateCategory(id, categoryForm.getName(), parentId, status);
+//        Integer id = Integer.parseInt(categoryForm.getId());
+//        Integer parentId = Integer.parseInt(categoryForm.getParentId());
+//        Integer status = Integer.parseInt(categoryForm.getStatus());
+//        return categoryService.updateCategory(id, categoryForm.getName(), parentId, status);
+        return null;
     }
 
     @DeleteMapping("/{id}")
