@@ -5,6 +5,7 @@ package com.seven.Blog.util;
  * Description: 系统中的常量信息
  * Created At 2018/08/07
  */
+//todo 删除该工具类
 public class ConstUtil {
 
     public static final String USER_ID = "userId";

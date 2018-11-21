@@ -35,4 +35,6 @@ public interface CategoryService {
      * @return
      */
     Integer getCategoryCount();
+
+    // 二期新增
 }
