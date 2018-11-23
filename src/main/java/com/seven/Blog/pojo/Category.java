@@ -14,13 +14,13 @@ import lombok.*;
 @ToString
 public class Category {
 
-    private Integer id;     //分类id
+    private Integer id;
 
-    private String name;        //分类名称
+    private String name;
 
-    private Integer parentId;    //父类id
+    private Integer parentId;
 
-    private Integer status;     //分类状态,0为不可用，1为可用
+    private Integer status;
 
     public Category(String name, Integer parentId, Integer status) {
         this.name = name;

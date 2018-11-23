@@ -1,6 +1,7 @@
 package com.seven.Blog.service;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.backend.CategoryDTO;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.vo.ServerResponse;
 
@@ -41,9 +42,11 @@ public interface CategoryService {
 
     PageInfo selectAll(int pageNum, int pageSize);
 
-    Category selectById(Integer id);
+    CategoryDTO selectById(Integer id);
 
     PageInfo selectByStatus(int status, int pageNum, int pageSize);
+
+    List<CategoryDTO> selectFirstLevel();
 
     Boolean insert(Category category);
 

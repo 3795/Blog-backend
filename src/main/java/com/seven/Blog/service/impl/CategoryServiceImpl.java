@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.CategoryMapper;
+import com.seven.Blog.dto.backend.CategoryDTO;
 import com.seven.Blog.enums.CommonStatusEnum;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Category;
@@ -101,13 +102,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public PageInfo selectAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Category> categoryList = categoryMapper.selectAll();
+        List<CategoryDTO> categoryList = categoryMapper.selectAll();
         return new PageInfo(categoryList);
     }
 
     @Override
-    public Category selectById(Integer id) {
-        Category category = categoryMapper.selectById(id);
+    public CategoryDTO selectById(Integer id) {
+        CategoryDTO category = categoryMapper.selectById(id);
         if (category == null) {
             throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
         }
@@ -117,8 +118,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public PageInfo selectByStatus(int status, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Category> categoryList = categoryMapper.selectByStatus(status);
+        List<CategoryDTO> categoryList = categoryMapper.selectByStatus(status);
         return new PageInfo(categoryList);
+    }
+
+    @Override
+    public List<CategoryDTO> selectFirstLevel() {
+        return categoryMapper.selectFirstLevel();
     }
 
     @Override

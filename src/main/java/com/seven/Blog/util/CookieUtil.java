@@ -46,8 +46,7 @@ public class CookieUtil {
         cookie.setDomain(SystemConstant.COOKIE_DOMAIN_NAME);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        // 默认cookie过期时间是一天
-        cookie.setMaxAge(60 * 60 * 24);
+        cookie.setMaxAge(Integer.parseInt(PropertiesUtil.getProperty("cookie.max.age", "86400")));
         response.addCookie(cookie);
     }
 

@@ -1,5 +1,6 @@
 package com.seven.Blog.dao;
 
+import com.seven.Blog.dto.backend.CategoryDTO;
 import com.seven.Blog.pojo.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,11 +44,13 @@ public interface CategoryMapper {
 
     /*--------------------------二期新增--------------------------------*/
 
-    List<Category> selectAll();
+    List<CategoryDTO> selectAll();
 
-    Category selectById(Integer id);
+    CategoryDTO selectById(Integer id);
 
-    List<Category> selectByStatus(Integer status);
+    List<CategoryDTO> selectByStatus(Integer status);
+
+    List<CategoryDTO> selectFirstLevel();
 
     Integer selectStatusById(Integer id);
 

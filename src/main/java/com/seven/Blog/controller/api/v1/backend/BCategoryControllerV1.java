@@ -1,6 +1,7 @@
 package com.seven.Blog.controller.api.v1.backend;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.backend.CategoryDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.form.CategoryForm;
 import com.seven.Blog.pojo.Category;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -39,8 +41,14 @@ public class BCategoryControllerV1 {
 
     @GetMapping("/{id}")
     public ServerResponse getCategoryById(@PathVariable("id") Integer id) {
-        Category category = categoryService.selectById(id);
+        CategoryDTO category = categoryService.selectById(id);
         return ServerResponse.success(category);
+    }
+
+    @GetMapping("/firstLevel")
+    public ServerResponse getFirstLevel() {
+        List<CategoryDTO> categoryDTOS = categoryService.selectFirstLevel();
+        return ServerResponse.success(categoryDTOS);
     }
 
     @PostMapping

@@ -20,7 +20,7 @@ public class RedisPoolUtil {
      */
     public static Long expire(String key, int expireTime) {
         Jedis jedis = RedisPool.getJedis();
-        Long result = jedis.expire(key, expireTime * 1000);
+        Long result = jedis.expire(key, expireTime);
         RedisPool.returnResource(jedis);
         return result;
     }
@@ -34,7 +34,7 @@ public class RedisPoolUtil {
      */
     public static String setExpireTime(String key, String value, int seconds) {
         Jedis jedis = RedisPool.getJedis();
-        String result = jedis.setex(key, seconds * 1000, value);
+        String result = jedis.setex(key, seconds, value);
         RedisPool.returnResource(jedis);
         return result;
     }
