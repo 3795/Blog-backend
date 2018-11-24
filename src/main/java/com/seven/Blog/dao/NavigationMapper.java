@@ -1,9 +1,10 @@
 package com.seven.Blog.dao;
 
-import com.seven.Blog.pojo.Category;
+import com.seven.Blog.dto.NavigationDTO;
 import com.seven.Blog.pojo.Navigation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Description: 导航功能的Mapper
  * Created At 2018/08/10
  */
+@Repository
 @Mapper
 public interface NavigationMapper {
 
@@ -35,4 +37,21 @@ public interface NavigationMapper {
      * @return
      */
     int getNavigationCount();
+
+    /*-----------------------------二期新增----------------------------*/
+
+    List<NavigationDTO> selectAll();
+
+    NavigationDTO selectById(Integer id);
+
+    List<NavigationDTO> selectByStatus(Integer status);
+
+    int insert(Navigation navigation);
+
+    int update(Navigation navigation);
+
+    int updateStatus(@Param("id") Integer id,
+                     @Param("status") Integer status);
+
+    int delete(Integer id);
 }

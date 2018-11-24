@@ -1,32 +1,26 @@
 package com.seven.Blog.dto;
 
+import lombok.*;
+
 /**
  * Created By Seven.wk
  * Description: 分类传输模型
  * Created At 2018/10/12
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class CategoryDTO {
 
-    private Integer id;     //分类id
+    private Integer id;
 
-    private String name;        //分类名称
+    private String name;
 
-    public CategoryDTO() {
-    }
+    private Integer parentId;
 
-    public Integer getId() {
-        return id;
-    }
+    private String parentName;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Integer status;
 }

@@ -59,7 +59,8 @@ public class INavigationController {
                                            BindingResult result) {
         if(result.hasErrors())
             return ServerResponse.error(result.getFieldError().getDefaultMessage());
-        int id = Integer.parseInt(navigationForm.getId());
+//        int id = Integer.parseInt(navigationForm.getId());
+        int id = -1;
         int priority = Integer.parseInt(navigationForm.getPriority());
         int status = Integer.parseInt(navigationForm.getStatus());
         Navigation navigation = new Navigation(id, navigationForm.getName(), priority,

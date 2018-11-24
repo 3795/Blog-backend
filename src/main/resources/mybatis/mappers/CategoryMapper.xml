@@ -74,7 +74,7 @@
 
     <!-- *************************二期工程************************************-->
 
-    <select id="selectAll" resultType="com.seven.Blog.dto.backend.CategoryDTO">
+    <select id="selectAll" resultType="com.seven.Blog.dto.CategoryDTO">
         select a.id, a.name, a.parent_id as parentId, b.name as parentName, a.status
         from category a, category b
         where a.parent_id = b.id
@@ -82,13 +82,13 @@
 
     </select>
 
-    <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.backend.CategoryDTO">
+    <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.CategoryDTO">
         select a.id, a.name, a.parent_id as parentId, b.name as parentName, a.status
         from category a, category b
         where a.id = #{id} and a.parent_id = b.id
     </select>
 
-    <select id="selectByStatus" resultType="com.seven.Blog.dto.backend.CategoryDTO" parameterType="Integer">
+    <select id="selectByStatus" resultType="com.seven.Blog.dto.CategoryDTO" parameterType="Integer">
         select a.id, a.name, a.parent_id as parentId, b.name as parentName, a.status
         from category a, category b
         where a.parent_id = b.id and status = #{status}
@@ -101,7 +101,7 @@
         where id = #{id}
     </select>
 
-    <select id="selectFirstLevel" resultType="com.seven.Blog.dto.backend.CategoryDTO">
+    <select id="selectFirstLevel" resultType="com.seven.Blog.dto.CategoryDTO">
         select id, name
         from category
         where parent_id = 0 and status = 1

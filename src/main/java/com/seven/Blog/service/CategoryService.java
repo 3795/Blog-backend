@@ -1,7 +1,7 @@
 package com.seven.Blog.service;
 
 import com.github.pagehelper.PageInfo;
-import com.seven.Blog.dto.backend.CategoryDTO;
+import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.vo.ServerResponse;
 

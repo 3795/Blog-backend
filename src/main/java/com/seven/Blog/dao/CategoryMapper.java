@@ -1,6 +1,6 @@
 package com.seven.Blog.dao;
 
-import com.seven.Blog.dto.backend.CategoryDTO;
+import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.pojo.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

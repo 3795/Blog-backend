@@ -1,10 +1,15 @@
 package com.seven.Blog.controller.api.v1.backend;
 
 import com.seven.Blog.constant.SystemConstant;
+import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
+import com.seven.Blog.pojo.User;
 import com.seven.Blog.util.CookieUtil;
+import com.seven.Blog.util.JsonUtil;
 import com.seven.Blog.util.RedisPoolUtil;
 import com.seven.Blog.vo.ServerResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +26,52 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/blog/v1/backend/user")
 @CrossOrigin
+@Slf4j
 public class BUserControllerV1 {
+
+    /**
+     * 获取用户的简要信息
+     * @param request
+     * @return
+     */
+    @GetMapping("/brief")
+    public ServerResponse getBriefInfo(HttpServletRequest request) {
+        UserDTO userDTO = null;
+        String key = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
+        String userJson = RedisPoolUtil.get(key);
+        User user = JsonUtil.string2Obj(userJson, User.class);
+        if (user != null) {
+            userDTO = new UserDTO(user.getUsername(), user.getAvatar());
+        }
+        return ServerResponse.success(userDTO);
+    }
+
+    /**
+     * 获取用户的详细信息
+     * @param request
+     * @return
+     */
+    @GetMapping("/detail")
+    public ServerResponse getDetailInfo(HttpServletRequest request) {
+        UserDTO userDTO = new UserDTO();
+        String key = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
+        String userJson = RedisPoolUtil.get(key);
+        User user = JsonUtil.string2Obj(userJson, User.class);
+        if (user != null) {
+            BeanUtils.copyProperties(user, userDTO);
+            userDTO.setId(null);
+        }
+        return ServerResponse.success(userDTO);
+    }
+
+    /**
+     * 确认用户登录
+     * @return
+     */
+    @GetMapping("isLogin")
+    public ServerResponse isLogin() {
+        return ServerResponse.success(true);
+    }
 
     /**
      * 用户退出登录

@@ -59,4 +59,52 @@
        select count(*) from navigation
     </select>
 
+    <!--***************************二期新增*****************************-->
+    <select id="selectAll" resultType="com.seven.Blog.dto.NavigationDTO">
+        select
+        <include refid="Base_Column_List"/>
+        from navigation
+    </select>
+
+    <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.NavigationDTO">
+        select
+        <include refid="Base_Column_List"/>
+        from navigation
+        where id = #{id}
+    </select>
+
+    <select id="selectByStatus" parameterType="Integer" resultType="com.seven.Blog.dto.NavigationDTO">
+        select
+        <include refid="Base_Column_List"/>
+        from navigation
+        where status = #{status}
+    </select>
+
+    <insert id="insert" parameterType="Navigation" >
+        insert into
+        navigation(name, priority, link, status)
+        values(#{name}, #{priority}, #{link}, #{status})
+    </insert>
+
+    <update id="update" parameterType="Navigation">
+        update navigation
+        set name = #{name},
+        priority = #{priority},
+        link = #{link},
+        status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="Map">
+        update navigation
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from navigation
+        where id = #{id}
+    </delete>
+
+
 </mapper>
