@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 /**
  * Created By Seven.wk
@@ -72,13 +73,14 @@ public class IArticleController {
         if(result.hasErrors()) {
             return ServerResponse.error(result.getFieldError().getDefaultMessage());
         }
-        int id= Integer.parseInt(articleForm.getId());
-        int categoryId= Integer.parseInt(articleForm.getCategoryId());
-        int status= Integer.parseInt(articleForm.getStatus());
-        Article article = new Article(id, articleForm.getTitle(),
-                articleForm.getImg(), articleForm.getSummary(),
-                articleForm.getContent(), categoryId, status);
-        return articleService.updateArticle(article);
+//        int id= Integer.parseInt(articleForm.getId());
+//        int categoryId= Integer.parseInt(articleForm.getCategoryId());
+//        int status= Integer.parseInt(articleForm.getStatus());
+//        Article article = new Article(id, articleForm.getTitle(),
+//                articleForm.getImg(), articleForm.getSummary(),
+//                articleForm.getContent(), categoryId, status, new Date(), new Date());
+//        return articleService.updateArticle(article);
+        return null;
     }
 
 }

@@ -1,7 +1,10 @@
 package com.seven.Blog.service;
 
+import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.vo.ServerResponse;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -56,5 +59,24 @@ public interface ArticleService {
     List<Article> getPublishedArticleByKeywords(String keywords, Integer page, Integer size);
 
     int getArticleCountByKeywords(String keywords);
+
+    /*-----------------------------------二期新增-----------------------------*/
+
+    PageInfo selectAll(int pageNum, int pageSize);
+
+    ArticleDTO selectById(Integer id);
+
+    PageInfo selectBriefInfo(int pageNum, int pageSize);
+
+    PageInfo selectBriefInfoByStatus(Integer status, int pageNum, int pageSize);
+
+    boolean insert(Article article);
+
+    boolean update(Article article);
+
+    boolean updateStatus(@Param("id") Integer id,
+                         @Param("status") Integer status);
+
+    boolean delete(Integer id);
 
 }

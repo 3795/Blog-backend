@@ -27,19 +27,20 @@ public class ArticleToArticleDTO {
      * @return
      */
     public ArticleDTO convert(Article article) {
-        ArticleDTO articleDTO = new ArticleDTO(article.getId(), article.getTitle(),
-                article.getImg(), article.getSummary(), article.getContent(),
-                article.getCreateTime(), article.getUpdateTime());
-        String categoryName = categoryService.getCategoryNameById(article.getCategoryId());
-        if(categoryName == null)
-            articleDTO.setCategoryName(ConstUtil.DEFAULT_CATEGORY_NAME);
-        else
-            articleDTO.setCategoryName(categoryName);
-        if(article.getStatus() == ConstUtil.ArticleStatus.UNPUBLISHED.getCode())
-            articleDTO.setStatusMsg(ConstUtil.ArticleStatus.UNPUBLISHED.getDesc());
-        else
-            articleDTO.setStatusMsg(ConstUtil.ArticleStatus.PUBLISHED.getDesc());
-        return articleDTO;
+//        ArticleDTO articleDTO = new ArticleDTO(article.getId(), article.getTitle(),
+//                article.getImg(), article.getSummary(), article.getContent(),
+//                article.getCreateTime(), article.getUpdateTime());
+//        String categoryName = categoryService.getCategoryNameById(article.getCategoryId());
+//        if(categoryName == null)
+//            articleDTO.setCategoryName(ConstUtil.DEFAULT_CATEGORY_NAME);
+//        else
+//            articleDTO.setCategoryName(categoryName);
+//        if(article.getStatus() == ConstUtil.ArticleStatus.UNPUBLISHED.getCode())
+//            articleDTO.setStatusMsg(ConstUtil.ArticleStatus.UNPUBLISHED.getDesc());
+//        else
+//            articleDTO.setStatusMsg(ConstUtil.ArticleStatus.PUBLISHED.getDesc());
+//        return articleDTO;
+        return null;
     }
 
     /**

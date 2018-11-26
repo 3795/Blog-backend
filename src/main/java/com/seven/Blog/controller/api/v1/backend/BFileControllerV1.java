@@ -1,4 +1,4 @@
-package com.seven.Blog.controller.api.manage;
+package com.seven.Blog.controller.api.v1.backend;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seven.Blog.enums.ResponseCodeEnum;
@@ -7,40 +7,39 @@ import com.seven.Blog.vo.ServerResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 /**
  * Created By Seven.wk
- * Description: 后台管理公用的api
- * Created At 2018/08/09
+ * Description: 文件管理
+ * Created At 2018/11/26
  */
-@RestController
-@RequestMapping("/api/manage")
-public class ICommonController {
+@RequestMapping("/blog/v1/backend")
+public class BFileControllerV1 {
 
     /**
-     * 文件上传API
+     * 上传图片
      * @param file
      * @return
+     * @throws IOException
      */
-    @PostMapping("/upload")
+    @PostMapping("/uploadImg")
     public ServerResponse upload(@RequestParam("file") MultipartFile file) throws IOException {
         if(!file.isEmpty()) {
-                String imgPath = FileUtil.uploadImg(file);
-                return ServerResponse.success(ResponseCodeEnum.FILE_UPLOAD_SUCCESS, imgPath);
+            String imgPath = FileUtil.uploadImg(file);
+            return ServerResponse.success(ResponseCodeEnum.FILE_UPLOAD_SUCCESS, imgPath);
         }
         return ServerResponse.error(ResponseCodeEnum.FILE_CANNOT_BE_EMPTY);
     }
 
     /**
-     * editor编辑器上传图片
+     * Editor上传图片
      * @param file
      * @return
      */
-    @PostMapping("/editorUpload")
+    @PostMapping("/edUploadImg")
     public String editorUpload(@RequestParam(value = "editormd-image-file") MultipartFile file) {
         JSONObject jsonObject = new JSONObject();
         if (!file.isEmpty()) {
@@ -61,5 +60,4 @@ public class ICommonController {
         }
         return jsonObject.toString();
     }
-
 }

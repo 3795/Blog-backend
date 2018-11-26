@@ -1,5 +1,9 @@
 package com.seven.Blog.form;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -7,86 +11,27 @@ import javax.validation.constraints.NotEmpty;
  * Description: 文章表单
  * Created At 2018/08/09
  */
+@Getter
+@Setter
+@NoArgsConstructor
 public class ArticleForm {
 
-    @NotEmpty(message = "ID不能为空")
-    private String id;     //文章id
-
     @NotEmpty(message = "标题不能为空")
-    private String title;   //文章标题
+    private String title;
 
     @NotEmpty(message = "图片路径不能为空")
-    private String img;     //文章标签图路径
+    private String img;
 
     @NotEmpty(message = "文章摘要不能为空")
-    private String summary;     //文章摘要
+    private String summary;
 
     @NotEmpty(message = "文章内容不能为空")
-    private String content;     //文章内容
+    private String content;
 
     @NotEmpty(message = "文章分类不能为空")
-    private String categoryId;      //文章所属分类
+    private String categoryId;
 
     @NotEmpty(message = "文章状态不能为空")
-    private String status;      //文章状态
+    private String status;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getSummary() {
-        if(summary.length() > 128)
-            summary = summary.substring(0, 128);
-        String pattern = "<img .*>";
-        summary = summary.replaceAll(pattern, "");
-        return summary + "...";
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
