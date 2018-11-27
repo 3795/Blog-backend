@@ -1,14 +1,17 @@
 package com.seven.Blog.dao;
 
+import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created By Seven.wk
  * Description: 用户信息接口
  * Created At 2018/08/06
  */
+@Repository
 @Mapper
 public interface UserMapper {
 
@@ -21,11 +24,9 @@ public interface UserMapper {
     User selectByAccountAndPassword(@Param("account") String account,
                                     @Param("password") String password);
 
-    User selectedUserByPrimaryKey(Integer id);
+    UserDTO selectById(Integer id);
 
-    int updateUser(@Param("id") Integer id,
-                   @Param("username") String username,
-                   @Param("avatar") String avatar);
+    int update(User user);
 
 
 }

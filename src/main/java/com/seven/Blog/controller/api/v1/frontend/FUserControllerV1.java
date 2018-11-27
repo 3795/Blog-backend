@@ -26,9 +26,7 @@ public class FUserControllerV1 {
 
     @GetMapping
     public ServerResponse getUser() {
-        User user = userService.getUser(userId);
-        UserDTO userDTO = new UserDTO();
-        BeanUtils.copyProperties(user, userDTO);
+        UserDTO userDTO = userService.getUser(userId);
         return ServerResponse.success(ResponseCodeEnum.SUCCESS, userDTO);
     }
 }

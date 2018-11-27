@@ -21,14 +21,14 @@
         and password = #{password}
     </select>
 
-    <select id="selectedUserByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.UserDTO">
         select 
         <include refid="Base_Column_List"/>
         from user
         where id = #{id}
     </select>
 
-    <update id="updateUser" parameterType="Map">
+    <update id="updateUser" parameterType="User">
         update user
         set username = #{username}, avatar = #{avatar}
         where id = #{id}

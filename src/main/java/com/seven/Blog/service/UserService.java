@@ -1,5 +1,6 @@
 package com.seven.Blog.service;
 
+import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.pojo.User;
 import com.seven.Blog.vo.ServerResponse;
 
@@ -17,7 +18,7 @@ public interface UserService {
      */
     User checkLoginInfo(String account, String password);
 
-    User getUser(Integer id);
+    UserDTO getUser(Integer id);
 
     ServerResponse updateUser(Integer id, String username, String avatar);
 }

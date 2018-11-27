@@ -167,8 +167,6 @@ public interface ArticleMapper {
 
     ArticleDTO selectById(Integer id);
 
-    List<ArticleDTO> selectBriefInfo();
-
     List<ArticleDTO> selectBriefInfoByStatus(Integer status);
 
     int insert(Article article);
@@ -180,5 +178,8 @@ public interface ArticleMapper {
 
     int delete(Integer id);
 
+    List<ArticleDTO> selectPublished();
+
+    List<ArticleDTO> search(String keywords);
 
 }

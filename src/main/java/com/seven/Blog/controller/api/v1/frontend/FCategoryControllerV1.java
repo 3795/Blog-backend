@@ -43,55 +43,55 @@ public class FCategoryControllerV1 {
      * @param page
      * @return
      */
-    @GetMapping("/{id}")
-    public ServerResponse category(@PathVariable("id") Integer id,
-                                   @RequestParam(value = "page", defaultValue = "1") Integer page) {
-        Category category = categoryService.getCategoryById(id);
-        if(category == null)
-            return ServerResponse.error(ResponseCodeEnum.PAGE_NOT_FOUND);
+//    @GetMapping("/{id}")
+//    public ServerResponse category(@PathVariable("id") Integer id,
+//                                   @RequestParam(value = "page", defaultValue = "1") Integer page) {
+//        Category category = categoryService.getCategoryById(id);
+//        if(category == null)
+//            return ServerResponse.error(ResponseCodeEnum.PAGE_NOT_FOUND);
+//
+//        //获取分页的相关数据
+//        int maxPage = (int) Math.ceil((float)getArticleCountByCategory(category, 0) / size);
+//        page = BasicUtil.getPage(page, maxPage);
+//
+//        if(category.getParentId() == 0) {       //一级分类
+//            String sql = "";
+//            List<Category> categoryList = categoryService.getChildCategory(category.getId());
+//            for(Category categoryItem : categoryList) {
+//                sql = sql + categoryItem.getId() + ",";
+//            }
+//            List<Article> articleList = articleService.getPublishedArticleByCategoryIds(sql, page, size);
+//            List<ArticleCardDTO> articleCardDTOList = articleToArticleCardDTO.convert(articleList);
+//            ArticleCardsDTO articleCardsDTO = new ArticleCardsDTO(articleCardDTOList, page, maxPage);
+//            return ServerResponse.success(articleCardsDTO);
+//        } else {        //二级分类
+//            List<Article> articleList = articleService.getPublishedArticleByCategoryId(category.getId(), page, size);
+//            List<ArticleCardDTO> articleCardDTOList = articleToArticleCardDTO.convert(articleList);
+//            ArticleCardsDTO articleCardsDTO = new ArticleCardsDTO(articleCardDTOList, page, maxPage);
+//            return ServerResponse.success(articleCardsDTO);
+//        }
+//
+//    }
 
-        //获取分页的相关数据
-        int maxPage = (int) Math.ceil((float)getArticleCountByCategory(category, 0) / size);
-        page = BasicUtil.getPage(page, maxPage);
 
-        if(category.getParentId() == 0) {       //一级分类
-            String sql = "";
-            List<Category> categoryList = categoryService.getChildCategory(category.getId());
-            for(Category categoryItem : categoryList) {
-                sql = sql + categoryItem.getId() + ",";
-            }
-            List<Article> articleList = articleService.getPublishedArticleByCategoryIds(sql, page, size);
-            List<ArticleCardDTO> articleCardDTOList = articleToArticleCardDTO.convert(articleList);
-            ArticleCardsDTO articleCardsDTO = new ArticleCardsDTO(articleCardDTOList, page, maxPage);
-            return ServerResponse.success(articleCardsDTO);
-        } else {        //二级分类
-            List<Article> articleList = articleService.getPublishedArticleByCategoryId(category.getId(), page, size);
-            List<ArticleCardDTO> articleCardDTOList = articleToArticleCardDTO.convert(articleList);
-            ArticleCardsDTO articleCardsDTO = new ArticleCardsDTO(articleCardDTOList, page, maxPage);
-            return ServerResponse.success(articleCardsDTO);
-        }
-
-    }
-
-
-    @GetMapping("/{id}/children")
-    public ServerResponse childrenCategories(@PathVariable("id") Integer id) {
-        CategoryInfo categoryInfo;
-        Category category = categoryService.getCategoryById(id);
-
-        if(category == null)
-            return ServerResponse.error(ResponseCodeEnum.PAGE_NOT_FOUND);
-
-        if(category.getParentId() == 0) {       //一级分类
-            List<Category> categoryList = categoryService.getChildCategory(category.getId());
-            List<CategoryDTO> categoryDtos = CategoryToCategoryDTO.convert(categoryList);
-            categoryInfo = new CategoryInfo(category.getName(), categoryDtos);
-        }
-        else
-            categoryInfo = new CategoryInfo(category.getName());
-
-        return ServerResponse.success(categoryInfo);
-    }
+//    @GetMapping("/{id}/children")
+//    public ServerResponse childrenCategories(@PathVariable("id") Integer id) {
+//        CategoryInfo categoryInfo;
+//        Category category = categoryService.getCategoryById(id);
+//
+//        if(category == null)
+//            return ServerResponse.error(ResponseCodeEnum.PAGE_NOT_FOUND);
+//
+//        if(category.getParentId() == 0) {       //一级分类
+//            List<Category> categoryList = categoryService.getChildCategory(category.getId());
+//            List<CategoryDTO> categoryDtos = CategoryToCategoryDTO.convert(categoryList);
+//            categoryInfo = new CategoryInfo(category.getName(), categoryDtos);
+//        }
+//        else
+//            categoryInfo = new CategoryInfo(category.getName());
+//
+//        return ServerResponse.success(categoryInfo);
+//    }
 
     /**
      * 获得文章数
@@ -99,16 +99,16 @@ public class FCategoryControllerV1 {
      * @param count
      * @return
      */
-    private Integer getArticleCountByCategory(Category category, int count) {
-        if(category.getParentId() == 0) {
-            List<Category> categoryList = categoryService.getChildCategory(category.getId());
-            for(Category categoryItem : categoryList) {
-                count = getArticleCountByCategory(categoryItem, count);
-            }
-            return count;
-        } else {
-            count += articleService.getArticleCountByCategoryId(category.getId());
-            return count;
-        }
-    }
+//    private Integer getArticleCountByCategory(Category category, int count) {
+//        if(category.getParentId() == 0) {
+//            List<Category> categoryList = categoryService.getChildCategory(category.getId());
+//            for(Category categoryItem : categoryList) {
+//                count = getArticleCountByCategory(categoryItem, count);
+//            }
+//            return count;
+//        } else {
+//            count += articleService.getArticleCountByCategoryId(category.getId());
+//            return count;
+//        }
+//    }
 }

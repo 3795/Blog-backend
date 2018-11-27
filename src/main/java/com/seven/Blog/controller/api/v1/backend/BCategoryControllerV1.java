@@ -1,6 +1,7 @@
 package com.seven.Blog.controller.api.v1.backend;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.bo.ParentCateBO;
 import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.form.CategoryForm;
@@ -131,5 +132,11 @@ public class BCategoryControllerV1 {
     public ServerResponse deleteCategory(@PathVariable(value = "id") Integer id) {
         categoryService.delete(id);
         return ServerResponse.success(ResponseCodeEnum.DELETE_SUCCESS);
+    }
+
+    @GetMapping("/cascade")
+    public ServerResponse selectCascadeCategory() {
+        List<ParentCateBO> parentCateBOList = categoryService.selectCascadeCate();
+        return ServerResponse.success(parentCateBOList);
     }
 }

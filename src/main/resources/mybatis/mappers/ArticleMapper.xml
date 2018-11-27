@@ -169,13 +169,6 @@
         and a.id = #{id}
     </select>
 
-    <select id="selectBriefInfo" resultType="com.seven.Blog.dto.ArticleDTO">
-        select a.id, title, create_time as createTime, a.status ,c.name as categoryName
-        from article a, category c
-        where a.category_id = c.id
-        order by create_time desc
-    </select>
-
     <select id="selectBriefInfoByStatus" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
         select a.id, title, create_time as createTime, a.status ,c.name as categoryName
         from article a, category c
@@ -212,5 +205,22 @@
         delete from article
         where id = #{id}
     </delete>
+
+    <select id="selectPublished" resultType="com.seven.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and a.status = 1
+        order by create_time desc
+    </select>
+
+    <select id="search" parameterType="String" resultType="com.seven.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and title like concat ('%', #{keywords}, '%')
+        and a.status = 1
+        order by create_time desc
+    </select>
 
 </mapper>

@@ -3,6 +3,8 @@ package com.seven.Blog.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.Exception.SystemException;
+import com.seven.Blog.bo.ChildrenCateBO;
+import com.seven.Blog.bo.ParentCateBO;
 import com.seven.Blog.dao.CategoryMapper;
 import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.enums.CommonStatusEnum;
@@ -174,5 +176,19 @@ public class CategoryServiceImpl implements CategoryService {
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
         return true;
+    }
+
+    @Override
+    public List<ParentCateBO> selectCascadeCate() {
+        List<ParentCateBO> parentCateBOList = categoryMapper.selectParent();
+
+        if (parentCateBOList != null) {
+            for (ParentCateBO p : parentCateBOList) {
+                List<ChildrenCateBO> childrenCateBOList = categoryMapper.selectChildren(p.getValue());
+                p.setChildren(childrenCateBOList);
+            }
+        }
+
+        return parentCateBOList;
     }
 }

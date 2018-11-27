@@ -2,6 +2,7 @@ package com.seven.Blog.service.impl;
 
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.UserMapper;
+import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.User;
 import com.seven.Blog.vo.ServerResponse;
@@ -35,15 +36,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Integer id) {
-        return userMapper.selectedUserByPrimaryKey(id);
+    public UserDTO getUser(Integer id) {
+        return userMapper.selectById(id);
     }
 
     @Override
     public ServerResponse updateUser(Integer id, String username, String avatar) {
-        int result = userMapper.updateUser(id, username, avatar);
-        if(result == 1)
-            return ServerResponse.success("更改信息成功");
+//        int result = userMapper.updateUser(id, username, avatar);
+//        if(result == 1)
+//            return ServerResponse.success("更改信息成功");
         return ServerResponse.success("更改信息失败");
     }
 }

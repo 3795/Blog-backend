@@ -1,6 +1,7 @@
 package com.seven.Blog.service;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.bo.ParentCateBO;
 import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.pojo.Category;
 import com.seven.Blog.vo.ServerResponse;
@@ -55,4 +56,6 @@ public interface CategoryService {
     Boolean changeStatus(Integer id);
 
     Boolean delete(Integer id);
+
+    List<ParentCateBO> selectCascadeCate();
 }
