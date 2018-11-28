@@ -82,4 +82,9 @@ public class NavigationServiceImpl implements NavigationService {
         }
         return true;
     }
+
+    @Override
+    public List<NavigationDTO> selectItem() {
+        return navigationMapper.selectItem();
+    }
 }

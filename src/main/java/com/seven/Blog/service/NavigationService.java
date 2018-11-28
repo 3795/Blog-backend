@@ -27,4 +27,6 @@ public interface NavigationService {
     Boolean updateStatus(Integer id, Integer status);
 
     Boolean delete(Integer id);
+
+    List<NavigationDTO> selectItem();
 }

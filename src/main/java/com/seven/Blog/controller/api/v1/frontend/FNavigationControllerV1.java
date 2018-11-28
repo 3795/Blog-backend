@@ -1,6 +1,7 @@
 package com.seven.Blog.controller.api.v1.frontend;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.NavigationDTO;
 import com.seven.Blog.enums.CommonStatusEnum;
 import com.seven.Blog.service.NavigationService;
 import com.seven.Blog.vo.ServerResponse;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -27,8 +30,8 @@ public class FNavigationControllerV1 {
      */
     @GetMapping
     public ServerResponse getNavigation() {
-        PageInfo pageInfo = navigationService.selectByStatus(CommonStatusEnum.ON.getCode(), 1, 10);
-        return ServerResponse.success(pageInfo);
+        List<NavigationDTO> list = navigationService.selectItem();
+        return ServerResponse.success(list);
     }
 
 }

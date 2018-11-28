@@ -58,5 +58,11 @@
         where id = #{id}
     </delete>
 
+    <select id="selectItem" resultType="com.seven.Blog.dto.NavigationDTO">
+        select name, link
+        from navigation
+        where status = 1
+        order by priority desc
+    </select>
 
 </mapper>
