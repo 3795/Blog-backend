@@ -30,5 +30,9 @@ public class User {
 
     private Date createTime = new Date();
 
-
+    public User(Integer id, String username, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.avatar = avatar;
+    }
 }

@@ -1,6 +1,6 @@
 package com.seven.Blog.util;
 
-import com.seven.Blog.bo.Captcha;
+import com.seven.Blog.bo.CaptchaBO;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,7 +19,7 @@ public class CaptchaUtil {
      * @param height    验证码高度
      * @return
      */
-    public static Captcha createCaptcha(int width, int height) {
+    public static CaptchaBO createCaptcha(int width, int height) {
         BufferedImage captchaImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Graphics graphics = captchaImage.createGraphics();
@@ -52,7 +52,7 @@ public class CaptchaUtil {
         }
         graphics.dispose();
 
-        return new Captcha(captchaImage, sRand);
+        return new CaptchaBO(captchaImage, sRand);
     }
 
     /**

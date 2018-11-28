@@ -2,7 +2,6 @@ package com.seven.Blog.service;
 
 import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.pojo.User;
-import com.seven.Blog.vo.ServerResponse;
 
 /**
  * Created By Seven.wk
@@ -10,15 +9,10 @@ import com.seven.Blog.vo.ServerResponse;
  * Created At 2018/08/06
  */
 public interface UserService {
-    /**
-     * 根据用户输入的账号和密码获取用户信息
-     * @param account       账号
-     * @param password      密码
-     * @return      用户信息
-     */
+
     User checkLoginInfo(String account, String password);
 
     UserDTO getUser(Integer id);
 
-    ServerResponse updateUser(Integer id, String username, String avatar);
+    Boolean updateInfo(User user);
 }

@@ -12,68 +12,6 @@
         id, name, parent_id, status
     </sql>
 
-    <select id="selectedByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from category
-        where id = #{id}
-    </select>
-    
-    <select id="getAllCategory" resultMap="BaseResultMap" parameterType="Map">
-        select
-        <include refid="Base_Column_List"/>
-        from category
-        limit #{size}
-        offset #{offset}
-    </select>
-    
-    <insert id="addCategory" parameterType="Map">
-        insert into
-        category (name, parent_id, status)
-        values(#{name}, #{parentId}, #{status})
-    </insert>
-    
-    <update id="updateCategory" parameterType="Category">
-        update category
-        set
-        name = #{name},
-        parent_id = #{parentId},
-        status = #{status}
-        where id = #{id}
-    </update>
-    
-    <delete id="deleteCategoryByPrimaryKey" parameterType="Integer">
-        delete from category
-        where
-        id = #{id}
-    </delete>
-
-    <select id="selectedCategoryNameByPrimaryKey" resultType="String" parameterType="Integer">
-        select name from category where id = #{id}
-    </select>
-
-    <select id="getCategoriesByStatus" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from category
-        where
-        status = #{status}
-    </select>
-
-    <select id="getChildCategory" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from category
-        where parent_id = #{parentId}
-        and status = 1
-    </select>
-
-    <select id="getCategoryCount" resultType="Integer">
-        select count(*) from category
-    </select>
-
-    <!-- *************************二期工程************************************-->
-
     <select id="selectAll" resultType="com.seven.Blog.dto.CategoryDTO">
         select a.id, a.name, a.parent_id as parentId, b.name as parentName, a.status
         from category a, category b
@@ -142,6 +80,18 @@
 
     <select id="selectChildren" resultType="com.seven.Blog.bo.ChildrenCateBO">
         select id as value, name as label
+        from category
+        where parent_id = #{parentId} and status = 1
+    </select>
+
+    <select id="selectChildrenId" parameterType="Integer" resultType="Integer">
+        select id
+        from category
+        where parent_id = #{id}
+    </select>
+
+    <select id="selectChildrenInfo" parameterType="Integer" resultType="com.seven.Blog.dto.CategoryDTO">
+        select id, name
         from category
         where parent_id = #{parentId} and status = 1
     </select>

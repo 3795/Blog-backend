@@ -13,7 +13,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,33 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 public class AuthAspect {
-
-    /**
-     * 访问管理系统页面时权限验证
-     */
-    @Pointcut("within(com.seven.Blog.controller.manage.ManageController)")
-    public void pageVerify() {}
-
-    @Around("pageVerify()")
-    public Object doPageVerify(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
-        String token = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
-        if (StringUtils.isEmpty(token)) {
-            return new ModelAndView("redirect:/manage/login");
-        }
-
-        String userJson = RedisPoolUtil.get(token);
-        if (StringUtils.isEmpty(userJson)) {
-            return new ModelAndView("redirect:/manage/login");
-        }
-
-        // 登录状态，在管理系统的每一步操作都会重置token过期时间
-        RedisPoolUtil.expire(token, SystemConstant.REDIS_EXPIRE_TIME);
-
-        return joinPoint.proceed();
-
-    }
 
     /**
      * 访问管理系统Api时权限验证

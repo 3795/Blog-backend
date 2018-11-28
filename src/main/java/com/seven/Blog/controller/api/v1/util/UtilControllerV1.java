@@ -1,6 +1,6 @@
 package com.seven.Blog.controller.api.v1.util;
 
-import com.seven.Blog.bo.Captcha;
+import com.seven.Blog.bo.CaptchaBO;
 import com.seven.Blog.constant.SystemConstant;
 import com.seven.Blog.util.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class UtilControllerV1 {
                         @RequestParam(value = "height", defaultValue = "35") Integer height,
                         HttpSession httpSession,
                         HttpServletResponse response) throws IOException {
-        Captcha captcha = CaptchaUtil.createCaptcha(width, height);
+        CaptchaBO captcha = CaptchaUtil.createCaptcha(width, height);
         httpSession.setAttribute(SystemConstant.CAPTCHA_CODE, captcha.getCaptchaCode());
         ImageIO.write(captcha.getCaptchaImage(), "JPEG", response.getOutputStream());
 

@@ -19,33 +19,6 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
-    Category selectedByPrimaryKey(Integer key);
-
-    List<Category> getAllCategory(@Param("offset") Integer offset,
-                                  @Param("size") Integer size);
-
-    int addCategory(@Param("name") String name,
-                    @Param("parentId") Integer parentId,
-                    @Param("status") Integer status);
-
-    int updateCategory(Category category);
-
-    int deleteCategoryByPrimaryKey(Integer key);
-
-    String selectedCategoryNameByPrimaryKey(Integer key);
-
-    List<Category> getCategoriesByStatus(Integer status);
-
-    List<Category> getChildCategory(Integer parentId);
-
-    /**
-     * 获得所有分类的数量
-     * @return
-     */
-    int getCategoryCount();
-
-    /*--------------------------二期新增--------------------------------*/
-
     List<CategoryDTO> selectAll();
 
     CategoryDTO selectById(Integer id);
@@ -68,5 +41,9 @@ public interface CategoryMapper {
     List<ParentCateBO> selectParent();
 
     List<ChildrenCateBO> selectChildren(Integer parentId);
+
+    List<Integer> selectChildrenId(Integer id);
+
+    List<CategoryDTO> selectChildrenInfo(Integer parentId);
 
 }

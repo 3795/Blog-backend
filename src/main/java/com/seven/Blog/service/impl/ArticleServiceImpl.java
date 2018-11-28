@@ -5,11 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.ArticleMapper;
 import com.seven.Blog.dto.ArticleDTO;
+import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Article;
-import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.ArticleService;
-import com.seven.Blog.util.ConstUtil;
+import com.seven.Blog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public PageInfo selectAll(int pageNum, int pageSize) {
@@ -96,6 +99,23 @@ public class ArticleServiceImpl implements ArticleService {
     public PageInfo search(String keywords, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ArticleDTO> articleDTOList = articleMapper.search(keywords);
+        return new PageInfo(articleDTOList);
+    }
+
+    @Override
+    public PageInfo selectPublishedByCate(Integer parentId, int pageNum, int pageSize) {
+        CategoryDTO category = categoryService.selectById(parentId);
+        List<ArticleDTO> articleDTOList;
+
+        // 该分类为一级分类
+        if (category.getParentId() == 0) {
+            List<Integer> idList = categoryService.selectChildrenId(category.getId());
+            PageHelper.startPage(pageNum, pageSize);
+            articleDTOList = articleMapper.selectPublishedByCategories(idList);
+        } else {
+            PageHelper.startPage(pageNum, pageSize);
+            articleDTOList = articleMapper.selectPublishedByCategoryId(category.getId());
+        }
         return new PageInfo(articleDTOList);
     }
 }

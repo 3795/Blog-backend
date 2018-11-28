@@ -19,14 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/blog/v1/user")
 public class FUserControllerV1 {
+
     @Autowired
     private UserService userService;
 
     private final Integer userId = 1;
 
+    /**
+     * 获取用户的基本信息
+     * @return
+     */
     @GetMapping
     public ServerResponse getUser() {
         UserDTO userDTO = userService.getUser(userId);
-        return ServerResponse.success(ResponseCodeEnum.SUCCESS, userDTO);
+        return ServerResponse.success(userDTO);
     }
 }

@@ -3,10 +3,7 @@ package com.seven.Blog.service;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
-import com.seven.Blog.vo.ServerResponse;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -33,4 +30,7 @@ public interface ArticleService {
     PageInfo selectPublished(int pageNum, int pageSize);
 
     PageInfo search(String keywords, int pageNum, int pageSize);
+
+    PageInfo selectPublishedByCate(Integer categoryId, int pageNum, int pageSize);
+
 }

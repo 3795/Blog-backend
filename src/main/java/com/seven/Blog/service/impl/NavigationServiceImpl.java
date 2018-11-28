@@ -8,8 +8,6 @@ import com.seven.Blog.dto.NavigationDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Navigation;
 import com.seven.Blog.service.NavigationService;
-import com.seven.Blog.util.ConstUtil;
-import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,55 +23,6 @@ public class NavigationServiceImpl implements NavigationService {
 
     @Autowired
     private NavigationMapper navigationMapper;
-
-    public List<Navigation> getAllNavigation() {
-        return navigationMapper.getAllNavigation();
-    }
-
-    @Override
-    public List<Navigation> getAvailableNavigation() {
-        return navigationMapper.getNavigationByStatus(ConstUtil.NavigationStatus.ABLE.getCode());
-    }
-
-    @Override
-    public ServerResponse addNavigation(String name, Integer priority, String link, Integer status) {
-        int result = navigationMapper.addNavigation(name, priority, link, status);
-        if(result == 1)
-            return ServerResponse.success("添加导航成功");
-        return ServerResponse.error("添加导航失败");
-    }
-
-    @Override
-    public ServerResponse updateNavigation(Navigation navigation) {
-        int result = navigationMapper.updateNavigation(navigation);
-        if(result == 1)
-            return ServerResponse.success("修改导航成功");
-        return ServerResponse.error("修改导航失败");
-    }
-
-    @Override
-    public ServerResponse deleteNavigation(Integer id) {
-        int result = navigationMapper.deleteNavigationByPrimaryKey(id);
-        if(result == 1)
-            return ServerResponse.success("删除导航成功");
-        return ServerResponse.error("删除导航失败");
-    }
-
-    @Override
-    public ServerResponse changeCategoryStatus(Integer id) {
-        Navigation navigation = navigationMapper.selectedByPrimaryKey(id);
-        if(navigation.getStatus() == ConstUtil.NavigationStatus.ABLE.getCode())
-            navigation.setStatus(ConstUtil.NavigationStatus.DISABLE.getCode());
-        else
-            navigation.setStatus(ConstUtil.NavigationStatus.ABLE.getCode());
-        int result = navigationMapper.updateNavigation(navigation);
-        if(result == 1)
-            return ServerResponse.success("更改状态成功");
-        return ServerResponse.error("更改状态失败");
-    }
-
-
-    /*---------------------------二期新增---------------------------------------*/
 
     @Override
     public PageInfo selectAll(int pageNum, int pageSize) {

@@ -14,20 +14,6 @@ import java.util.List;
  */
 public interface NavigationService {
 
-    List<Navigation> getAllNavigation();
-
-    List<Navigation> getAvailableNavigation();
-
-    ServerResponse addNavigation(String name, Integer priority, String link, Integer status);
-
-    ServerResponse updateNavigation(Navigation navigation);
-
-    ServerResponse deleteNavigation(Integer id);
-
-    ServerResponse changeCategoryStatus(Integer id);
-
-    /*---------------------------二期新增---------------------------------------*/
-
     PageInfo selectAll(int pageNum, int pageSize);
 
     NavigationDTO selectById(Integer id);

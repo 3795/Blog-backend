@@ -1,16 +1,13 @@
 package com.seven.Blog.controller.api.v1.frontend;
 
-import com.seven.Blog.convert.NavigationToNavigationDTO;
-import com.seven.Blog.dto.NavigationDTO;
-import com.seven.Blog.pojo.Navigation;
+import com.github.pagehelper.PageInfo;
+import com.seven.Blog.enums.CommonStatusEnum;
 import com.seven.Blog.service.NavigationService;
 import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -24,12 +21,14 @@ public class FNavigationControllerV1 {
     @Autowired
     private NavigationService navigationService;
 
+    /**
+     * 获取导航链接信息
+     * @return
+     */
     @GetMapping
     public ServerResponse getNavigation() {
-        List<NavigationDTO> navigationDTOList;
-        List<Navigation> navigationList = navigationService.getAvailableNavigation();
-        navigationDTOList = NavigationToNavigationDTO.convert(navigationList);
-        return ServerResponse.success(navigationDTOList);
+        PageInfo pageInfo = navigationService.selectByStatus(CommonStatusEnum.ON.getCode(), 1, 10);
+        return ServerResponse.success(pageInfo);
     }
 
 }

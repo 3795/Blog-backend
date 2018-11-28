@@ -5,7 +5,6 @@ import com.seven.Blog.dao.UserMapper;
 import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.User;
-import com.seven.Blog.vo.ServerResponse;
 import com.seven.Blog.service.UserService;
 import com.seven.Blog.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
@@ -37,14 +36,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUser(Integer id) {
+        UserDTO userDTO = userMapper.selectById(id);
+        if (userDTO == null) {
+            log.warn("用户{}不存在", id);
+            throw new SystemException(ResponseCodeEnum.USER_NOT_EXISTS);
+        }
         return userMapper.selectById(id);
     }
 
     @Override
-    public ServerResponse updateUser(Integer id, String username, String avatar) {
-//        int result = userMapper.updateUser(id, username, avatar);
-//        if(result == 1)
-//            return ServerResponse.success("更改信息成功");
-        return ServerResponse.success("更改信息失败");
+    public Boolean updateInfo(User user) {
+        int result = userMapper.update(user);
+        if (result != 1) {
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+        return true;
     }
 }

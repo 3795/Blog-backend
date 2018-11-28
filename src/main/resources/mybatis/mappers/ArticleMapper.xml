@@ -223,4 +223,25 @@
         order by create_time desc
     </select>
 
+    <select id="selectPublishedByCategories" parameterType="List" resultType="com.seven.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and a.category_id in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and a.status = 1
+        order by create_time desc
+    </select>
+
+    <select id="selectPublishedByCategoryId" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and a.category_id = #{id}
+        and a.status = 1
+        order by create_time desc
+    </select>
+
 </mapper>

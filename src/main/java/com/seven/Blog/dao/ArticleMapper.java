@@ -182,4 +182,8 @@ public interface ArticleMapper {
 
     List<ArticleDTO> search(String keywords);
 
+    List<ArticleDTO> selectPublishedByCategories(List<Integer> idList);
+
+    List<ArticleDTO> selectPublishedByCategoryId(Integer id);
+
 }

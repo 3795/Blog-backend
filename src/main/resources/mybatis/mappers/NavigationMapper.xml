@@ -11,55 +11,7 @@
     <sql id="Base_Column_List">
         id, name, priority, link, status
     </sql>
-    
-    <insert id="addNavigation" parameterType="Map">
-        insert into
-        navigation(name, priority, link, status)
-        values(#{name}, #{priority}, #{link}, #{status})
-    </insert>
 
-    <select id="getAllNavigation" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from navigation
-    </select>
-
-    <select id="getNavigationByStatus" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from navigation
-        where status = #{status}
-        order by priority desc
-    </select>
-
-    <delete id="deleteNavigationByPrimaryKey" parameterType="Integer">
-        delete from navigation
-        where
-        id = #{id}
-    </delete>
-
-    <update id="updateNavigation" parameterType="Navigation">
-        update navigation
-        set
-        name = #{name},
-        priority = #{priority},
-        link = #{link},
-        status = #{status}
-        where id = #{id}
-    </update>
-
-    <select id="selectedByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from navigation
-        where id = #{id}
-    </select>
-    
-    <select id="getNavigationCount" resultType="Integer">
-       select count(*) from navigation
-    </select>
-
-    <!--***************************二期新增*****************************-->
     <select id="selectAll" resultType="com.seven.Blog.dto.NavigationDTO">
         select
         <include refid="Base_Column_List"/>
