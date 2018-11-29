@@ -2,6 +2,8 @@ package com.seven.Blog.controller.api.v1.frontend;
 
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.dto.ArticleDTO;
+import com.seven.Blog.enums.CommonStatusEnum;
+import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +28,39 @@ public class FArticleControllerV1 {
         return ServerResponse.success(pageInfo);
     }
 
-
+    /**
+     * 根据文章ID查找文章信息
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ServerResponse getArticleById(@PathVariable("id") Integer id) {
         ArticleDTO article = articleService.selectById(id);
         return ServerResponse.success(article);
     }
 
+    /**
+     * 根据关键字查找文章
+     * @param keywords
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @GetMapping("/search")
     public ServerResponse search(@RequestParam("keywords") String keywords,
                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         PageInfo pageInfo = articleService.search(keywords, pageNum, pageSize);
         return ServerResponse.success(pageInfo);
+    }
+
+    /**
+     * 统计文章数量
+     * @return
+     */
+    @GetMapping("/count")
+    public ServerResponse count() {
+        int count = articleService.countByStatus(CommonStatusEnum.ON.getCode());
+        return ServerResponse.success(count);
     }
 }

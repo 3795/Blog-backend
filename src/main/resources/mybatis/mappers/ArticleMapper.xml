@@ -244,4 +244,12 @@
         order by create_time desc
     </select>
 
+    <select id="count" resultType="Integer">
+        select count(1) from article
+    </select>
+
+    <select id="countByStatus" parameterType="Integer" resultType="Integer">
+        select count(1) from article where status = #{status}
+    </select>
+
 </mapper>

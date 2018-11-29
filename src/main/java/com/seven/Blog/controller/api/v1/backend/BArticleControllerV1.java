@@ -124,4 +124,20 @@ public class BArticleControllerV1 {
         articleService.delete(id);
         return ServerResponse.success(ResponseCodeEnum.DELETE_SUCCESS);
     }
+
+    /**
+     * 统计文章的数量
+     * @param status
+     * @return
+     */
+    @GetMapping("/count")
+    public ServerResponse count(@RequestParam(value = "status", defaultValue = "-1") Integer status) {
+        int result = 0;
+        if (status == -1) {
+            result = articleService.countAll();
+        } else {
+            result = articleService.countByStatus(status);
+        }
+        return ServerResponse.success(result);
+    }
 }

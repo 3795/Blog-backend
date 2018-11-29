@@ -48,4 +48,14 @@ public class FCategoryControllerV1 {
         return ServerResponse.success(categoryInfo);
     }
 
+    /**
+     * 统计分类的个数
+     * @return
+     */
+    @GetMapping("/count")
+    public ServerResponse count() {
+        int result = categoryService.count();
+        return ServerResponse.success(result);
+    }
+
 }

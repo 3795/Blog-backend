@@ -96,4 +96,8 @@
         where parent_id = #{parentId} and status = 1
     </select>
 
+    <select id="count" resultType="Integer">
+        select count(1) from category where status = 1
+    </select>
+
 </mapper>
