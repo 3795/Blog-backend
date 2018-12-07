@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  * Created At 2018/11/10
  */
 @RestController
-@RequestMapping("/blog/v1/backend")
+@RequestMapping("/backend")
 @Slf4j
 public class BLoginControllerV1 {
 

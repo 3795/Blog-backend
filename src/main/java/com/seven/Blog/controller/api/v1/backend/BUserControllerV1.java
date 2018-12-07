@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created At 2018/11/14
  */
 @RestController
-@RequestMapping("/blog/v1/backend/user")
+@RequestMapping("/backend/user")
 @CrossOrigin
 @Slf4j
 public class BUserControllerV1 {

@@ -17,7 +17,7 @@ import java.io.IOException;
  * Description: 文件管理
  * Created At 2018/11/26
  */
-@RequestMapping("/blog/v1/backend")
+@RequestMapping("/backend")
 @RestController
 public class BFileControllerV1 {
 

@@ -1,7 +1,6 @@
 package com.seven.Blog.controller.api.v1.backend;
 
 import com.github.pagehelper.PageInfo;
-import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.form.ArticleForm;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -21,7 +19,7 @@ import java.util.List;
  * Created At 2018/11/11
  */
 @RestController
-@RequestMapping("/blog/v1/backend/article")
+@RequestMapping("/backend/article")
 public class BArticleControllerV1 {
 
     @Autowired

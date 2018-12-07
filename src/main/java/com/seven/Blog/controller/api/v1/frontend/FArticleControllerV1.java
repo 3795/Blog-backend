@@ -3,7 +3,6 @@ package com.seven.Blog.controller.api.v1.frontend;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.enums.CommonStatusEnum;
-import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Created At 2018/11/15
  */
 @RestController
-@RequestMapping("/blog/v1/article")
+@RequestMapping("/article")
 public class FArticleControllerV1 {
 
     @Autowired

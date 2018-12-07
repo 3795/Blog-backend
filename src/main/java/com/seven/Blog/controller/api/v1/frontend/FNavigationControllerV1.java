@@ -1,8 +1,6 @@
 package com.seven.Blog.controller.api.v1.frontend;
 
-import com.github.pagehelper.PageInfo;
 import com.seven.Blog.dto.NavigationDTO;
-import com.seven.Blog.enums.CommonStatusEnum;
 import com.seven.Blog.service.NavigationService;
 import com.seven.Blog.vo.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ import java.util.List;
  * Created At 2018/11/15
  */
 @RestController
-@RequestMapping("/blog/v1/navigation")
+@RequestMapping("/navigation")
 public class FNavigationControllerV1 {
 
     @Autowired

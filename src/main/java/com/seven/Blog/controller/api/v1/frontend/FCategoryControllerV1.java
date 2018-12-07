@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Created At 2018/11/15
  */
 @RestController
-@RequestMapping("/blog/v1/category")
+@RequestMapping("/category")
 public class FCategoryControllerV1 {
     @Autowired
     private CategoryService categoryService;
