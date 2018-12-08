@@ -31,4 +31,6 @@ public interface NavigationMapper {
                      @Param("status") Integer status);
 
     int delete(Integer id);
+
+    List<NavigationDTO> selectItem();
 }

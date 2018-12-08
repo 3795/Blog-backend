@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * Created At 2018/11/24
  */
 @RestController
-@RequestMapping("/blog/v1/backend/navigation")
+@RequestMapping("/backend/navigation")
 public class BNavigationControllerV1 {
 
     @Autowired

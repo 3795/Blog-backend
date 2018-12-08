@@ -46,4 +46,6 @@ public interface CategoryMapper {
 
     List<CategoryDTO> selectChildrenInfo(Integer parentId);
 
+    int count();
+
 }

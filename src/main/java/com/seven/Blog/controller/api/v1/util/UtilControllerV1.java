@@ -20,7 +20,7 @@ import java.io.IOException;
  * Created At 2018/11/10
  */
 @RestController
-@RequestMapping("/blog/v1")
+@RequestMapping
 @Slf4j
 public class UtilControllerV1 {
 

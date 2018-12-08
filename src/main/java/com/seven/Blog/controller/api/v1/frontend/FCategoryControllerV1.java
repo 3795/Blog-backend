@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Created At 2018/11/15
  */
 @RestController
-@RequestMapping("/blog/v1/category")
+@RequestMapping("/category")
 public class FCategoryControllerV1 {
     @Autowired
     private CategoryService categoryService;
@@ -46,6 +46,16 @@ public class FCategoryControllerV1 {
     public ServerResponse getChildren(@RequestParam("id") Integer id) {
         CategoryInfo categoryInfo = categoryService.selectParentAndChildren(id);
         return ServerResponse.success(categoryInfo);
+    }
+
+    /**
+     * 统计分类的个数
+     * @return
+     */
+    @GetMapping("/count")
+    public ServerResponse count() {
+        int result = categoryService.count();
+        return ServerResponse.success(result);
     }
 
 }

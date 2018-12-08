@@ -36,4 +36,6 @@ public interface CategoryService {
     List<Integer> selectChildrenId(Integer id);
 
     CategoryInfo selectParentAndChildren(Integer id);
+
+    int count();
 }

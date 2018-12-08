@@ -118,4 +118,14 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return new PageInfo(articleDTOList);
     }
+
+    @Override
+    public int countAll() {
+        return articleMapper.count();
+    }
+
+    @Override
+    public int countByStatus(Integer status) {
+        return articleMapper.countByStatus(status);
+    }
 }

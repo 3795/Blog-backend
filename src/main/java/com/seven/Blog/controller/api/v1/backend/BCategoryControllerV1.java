@@ -21,7 +21,7 @@ import java.util.List;
  * Created At 2018/11/21
  */
 @RestController
-@RequestMapping("/blog/v1/backend/category")
+@RequestMapping("/backend/category")
 public class BCategoryControllerV1 {
 
     @Autowired

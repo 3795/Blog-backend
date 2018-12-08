@@ -33,4 +33,8 @@ public interface ArticleService {
 
     PageInfo selectPublishedByCate(Integer categoryId, int pageNum, int pageSize);
 
+    int countAll();
+
+    int countByStatus(Integer status);
+
 }

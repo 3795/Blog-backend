@@ -186,4 +186,8 @@ public interface ArticleMapper {
 
     List<ArticleDTO> selectPublishedByCategoryId(Integer id);
 
+    int count();
+
+    int countByStatus(Integer status);
+
 }

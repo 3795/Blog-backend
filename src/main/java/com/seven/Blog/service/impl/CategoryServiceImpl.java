@@ -136,4 +136,9 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return new CategoryInfo(parentCate.getName(), childrenList);
     }
+
+    @Override
+    public int count() {
+        return categoryMapper.count();
+    }
 }
