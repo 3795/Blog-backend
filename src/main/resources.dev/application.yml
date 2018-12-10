@@ -24,7 +24,6 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
-
 server:
   port: 8100
   servlet:
