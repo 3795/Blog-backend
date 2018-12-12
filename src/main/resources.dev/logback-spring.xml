@@ -33,6 +33,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
             <fileNamePattern>D:\Develop\JavaEE\Blog\log\info.%d.log</fileNamePattern>
+            <!--<fileNamePattern>/usr/prod/blog/backend/logs/warn.%d.log</fileNamePattern>-->
         </rollingPolicy>
     </appender>
 
@@ -57,7 +58,8 @@
         <!--每天产生一个info信息日志-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>/usr/prod/blog/backend/logs/warn.%d.log</fileNamePattern>
+            <fileNamePattern>D:\Develop\JavaEE\Blog\log\warn.%d.log</fileNamePattern>
+            <!--<fileNamePattern>/usr/prod/blog/backend/logs/warn.%d.log</fileNamePattern>-->
         </rollingPolicy>
     </appender>
 
@@ -76,7 +78,8 @@
         <!--每天产生一个error信息日志-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>/usr/prod/blog/backend/logs/error.%d.log</fileNamePattern>
+            <fileNamePattern>D:\Develop\JavaEE\Blog\log\error.%d.log</fileNamePattern>
+            <!--<fileNamePattern>/usr/prod/blog/backend/logs/error.%d.log</fileNamePattern>-->
         </rollingPolicy>
     </appender>
 
