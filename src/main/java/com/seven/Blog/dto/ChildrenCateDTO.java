@@ -1,6 +1,5 @@
-package com.seven.Blog.bo;
+package com.seven.Blog.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,16 +13,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChildrenCateBO {
+public class ChildrenCateDTO {
 
     private Integer value;
 
     private String label;
 
-    @JsonProperty(value = "isLeaf")
-    private boolean isLeaf;
+    private boolean isIsLeaf;
 
-    public ChildrenCateBO() {
-        this.isLeaf = true;
+    public ChildrenCateDTO() {
+        this.isIsLeaf = true;
     }
 }

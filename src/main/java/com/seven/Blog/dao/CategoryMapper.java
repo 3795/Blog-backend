@@ -1,7 +1,7 @@
 package com.seven.Blog.dao;
 
-import com.seven.Blog.bo.ChildrenCateBO;
-import com.seven.Blog.bo.ParentCateBO;
+import com.seven.Blog.dto.ChildrenCateDTO;
+import com.seven.Blog.dto.ParentCateDTO;
 import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.pojo.Category;
 import org.apache.ibatis.annotations.Mapper;
@@ -38,9 +38,9 @@ public interface CategoryMapper {
 
     int delete(Integer id);
 
-    List<ParentCateBO> selectParent();
+    List<ParentCateDTO> selectParent();
 
-    List<ChildrenCateBO> selectChildren(Integer parentId);
+    List<ChildrenCateDTO> selectChildren(Integer parentId);
 
     List<Integer> selectChildrenId(Integer id);
 

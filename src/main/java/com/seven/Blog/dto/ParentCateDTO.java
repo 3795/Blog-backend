@@ -1,4 +1,4 @@
-package com.seven.Blog.bo;
+package com.seven.Blog.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +16,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ParentCateBO {
+public class ParentCateDTO {
 
     private Integer value;
 
     private String label;
 
-    private List<ChildrenCateBO> children;
+    private List<ChildrenCateDTO> children;
 }

@@ -3,8 +3,8 @@ package com.seven.Blog.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.Exception.SystemException;
-import com.seven.Blog.bo.ChildrenCateBO;
-import com.seven.Blog.bo.ParentCateBO;
+import com.seven.Blog.dto.ChildrenCateDTO;
+import com.seven.Blog.dto.ParentCateDTO;
 import com.seven.Blog.dao.CategoryMapper;
 import com.seven.Blog.dto.CategoryDTO;
 import com.seven.Blog.dto.CategoryInfo;
@@ -109,17 +109,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<ParentCateBO> selectCascadeCate() {
-        List<ParentCateBO> parentCateBOList = categoryMapper.selectParent();
+    public List<ParentCateDTO> selectCascadeCate() {
+        List<ParentCateDTO> parentCateDTOList = categoryMapper.selectParent();
 
-        if (parentCateBOList != null) {
-            for (ParentCateBO p : parentCateBOList) {
-                List<ChildrenCateBO> childrenCateBOList = categoryMapper.selectChildren(p.getValue());
-                p.setChildren(childrenCateBOList);
+        if (parentCateDTOList != null) {
+            for (ParentCateDTO p : parentCateDTOList) {
+                List<ChildrenCateDTO> childrenCateDTOList = categoryMapper.selectChildren(p.getValue());
+                p.setChildren(childrenCateDTOList);
             }
         }
 
-        return parentCateBOList;
+        return parentCateDTOList;
     }
 
     @Override

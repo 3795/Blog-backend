@@ -72,13 +72,13 @@
         where id = #{id}
     </delete>
 
-    <select id="selectParent" resultType="com.seven.Blog.bo.ParentCateBO">
+    <select id="selectParent" resultType="com.seven.Blog.dto.ParentCateDTO">
         select id as value, name as label
         from category
         where parent_id = 0 and status = 1
     </select>
 
-    <select id="selectChildren" resultType="com.seven.Blog.bo.ChildrenCateBO">
+    <select id="selectChildren" resultType="com.seven.Blog.dto.ChildrenCateDTO">
         select id as value, name as label
         from category
         where parent_id = #{parentId} and status = 1
