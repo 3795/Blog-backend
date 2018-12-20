@@ -25,4 +25,4 @@
 /.nb-gradle/
 
 */test/*
-src/main/resources.prod/*
+src/main/resources/application-prod.yml

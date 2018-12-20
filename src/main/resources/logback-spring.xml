@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
 
+    <springProperty scope="context" name="logPath" source="log.path"/>
+
     <!--控制台输出日志的格式-->
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -32,8 +34,7 @@
         <!--每天产生一个info信息日志-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>D:\Develop\JavaEE\Blog\log\info.%d.log</fileNamePattern>
-            <!--<fileNamePattern>/usr/prod/blog/backend/logs/warn.%d.log</fileNamePattern>-->
+            <fileNamePattern>${logPath}/info.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -58,8 +59,7 @@
         <!--每天产生一个info信息日志-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>D:\Develop\JavaEE\Blog\log\warn.%d.log</fileNamePattern>
-            <!--<fileNamePattern>/usr/prod/blog/backend/logs/warn.%d.log</fileNamePattern>-->
+            <fileNamePattern>${logPath}/warn.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -78,8 +78,7 @@
         <!--每天产生一个error信息日志-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>D:\Develop\JavaEE\Blog\log\error.%d.log</fileNamePattern>
-            <!--<fileNamePattern>/usr/prod/blog/backend/logs/error.%d.log</fileNamePattern>-->
+            <fileNamePattern>${logPath}/error.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 

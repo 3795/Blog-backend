@@ -15,7 +15,7 @@ public class RedisPool {
 
     private static String redisIp = PropertiesUtil.getProperty("redis.ip", "127.0.0.1");
     private static Integer redisPort = Integer.parseInt(PropertiesUtil.getProperty("redis.port", "6379"));
-//    private static String redisPassword = PropertiesUtil.getProperty("redis.password", "");
+    private static String redisPassword = PropertiesUtil.getProperty("redis.password", "");
 
     private static Integer maxTotal = Integer.parseInt(PropertiesUtil.getProperty("redis.max.total","20"));
     private static Integer maxIdle = Integer.parseInt(PropertiesUtil.getProperty("redis.max.idle","20"));
@@ -37,8 +37,7 @@ public class RedisPool {
         // 连接资源耗尽时，是否会阻塞，true表示会阻塞直到超时，false则会抛出异常
         jedisPoolConfig.setBlockWhenExhausted(true);
 
-//        jedisPool = new JedisPool(jedisPoolConfig, redisIp, redisPort, 1000 * 2, redisPassword);
-        jedisPool = new JedisPool(jedisPoolConfig, redisIp, redisPort, 1000 * 2);
+        jedisPool = new JedisPool(jedisPoolConfig, redisIp, redisPort, 1000 * 2, redisPassword);
     }
 
     static {

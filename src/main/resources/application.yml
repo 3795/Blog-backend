@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: dev
+  jackson:
+    default-property-inclusion: non_null
+server:
+  port: 8100
+  servlet:
+    path: /blog/v1
+
+mybatis:
+  type-aliases-package: com.seven.Blog.pojo
+  mapper-locations: classpath:mybatis/mappers/*.xml
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  auto-dialect: mysql
+
+
+

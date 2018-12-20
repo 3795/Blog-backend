@@ -21,21 +21,13 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-  jackson:
-    default-property-inclusion: non_null
-
-server:
-  port: 8100
-  servlet:
-    path: /blog/v1
-
-mybatis:
-  type-aliases-package: com.seven.Blog.pojo
-  mapper-locations: classpath:mybatis/mappers/*.xml
-pagehelper:
-  reasonable: true
-  support-methods-arguments: true
-  auto-dialect: mysql
-
+logging:
+  level:
+    com:
+      seven:
+        Blog:
+          dao: debug
+log:
+  path: D:/Develop/JavaEE/Blog/logs
 
 
