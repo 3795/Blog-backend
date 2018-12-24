@@ -28,7 +28,7 @@ public class NavigationServiceImpl implements NavigationService {
     public PageInfo selectAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<NavigationDTO> navigationDTOList = navigationMapper.selectAll();
-        return new PageInfo(navigationDTOList);
+        return new PageInfo<>(navigationDTOList);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class NavigationServiceImpl implements NavigationService {
     public PageInfo selectByStatus(int status, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<NavigationDTO> navigationDTOList = navigationMapper.selectByStatus(status);
-        return new PageInfo(navigationDTOList);
+        return new PageInfo<>(navigationDTOList);
     }
 
     @Override

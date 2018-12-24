@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     public PageInfo selectAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<CategoryDTO> categoryList = categoryMapper.selectAll();
-        return new PageInfo(categoryList);
+        return new PageInfo<>(categoryList);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
     public PageInfo selectByStatus(int status, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<CategoryDTO> categoryList = categoryMapper.selectByStatus(status);
-        return new PageInfo(categoryList);
+        return new PageInfo<>(categoryList);
     }
 
     @Override

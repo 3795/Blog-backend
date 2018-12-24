@@ -31,7 +31,7 @@ public class ArticleForm {
     @NotEmpty(message = "文章分类不能为空")
     private String categoryId;
 
-    @NotEmpty(message = "文章状态不能为空")
-    private String status;
+    @NotEmpty(message = "文章类型不能为空")
+    private String type;
 
 }

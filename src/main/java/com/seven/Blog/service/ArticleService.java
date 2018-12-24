@@ -16,14 +16,15 @@ public interface ArticleService {
 
     ArticleDTO selectById(Integer id);
 
-    PageInfo selectBriefInfoByStatus(Integer status, int pageNum, int pageSize);
+    PageInfo selectBriefInfoByTypeAndStatus(Integer type, Integer status, int pageNum, int pageSize);
 
     boolean insert(Article article);
 
     boolean update(Article article);
 
-    boolean updateStatus(@Param("id") Integer id,
-                         @Param("status") Integer status);
+    boolean updateStatus(Integer id, Integer status);
+
+    boolean updateType(Integer id, Integer type);
 
     boolean delete(Integer id);
 
@@ -35,6 +36,9 @@ public interface ArticleService {
 
     int countAll();
 
-    int countByStatus(Integer status);
+    int countByStatusAndType(Integer status, Integer type);
 
+    ArticleDTO queryBriefInfoById(Integer id);
+
+    String queryContentById(Integer id);
 }

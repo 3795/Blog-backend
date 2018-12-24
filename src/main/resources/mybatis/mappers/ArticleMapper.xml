@@ -18,143 +18,6 @@
         id, title, img, summary, content, category_id, create_time, update_time, status
     </sql>
 
-    <select id="selectedArticleByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        where id = #{id}
-    </select>
-
-    <select id="selectedPublishedArticleByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        where id = #{id}
-        and status = 1
-    </select>
-
-    <select id="getAllArticles" resultMap="BaseResultMap" parameterType="Map">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        order by id desc
-        limit #{size}
-        offset #{offset}
-    </select>
-
-    <select id="getArticlesByStatus" resultMap="BaseResultMap" parameterType="Map">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        where status = #{status}
-        order by id desc
-        limit #{size}
-        offset #{offset}
-    </select>
-
-    <insert id="addArticle" parameterType="Map">
-        insert into
-        article(title, img, summary, content, category_id, status, create_time, update_time)
-        values(#{title}, #{img}, #{summary}, #{content}, #{categoryId}, #{status}, now(), now())
-    </insert>
-
-    <update id="updateArticle" parameterType="Article">
-        update article
-        set title = #{title},
-        img = #{img},
-        summary = #{summary},
-        content = #{content},
-        category_id = #{categoryId},
-        status = #{status},
-        update_time = now()
-        where id = #{id}
-    </update>
-    
-    <delete id="deleteArticleByPrimaryKey" parameterType="Integer">
-        delete from article
-        where
-        id = #{id}
-    </delete>
-    
-    <update id="updateArticleStatusByPrimaryKey" parameterType="Integer">
-        update article set
-        status = #{status}
-        where id = #{id}
-    </update>
-
-    <select id="getArticleCount" resultType="Integer">
-        select count(*) from article
-    </select>
-
-    <select id="getArticleCountByStatus" resultType="Integer" parameterType="Integer">
-        select count(*) from article
-        where status = #{status}
-    </select>
-
-    <select id="getAllPublishedArticles" resultMap="BaseResultMap" parameterType="Map">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        where status = 1
-        order by id desc
-        limit #{size}
-        offset #{offset}
-    </select>
-
-    <select id="getPublishedArticlesByCategoryIds" resultMap="BaseResultMap" parameterType="Map">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        where status = 1
-        and category_id in
-        <foreach collection="categoryIds" item="item" open="(" close=")" separator="," index="index">
-            #{item}
-        </foreach>
-        order by id desc
-        limit #{size}
-        offset #{offset}
-    </select>
-
-    <select id="getPublishedArticleCountByCategoryId" resultType="Integer" parameterType="Integer">
-        select count(*) from article
-        where category_id = #{categoryId}
-        and status = 1
-    </select>
-
-    <select id="getPublishedArticlesByCategoryId" resultMap="BaseResultMap" parameterType="Map">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-        where status = 1
-        and category_id = #{categoryId}
-        order by id desc
-        limit #{size}
-        offset #{offset}
-    </select>
-    
-    <select id="getPublishedArticleByKeywords" resultMap="BaseResultMap" parameterType="Map">
-        select 
-        <include refid="Base_Column_List"/>
-        from article
-        where
-        title like CONCAT('%', #{keywords}, '%')
-        and
-        status = 1
-        order by create_time desc
-        limit #{size}
-        offset #{offset}
-    </select>
-
-    <select id="getPublishedArticleCountByKeywords" resultType="Integer" parameterType="String">
-        select count(*) from article
-        where
-        status = 1
-        and
-        title like CONCAT('%', #{keywords}, '%')
-    </select>
-
-    <!--*********************************二期新增*******************************-->
-
     <select id="selectAll" resultType="com.seven.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, content, category_id as categoryId, create_time as createTime, update_time as updateTime, a.status ,c.name as categoryName
         from article a, category c
@@ -169,10 +32,13 @@
         and a.id = #{id}
     </select>
 
-    <select id="selectBriefInfoByStatus" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
-        select a.id, title, create_time as createTime, a.status ,c.name as categoryName
+    <select id="selectBriefInfoByTypeAndStatus" parameterType="Map" resultType="com.seven.Blog.dto.ArticleDTO">
+        select a.id, title, create_time as createTime, a.type ,c.name as categoryName
         from article a, category c
         where a.category_id = c.id
+        <if test="type != null">
+            and a.type = #{type}
+        </if>
         and a.status = #{status}
         order by create_time desc
     </select>
@@ -180,7 +46,7 @@
     <insert id="insert" parameterType="Article">
         insert into
         article(title, img, summary, content, category_id, status, create_time, update_time)
-        values(#{title}, #{img}, #{summary}, #{content}, #{categoryId}, #{status}, now(), now())
+        values(#{title}, #{img}, #{summary}, #{content}, #{categoryId}, #{type}, #{status}, now(), now())
     </insert>
 
     <update id="update" parameterType="Article">
@@ -190,7 +56,7 @@
         summary = #{summary},
         content = #{content},
         category_id = #{categoryId},
-        status = #{status},
+        type = #{type},
         update_time = now()
         where id = #{id}
     </update>
@@ -200,6 +66,13 @@
         set status = #{status}
         where id = #{id}
     </update>
+
+    <update id="updateType" parameterType="Map">
+        update article
+        set type = #{type}
+        where id = #{id}
+    </update>
+
 
     <delete id="delete" parameterType="Integer">
         delete from article
@@ -211,6 +84,7 @@
         from article a, category c
         where a.category_id = c.id
         and a.status = 1
+        and a.type > 0
         order by create_time desc
     </select>
 
@@ -220,6 +94,7 @@
         where a.category_id = c.id
         and title like concat ('%', #{keywords}, '%')
         and a.status = 1
+        and a.type > 0
         order by create_time desc
     </select>
 
@@ -232,6 +107,7 @@
             #{id}
         </foreach>
         and a.status = 1
+        and a.type > 0
         order by create_time desc
     </select>
 
@@ -241,15 +117,34 @@
         where a.category_id = c.id
         and a.category_id = #{id}
         and a.status = 1
+        and a.type > 0
         order by create_time desc
+    </select>
+
+    <select id="queryBriefInfoById" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, category_id as categoryId, create_time as createTime, update_time as updateTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and a.id = #{id}
+    </select>
+    
+    <select id="queryContentById" parameterType="Integer" resultType="String">
+        select content
+        from article
+        where id = #{id}
     </select>
 
     <select id="count" resultType="Integer">
         select count(1) from article
     </select>
 
-    <select id="countByStatus" parameterType="Integer" resultType="Integer">
-        select count(1) from article where status = #{status}
+    <select id="countByStatus" parameterType="Map" resultType="Integer">
+        select count(1)
+        from article
+        where status = #{status}
+        <if test="type != null">
+            and type = #{type}
+        </if>
     </select>
 
 </mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seven.Blog.dao.TagMapper">
+
+    <sql id="Base_Column_List">
+        id, name, color, status
+    </sql>
+
+    <select id="queryTags" parameterType="Integer" resultType="Tag">
+        select
+        <include refid="Base_Column_List"/>
+        from tag
+        <if test="status != null">
+            where status = #{status}
+        </if>
+    </select>
+
+    <select id="queryTagById" parameterType="Integer" resultType="Tag">
+        select
+        <include refid="Base_Column_List"/>
+        from tag
+        where id = #{id}
+    </select>
+    
+    <insert id="insertTag" parameterType="Tag">
+        insert into
+        tag(name, color, status)
+        values(#{name}, #{color}, #{status})
+    </insert>
+    
+    <update id="updateTag" parameterType="Tag">
+        update tag
+        set name = #{name}, color = #{color}, status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="Integer">
+        update tag
+        set status = (status + 1) % 2
+        where id = #{id}
+    </update>
+    
+    <delete id="deleteTag" parameterType="Integer">
+        delete from tag
+        where id = #{id}
+    </delete>
+
+</mapper>

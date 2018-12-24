@@ -44,13 +44,10 @@ public class ServerResponse<T> implements Serializable {
 
     /**
      * 返回成功信息
-     * @param msg       成功描述
+     * @param data
+     * @param <T>
      * @return
      */
-    public static ServerResponse success(String msg) {
-        return new ServerResponse(ResponseCodeEnum.SUCCESS.getCode(), msg);
-    }
-
     public static <T> ServerResponse success(T data) {
         return new ServerResponse<>(ResponseCodeEnum.SUCCESS, data);
     }

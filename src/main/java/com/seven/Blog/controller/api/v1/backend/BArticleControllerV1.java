@@ -26,7 +26,8 @@ public class BArticleControllerV1 {
     private ArticleService articleService;
 
     /**
-     * 根据文章状态（status）获取文章列表
+     * 根据文章类型(type)和状态(status)获取文章列表
+     * @param type
      * @param status
      * @param pageNum
      * @param pageSize
@@ -34,10 +35,11 @@ public class BArticleControllerV1 {
      */
     @GetMapping
     public ServerResponse getArticles(@RequestParam(value = "status", defaultValue = "1") Integer status,
+                                      @RequestParam(value = "type", required = false) Integer type,
                                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-        PageInfo pageInfo = articleService.selectBriefInfoByStatus(status, pageNum, pageSize);
+        PageInfo pageInfo = articleService.selectBriefInfoByTypeAndStatus(type, status, pageNum, pageSize);
         return ServerResponse.success(pageInfo);
     }
 
@@ -67,7 +69,7 @@ public class BArticleControllerV1 {
 
         Article article = new Article(articleForm.getTitle(), articleForm.getImg(), articleForm.getSummary(),
                 articleForm.getContent(), Integer.parseInt(articleForm.getCategoryId()),
-                Integer.parseInt(articleForm.getStatus()));
+                Integer.parseInt(articleForm.getType()));
 
         articleService.insert(article);
 
@@ -92,7 +94,7 @@ public class BArticleControllerV1 {
         Article article = new Article(id, articleForm.getTitle(), articleForm.getImg(),
                 articleForm.getSummary(), articleForm.getContent(),
                 Integer.parseInt(articleForm.getCategoryId()),
-                Integer.parseInt(articleForm.getStatus()));
+                Integer.parseInt(articleForm.getType()));
 
         articleService.update(article);
 
@@ -105,10 +107,23 @@ public class BArticleControllerV1 {
      * @param status
      * @return
      */
-    @PatchMapping
+    @PatchMapping("/status")
     public ServerResponse updateStatus(@RequestParam("id") Integer id,
                                        @RequestParam("status") Integer status) {
         articleService.updateStatus(id, status);
+        return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS);
+    }
+
+    /**
+     * 更新文章状态
+     * @param id
+     * @param type
+     * @return
+     */
+    @PatchMapping("/type")
+    public ServerResponse updateType(@RequestParam("id") Integer id,
+                                     @RequestParam("type") Integer type) {
+        articleService.updateType(id, type);
         return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS);
     }
 
@@ -129,12 +144,13 @@ public class BArticleControllerV1 {
      * @return
      */
     @GetMapping("/count")
-    public ServerResponse count(@RequestParam(value = "status", defaultValue = "-1") Integer status) {
-        int result = 0;
+    public ServerResponse count(@RequestParam(value = "status", defaultValue = "-1") Integer status,
+                                @RequestParam(value = "type", required = false) Integer type) {
+        int result;
         if (status == -1) {
             result = articleService.countAll();
         } else {
-            result = articleService.countByStatus(status);
+            result = articleService.countByStatusAndType(status, type);
         }
         return ServerResponse.success(result);
     }

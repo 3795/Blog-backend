@@ -26,7 +26,7 @@ public class SystemExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.OK)
     public ServerResponse handleException(Exception e) {
         log.error("系统出错，异常信息：{}", e);
         return ServerResponse.error(ResponseCodeEnum.SERVER_ERROR);

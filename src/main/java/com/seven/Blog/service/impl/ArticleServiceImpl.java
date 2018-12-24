@@ -33,7 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
     public PageInfo selectAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ArticleDTO> articleDTOList = articleMapper.selectAll();
-        return new PageInfo(articleDTOList);
+        return new PageInfo<>(articleDTOList);
     }
 
     @Override
@@ -46,10 +46,10 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageInfo selectBriefInfoByStatus(Integer status, int pageNum, int pageSize) {
+    public PageInfo selectBriefInfoByTypeAndStatus(Integer type, Integer status, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<ArticleDTO> articleDTOList = articleMapper.selectBriefInfoByStatus(status);
-        return new PageInfo(articleDTOList);
+        List<ArticleDTO> articleDTOList = articleMapper.selectBriefInfoByTypeAndStatus(type, status);
+        return new PageInfo<>(articleDTOList);
     }
 
     @Override
@@ -73,6 +73,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public boolean updateStatus(Integer id, Integer status) {
         int result = articleMapper.updateStatus(id, status);
+        if (result != 1) {
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateType(Integer id, Integer type) {
+        int result = articleMapper.updateType(id, type);
         if (result != 1) {
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
@@ -125,7 +134,25 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int countByStatus(Integer status) {
-        return articleMapper.countByStatus(status);
+    public int countByStatusAndType(Integer status, Integer type) {
+        return articleMapper.countByStatus(status, type);
+    }
+
+    @Override
+    public ArticleDTO queryBriefInfoById(Integer id) {
+        ArticleDTO articleDTO = articleMapper.queryBriefInfoById(id);
+        if (articleDTO == null) {
+            throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
+        }
+        return articleDTO;
+    }
+
+    @Override
+    public String queryContentById(Integer id) {
+        String content = articleMapper.queryContentById(id);
+        if (content == null) {
+            throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
+        }
+        return content;
     }
 }

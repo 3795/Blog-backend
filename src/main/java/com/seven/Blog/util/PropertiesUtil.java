@@ -18,7 +18,7 @@ public class PropertiesUtil {
     private static Properties properties;
 
     static {
-        String fileName = "system.properties";
+        String fileName = "system-dev.properties";
         properties = new Properties();
         try {
             properties.load(new InputStreamReader(PropertiesUtil.class

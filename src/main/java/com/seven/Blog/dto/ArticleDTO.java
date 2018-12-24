@@ -29,9 +29,9 @@ public class ArticleDTO {
 
     private String categoryName;
 
-    private String statusMsg;       // 后续将该条删除
-
     private Integer status;
+
+    private Integer type;
 
     private Date createTime;
 

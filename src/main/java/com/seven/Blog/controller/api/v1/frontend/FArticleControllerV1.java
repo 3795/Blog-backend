@@ -20,8 +20,14 @@ public class FArticleControllerV1 {
     @Autowired
     private ArticleService articleService;
 
+    /**
+     * 获取所有的文章
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @GetMapping
-    public ServerResponse getAllArticles(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public ServerResponse queryArticles(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         PageInfo pageInfo = articleService.selectPublished(pageNum, pageSize);
         return ServerResponse.success(pageInfo);
@@ -33,9 +39,31 @@ public class FArticleControllerV1 {
      * @return
      */
     @GetMapping("/{id}")
-    public ServerResponse getArticleById(@PathVariable("id") Integer id) {
+    public ServerResponse queryArticleById(@PathVariable("id") Integer id) {
         ArticleDTO article = articleService.selectById(id);
         return ServerResponse.success(article);
+    }
+
+    /**
+     * 根据文章id查找文章的简要信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}/brief")
+    public ServerResponse queryBriefInfoById(@PathVariable("id") Integer id) {
+        ArticleDTO article = articleService.queryBriefInfoById(id);
+        return ServerResponse.success(article);
+    }
+
+    /**
+     * 根据文章id查找文章的内容
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}/content")
+    public ServerResponse queryContentById(@PathVariable("id") Integer id) {
+        String content = articleService.queryContentById(id);
+        return ServerResponse.success(content);
     }
 
     /**
@@ -59,7 +87,7 @@ public class FArticleControllerV1 {
      */
     @GetMapping("/count")
     public ServerResponse count() {
-        int count = articleService.countByStatus(CommonStatusEnum.ON.getCode());
+        int count = articleService.countByStatusAndType(CommonStatusEnum.ON.getCode(), null);
         return ServerResponse.success(count);
     }
 }

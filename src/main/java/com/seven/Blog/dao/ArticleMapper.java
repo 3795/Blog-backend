@@ -22,7 +22,8 @@ public interface ArticleMapper {
 
     ArticleDTO selectById(Integer id);
 
-    List<ArticleDTO> selectBriefInfoByStatus(Integer status);
+    List<ArticleDTO> selectBriefInfoByTypeAndStatus(@Param("type") Integer type,
+                                                    @Param("status") Integer status);
 
     int insert(Article article);
 
@@ -30,6 +31,9 @@ public interface ArticleMapper {
 
     int updateStatus(@Param("id") Integer id,
                      @Param("status") Integer status);
+
+    int updateType(@Param("id") Integer id,
+                   @Param("type") Integer type);
 
     int delete(Integer id);
 
@@ -41,8 +45,13 @@ public interface ArticleMapper {
 
     List<ArticleDTO> selectPublishedByCategoryId(Integer id);
 
+    ArticleDTO queryBriefInfoById(Integer id);
+
+    String queryContentById(Integer id);
+
     int count();
 
-    int countByStatus(Integer status);
+    int countByStatus(@Param("status") Integer status,
+                      @Param("type") Integer type);
 
 }
