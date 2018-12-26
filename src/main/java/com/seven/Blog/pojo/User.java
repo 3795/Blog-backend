@@ -28,7 +28,11 @@ public class User {
 
     private String password;
 
-    private Date createTime = new Date();
+    private String email;
+
+    private String phone;
+
+    private String signature;
 
     public User(Integer id, String username, String avatar) {
         this.id = id;

@@ -5,12 +5,15 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="account" property="account" jdbcType="VARCHAR"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="signature" property="signature" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, account, username, avatar
+        id, account, username, avatar, email, phone, signature
     </sql>
 
     <select id="selectByAccountAndPassword" resultMap="BaseResultMap" parameterType="Map">
@@ -28,16 +31,18 @@
         where id = #{id}
     </select>
 
-    <update id="update" parameterType="User">
+    <update id="updateInfo" parameterType="User">
         update user
-        <set>
-            <if test="username != null and username != '' ">
-                username = #{username},
-            </if>
-            <if test="avatar != null and avatar != '' ">
-                avatar = #{avatar},
-            </if>
-        </set>
+        set username = #{username},
+        email = #{email},
+        phone = #{phone},
+        signature = #{signature}
+        where id = #{id}
+    </update>
+
+    <update id="updateAvatar" parameterType="Map">
+        update user
+        set avatar = #{avatar}
         where id = #{id}
     </update>
 

@@ -23,4 +23,9 @@ public class SystemException extends RuntimeException {
         this.code = responseCodeEnum.getCode();
     }
 
+    public SystemException(Exception e) {
+        super(e.getMessage());
+        this.code = ResponseCodeEnum.SERVER_ERROR.getCode();
+    }
+
 }

@@ -24,7 +24,11 @@ public class UserDTO {
 
     private String avatar;
 
-    private Date createTime;
+    private String email;
+
+    private String phone;
+
+    private String signature;
 
     public UserDTO(String username, String avatar) {
         this.username = username;

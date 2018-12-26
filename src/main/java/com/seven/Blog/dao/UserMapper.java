@@ -26,7 +26,10 @@ public interface UserMapper {
 
     UserDTO selectById(Integer id);
 
-    int update(User user);
+    int updateInfo(User user);
+
+    int updateAvatar(@Param("id") Integer id,
+                     @Param("avatar") String avatar);
 
 
 }

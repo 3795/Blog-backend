@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateInfo(User user) {
-        int result = userMapper.update(user);
+        int result = userMapper.updateInfo(user);
         if (result != 1) {
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }

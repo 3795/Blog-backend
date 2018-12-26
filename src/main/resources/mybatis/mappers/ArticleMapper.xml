@@ -36,7 +36,10 @@
         select a.id, title, create_time as createTime, a.type ,c.name as categoryName
         from article a, category c
         where a.category_id = c.id
-        <if test="type != null">
+        <if test="type != null and type == 1">
+            and a.type > 0
+        </if>
+        <if test="type != null and (type > 1 or type == 0)">
             and a.type = #{type}
         </if>
         and a.status = #{status}

@@ -2,8 +2,10 @@ package com.seven.Blog.controller.api.v1.backend;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seven.Blog.enums.ResponseCodeEnum;
+import com.seven.Blog.service.FileService;
 import com.seven.Blog.util.FileUtil;
 import com.seven.Blog.vo.ServerResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,23 +23,22 @@ import java.io.IOException;
 @RestController
 public class BFileControllerV1 {
 
+    @Autowired
+    private FileService fileService;
+
     /**
      * 上传图片
      * @param file
      * @return
-     * @throws IOException
      */
     @PostMapping("/uploadImg")
-    public ServerResponse upload(@RequestParam("file") MultipartFile file) throws IOException {
-        if(!file.isEmpty()) {
-            String imgPath = FileUtil.uploadImg(file);
-            return ServerResponse.success(ResponseCodeEnum.FILE_UPLOAD_SUCCESS, imgPath);
-        }
-        return ServerResponse.error(ResponseCodeEnum.FILE_CANNOT_BE_EMPTY);
+    public ServerResponse upload(@RequestParam("file") MultipartFile file) {
+        String imgPath = fileService.uploadImg(file);
+        return ServerResponse.success(imgPath);
     }
 
     /**
-     * Editor上传图片
+     * Editor编辑器上传图片
      * @param file
      * @return
      */
