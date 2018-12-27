@@ -28,7 +28,7 @@ public class FUserControllerV1 {
      */
     @GetMapping
     public ServerResponse getUser() {
-        UserDTO userDTO = userService.getUser(userId);
+        UserDTO userDTO = userService.queryUserById(userId);
         return ServerResponse.success(userDTO);
     }
 }

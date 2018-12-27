@@ -2,6 +2,7 @@ package com.seven.Blog.controller.api.v1.backend;
 
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.constant.SystemConstant;
+import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.User;
 import com.seven.Blog.service.UserService;
@@ -51,7 +52,7 @@ public class BLoginControllerV1 {
                 !session.getAttribute(SystemConstant.CAPTCHA_CODE).equals(captchaCode))
             throw new SystemException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
 
-        User user = userService.checkLoginInfo(account, password);
+        UserDTO user = userService.checkLoginInfo(account, password);
 
         CookieUtil.writeCookie(response, SystemConstant.LOGIN_TOKEN, session.getId());
 

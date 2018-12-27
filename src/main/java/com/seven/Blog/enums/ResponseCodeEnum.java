@@ -33,6 +33,8 @@ public enum ResponseCodeEnum {
     DELETE_FAILED(34, "删除失败"),
     DELETE_SUCCESS(35, "删除成功"),
 
+    WRONG_PASSWORD(36, "旧密码错误"),
+
     PAGE_NOT_FOUND(404, "页面不存在"),
     SERVER_ERROR(500, "出了小问题，紧急抢救中..."),
     ;

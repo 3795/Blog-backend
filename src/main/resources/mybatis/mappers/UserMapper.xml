@@ -16,7 +16,7 @@
         id, account, username, avatar, email, phone, signature
     </sql>
 
-    <select id="selectByAccountAndPassword" resultMap="BaseResultMap" parameterType="Map">
+    <select id="selectByAccountAndPassword" resultType="com.seven.Blog.dto.UserDTO" parameterType="Map">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -31,6 +31,13 @@
         where id = #{id}
     </select>
 
+    <select id="queryByPassword" parameterType="Map" resultType="Integer">
+        select count(1)
+        from user
+        where id = #{id}
+        and password = #{password}
+    </select>
+
     <update id="updateInfo" parameterType="User">
         update user
         set username = #{username},
@@ -43,6 +50,12 @@
     <update id="updateAvatar" parameterType="Map">
         update user
         set avatar = #{avatar}
+        where id = #{id}
+    </update>
+
+    <update id="updatePassword" parameterType="Map">
+        update user
+        set password = #{password}
         where id = #{id}
     </update>
 

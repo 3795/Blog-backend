@@ -2,6 +2,9 @@ package com.seven.Blog.service;
 
 import com.seven.Blog.dto.UserDTO;
 import com.seven.Blog.pojo.User;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created By Seven.wk
@@ -10,9 +13,19 @@ import com.seven.Blog.pojo.User;
  */
 public interface UserService {
 
-    User checkLoginInfo(String account, String password);
+    UserDTO checkLoginInfo(String account, String password);
 
-    UserDTO getUser(Integer id);
+    UserDTO queryUserById(Integer id);
 
-    Boolean updateInfo(User user);
+    UserDTO queryUserInfo(HttpServletRequest request);
+
+    Boolean updateInfo(HttpServletRequest request, User user);
+
+    Boolean updateAvatar(HttpServletRequest request, MultipartFile file);
+
+    Boolean updatePassword(HttpServletRequest request, String oldPassword, String newPassword);
+
+    Integer queryUserId(HttpServletRequest request);
+
+    Boolean updateCache(Integer id, HttpServletRequest request);
 }

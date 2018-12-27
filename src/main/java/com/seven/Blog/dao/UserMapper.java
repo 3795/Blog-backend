@@ -15,21 +15,21 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserMapper {
 
-    /**
-     * 根据用户输入的账号和密码查找用户
-     * @param account       账号
-     * @param password      密码
-     * @return      用户信息
-     */
-    User selectByAccountAndPassword(@Param("account") String account,
+    UserDTO selectByAccountAndPassword(@Param("account") String account,
                                     @Param("password") String password);
 
     UserDTO selectById(Integer id);
+
+    int queryByPassword(@Param("id") Integer id,
+                        @Param("password") String password);
 
     int updateInfo(User user);
 
     int updateAvatar(@Param("id") Integer id,
                      @Param("avatar") String avatar);
+
+    int updatePassword(@Param("id") Integer id,
+                       @Param("password") String password);
 
 
 }
