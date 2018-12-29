@@ -26,7 +26,9 @@
     </select>
 
     <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
-        select a.id, title, img, summary, content, category_id as categoryId, create_time as createTime, update_time as updateTime, a.status ,c.name as categoryName
+        select a.id, title, img, summary, content, category_id as categoryId,
+        create_time as createTime, update_time as updateTime,
+        a.status ,c.name as categoryName, a.type
         from article a, category c
         where a.category_id = c.id
         and a.id = #{id}
@@ -46,10 +48,12 @@
         order by create_time desc
     </select>
 
-    <insert id="insert" parameterType="Article">
+    <insert id="insert" parameterType="Article" keyProperty="id" useGeneratedKeys="true">
         insert into
-        article(title, img, summary, content, category_id, status, create_time, update_time)
-        values(#{title}, #{img}, #{summary}, #{content}, #{categoryId}, #{type}, #{status}, now(), now())
+        article(title, img, summary, content, category_id, type, create_time, update_time)
+        values(#{title}, #{img}, #{summary},
+        #{content}, #{categoryId}, #{type}, now(), now());
+
     </insert>
 
     <update id="update" parameterType="Article">
@@ -149,5 +153,34 @@
             and type = #{type}
         </if>
     </select>
+
+    <insert id="insertArticleTag" parameterType="Map">
+        insert into
+        article_tag(article_id, tag_id)
+        values
+        <foreach collection="tags" item="item" index="index" separator=",">
+            (#{articleId}, #{item})
+        </foreach>
+    </insert>
+
+    <select id="queryArticleTagIdByArticleId" parameterType="Integer" resultType="Integer">
+        select id from
+        article_tag
+        where article_id = #{articleId}
+    </select>
+
+    <update id="updateArticleTag" parameterType="Map">
+        update article_tag
+        set tag_id = #{tag}
+        where id = #{id}
+    </update>
+
+    <update id="updateTest" parameterType="Map">
+        <foreach collection="ids, tags" item="id, tag" separator=";">
+            update article_tag
+            set tag_id = #{tag}
+            where id = #{id}
+        </foreach>
+    </update>
 
 </mapper>

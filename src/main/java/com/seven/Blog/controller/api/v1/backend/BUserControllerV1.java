@@ -10,6 +10,10 @@ import com.seven.Blog.util.CookieUtil;
 import com.seven.Blog.util.JsonUtil;
 import com.seven.Blog.util.RedisPoolUtil;
 import com.seven.Blog.vo.ServerResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +32,8 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/backend/user")
-@CrossOrigin
 @Slf4j
+@Api(tags = "管理用户信息接口")
 public class BUserControllerV1 {
 
     @Autowired
@@ -40,6 +44,7 @@ public class BUserControllerV1 {
      * @param request
      * @return
      */
+    @ApiOperation(value = "查询用户简要信息")
     @GetMapping("/brief")
     public ServerResponse getBriefInfo(HttpServletRequest request) {
         UserDTO user = userService.queryUserInfo(request);
@@ -53,6 +58,7 @@ public class BUserControllerV1 {
      * @return
      */
     @GetMapping("/detail")
+    @ApiOperation(value = "查询用户详细信息")
     public ServerResponse getDetailInfo(HttpServletRequest request) {
         UserDTO userDTO = userService.queryUserInfo(request);
         userDTO.setId(null);
@@ -64,6 +70,7 @@ public class BUserControllerV1 {
      * @return
      */
     @GetMapping("isLogin")
+    @ApiOperation(value = "查询用户登录状态")
     public ServerResponse isLogin() {
         return ServerResponse.success(true);
     }
@@ -73,6 +80,7 @@ public class BUserControllerV1 {
      * @return
      */
     @GetMapping("/logout")
+    @ApiOperation(value = "用户退出登录")
     public ServerResponse logout(HttpServletRequest request,
                                  HttpServletResponse response) {
         String loginToken = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
@@ -89,6 +97,13 @@ public class BUserControllerV1 {
      * @return
      */
     @PutMapping("/info")
+    @ApiOperation(value = "更新用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名称", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "phone", value = "联系电话", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "email", value = "电子邮箱", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "signature", value = "个性签名", paramType = "query")
+    })
     public ServerResponse updateInfo(HttpServletRequest request,
                                      @Valid UserForm userForm,
                                      BindingResult result) {
@@ -107,11 +122,12 @@ public class BUserControllerV1 {
      * @param file
      * @return
      */
-    @PatchMapping("/avatar")
+    @PostMapping("/avatar")
+    @ApiOperation(value = "更新用户头像")
     public ServerResponse updateAvatar(HttpServletRequest request,
                                        @RequestParam("file") MultipartFile file) {
-        userService.updateAvatar(request, file);
-        return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS);
+        String avatar = userService.updateAvatar(request, file);
+        return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS, avatar);
     }
 
     /**
@@ -122,6 +138,11 @@ public class BUserControllerV1 {
      * @return
      */
     @PatchMapping("/password")
+    @ApiOperation(value = "更新用户密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, paramType = "query")
+    })
     public ServerResponse updatePassword(HttpServletRequest request,
                                          @RequestParam("oldPassword") String oldPassword,
                                          @RequestParam("newPassword") String newPassword) {

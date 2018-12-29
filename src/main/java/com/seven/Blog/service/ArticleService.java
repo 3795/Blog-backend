@@ -5,6 +5,8 @@ import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.pojo.Article;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * Created By Seven.wk
  * Description: 文章管理服务
@@ -18,9 +20,9 @@ public interface ArticleService {
 
     PageInfo selectBriefInfoByTypeAndStatus(Integer type, Integer status, int pageNum, int pageSize);
 
-    boolean insert(Article article);
+    boolean insert(Article article, List<Integer> tags);
 
-    boolean update(Article article);
+    boolean update(Article article, List<Integer> tags);
 
     boolean updateStatus(Integer id, Integer status);
 

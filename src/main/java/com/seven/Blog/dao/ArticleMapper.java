@@ -54,4 +54,15 @@ public interface ArticleMapper {
     int countByStatus(@Param("status") Integer status,
                       @Param("type") Integer type);
 
+    int insertArticleTag(@Param("articleId") Integer articleId,
+                         @Param("tags") List<Integer> tags);
+
+    List<Integer> queryArticleTagIdByArticleId(@Param("articleId") Integer articleId);
+
+    int updateArticleTag(@Param("id") Integer id,
+                         @Param("tag") Integer tag);
+
+    int updateTest(@Param("ids") List<Integer> ids,
+                   @Param("tags") List<Integer> tags);
+
 }

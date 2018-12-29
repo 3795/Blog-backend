@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Boolean updateAvatar(HttpServletRequest request, MultipartFile file) {
+    public String updateAvatar(HttpServletRequest request, MultipartFile file) {
         Integer id = this.queryUserId(request);
         String avatar = fileService.uploadImg(file);
         int result = userMapper.updateAvatar(id, avatar);
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
         this.updateCache(id, request);
 
-        return true;
+        return avatar;
     }
 
     @Override

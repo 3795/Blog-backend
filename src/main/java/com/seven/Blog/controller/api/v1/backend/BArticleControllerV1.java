@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -71,7 +72,7 @@ public class BArticleControllerV1 {
                 articleForm.getContent(), Integer.parseInt(articleForm.getCategoryId()),
                 Integer.parseInt(articleForm.getType()));
 
-        articleService.insert(article);
+        articleService.insert(article, articleForm.getTags());
 
         return ServerResponse.success(ResponseCodeEnum.INSERT_SUCCESS);
     }
@@ -96,7 +97,7 @@ public class BArticleControllerV1 {
                 Integer.parseInt(articleForm.getCategoryId()),
                 Integer.parseInt(articleForm.getType()));
 
-        articleService.update(article);
+        articleService.update(article, articleForm.getTags());
 
         return ServerResponse.success(ResponseCodeEnum.UPDATE_SUCCESS);
     }
@@ -153,5 +154,10 @@ public class BArticleControllerV1 {
             result = articleService.countByStatusAndType(status, type);
         }
         return ServerResponse.success(result);
+    }
+
+    @GetMapping("/test")
+    public ServerResponse test(@RequestParam("tags") List<Integer> tags) {
+        return ServerResponse.success(tags);
     }
 }

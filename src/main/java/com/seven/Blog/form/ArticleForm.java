@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -33,5 +34,8 @@ public class ArticleForm {
 
     @NotEmpty(message = "文章类型不能为空")
     private String type;
+
+    @NotEmpty(message = "文章标签不能为空")
+    private List<Integer> tags;
 
 }

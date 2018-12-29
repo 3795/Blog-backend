@@ -21,7 +21,7 @@ public interface UserService {
 
     Boolean updateInfo(HttpServletRequest request, User user);
 
-    Boolean updateAvatar(HttpServletRequest request, MultipartFile file);
+    String updateAvatar(HttpServletRequest request, MultipartFile file);
 
     Boolean updatePassword(HttpServletRequest request, String oldPassword, String newPassword);
 

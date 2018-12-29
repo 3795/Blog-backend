@@ -10,6 +10,7 @@ import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.service.ArticleService;
 import com.seven.Blog.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * Created At 2018/08/08
  */
 @Service
+@Slf4j
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
@@ -53,20 +55,32 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public boolean insert(Article article) {
+    public boolean insert(Article article, List<Integer> tags) {
         int result = articleMapper.insert(article);
         if (result != 1) {
+            log.error("insert article error!");
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
+
+        result = articleMapper.insertArticleTag(article.getId(), tags);
+        if (result < 1) {
+            log.error("insert article_tag error!");
+            throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
+        }
+
         return true;
     }
 
     @Override
-    public boolean update(Article article) {
+    public boolean update(Article article, List<Integer> tags) {
         int result = articleMapper.update(article);
         if (result != 1) {
+            log.error("update article error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
+
+        List<Integer> ids = articleMapper.queryArticleTagIdByArticleId(article.getId());
+
         return true;
     }
 

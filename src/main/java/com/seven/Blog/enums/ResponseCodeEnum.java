@@ -28,8 +28,8 @@ public enum ResponseCodeEnum {
 
     INSERT_FAILED(30, "添加失败"),
     INSERT_SUCCESS(31, "添加成功"),
-    UPDATE_FAILED(32, "修改失败"),
-    UPDATE_SUCCESS(33, "修改成功"),
+    UPDATE_FAILED(32, "更新失败"),
+    UPDATE_SUCCESS(33, "更新成功"),
     DELETE_FAILED(34, "删除失败"),
     DELETE_SUCCESS(35, "删除成功"),
 
