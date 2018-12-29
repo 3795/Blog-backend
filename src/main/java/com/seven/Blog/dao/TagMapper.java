@@ -1,5 +1,6 @@
 package com.seven.Blog.dao;
 
+import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.pojo.Tag;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,7 +17,9 @@ import java.util.List;
 @Repository
 public interface TagMapper {
 
-    List<Tag> queryTags(@Param("status") Integer status);
+    List<TagDTO> queryTags(@Param("status") Integer status);
+
+    List<TagDTO> queryTagOptions();
 
     Tag queryTagById(int id);
 

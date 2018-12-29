@@ -1,18 +1,20 @@
 package com.seven.Blog.config;
 
+import com.alibaba.druid.filter.Filter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.alibaba.druid.wall.WallConfig;
+import com.alibaba.druid.wall.WallFilter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created By Seven.wk
@@ -20,12 +22,21 @@ import java.util.Map;
  * Created At 2018/11/20
  */
 @Configuration
+@EnableConfigurationProperties(DruidProperties.class)
 public class DruidConfig {
 
-    @ConfigurationProperties(prefix = "spring.datasource")
     @Bean
-    public DataSource druidDataSource() {
-        return new DruidDataSource();
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource initDruidDataSource() {
+        DruidDataSource druidDataSource = new DruidDataSource();
+        WallConfig wallConfig = new WallConfig();
+        wallConfig.setMultiStatementAllow(true);
+        WallFilter wallFilter = new WallFilter();
+        wallFilter.setConfig(wallConfig);
+        List<Filter> filters = new ArrayList<>();
+        filters.add(wallFilter);
+        druidDataSource.setProxyFilters(filters);
+        return druidDataSource;
     }
 
     /**
@@ -33,14 +44,14 @@ public class DruidConfig {
      * @return
      */
     @Bean
-    public ServletRegistrationBean statViewServlet(){
+    public ServletRegistrationBean statViewServlet(DruidProperties prop){
         ServletRegistrationBean registrationBean = new ServletRegistrationBean();
         registrationBean.setServlet(new StatViewServlet());
         registrationBean.setUrlMappings(Arrays.asList("/druid/*"));
         //设置初始化参数
         Map<String,String> initMap = new HashMap<>();
-        initMap.put("loginUsername","admin");
-        initMap.put("loginPassword","123456");
+        initMap.put("loginUsername", prop.getLoginUsername());
+        initMap.put("loginPassword", prop.getLoginPassword());
         initMap.put("allow","");
         initMap.put("deny","");
         registrationBean.setInitParameters(initMap);

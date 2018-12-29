@@ -13,6 +13,7 @@ import com.seven.Blog.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -55,16 +56,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public boolean insert(Article article, List<Integer> tags) {
         int result = articleMapper.insert(article);
         if (result != 1) {
-            log.error("insert article error!");
+            log.warn("insert article error!");
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
 
         result = articleMapper.insertArticleTag(article.getId(), tags);
         if (result < 1) {
-            log.error("insert article_tag error!");
+            log.warn("insert article_tag error!");
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
 
@@ -72,15 +74,21 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public boolean update(Article article, List<Integer> tags) {
         int result = articleMapper.update(article);
         if (result != 1) {
-            log.error("update article error!");
+            log.warn("update article error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
 
-        List<Integer> ids = articleMapper.queryArticleTagIdByArticleId(article.getId());
-
+        // 更新与标签之间的关联
+        articleMapper.deleteArticleTagByArticleId(article.getId());
+        result = articleMapper.insertArticleTag(article.getId(), tags);
+        if (result < 1) {
+            log.warn("update article_tag error!");
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
         return true;
     }
 
@@ -103,11 +111,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public boolean delete(Integer id) {
         int result = articleMapper.delete(id);
         if (result != 1) {
+            log.error("delete article error!");
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
+
+        // 删除文章与标签之间的关联
+        articleMapper.deleteArticleTagByArticleId(id);
+
         return true;
     }
 
@@ -115,14 +129,14 @@ public class ArticleServiceImpl implements ArticleService {
     public PageInfo selectPublished(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ArticleDTO> articleDTOList = articleMapper.selectPublished();
-        return new PageInfo(articleDTOList);
+        return new PageInfo<>(articleDTOList);
     }
 
     @Override
     public PageInfo search(String keywords, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ArticleDTO> articleDTOList = articleMapper.search(keywords);
-        return new PageInfo(articleDTOList);
+        return new PageInfo<>(articleDTOList);
     }
 
     @Override
@@ -139,7 +153,7 @@ public class ArticleServiceImpl implements ArticleService {
             PageHelper.startPage(pageNum, pageSize);
             articleDTOList = articleMapper.selectPublishedByCategoryId(category.getId());
         }
-        return new PageInfo(articleDTOList);
+        return new PageInfo<>(articleDTOList);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.TagMapper;
+import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.enums.CommonStatusEnum;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Tag;
@@ -27,13 +28,13 @@ public class TagServiceImpl implements TagService {
     @Override
     public PageInfo queryTags(Integer status, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Tag> tagList = tagMapper.queryTags(status);
+        List<TagDTO> tagList = tagMapper.queryTags(status);
         return new PageInfo<>(tagList);
     }
 
     @Override
-    public List<Tag> queryTagOptions() {
-        return tagMapper.queryTags(CommonStatusEnum.ON.getCode());
+    public List<TagDTO> queryTagOptions() {
+        return tagMapper.queryTagOptions();
     }
 
     @Override

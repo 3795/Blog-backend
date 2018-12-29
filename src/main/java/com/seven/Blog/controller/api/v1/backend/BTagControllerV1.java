@@ -1,6 +1,7 @@
 package com.seven.Blog.controller.api.v1.backend;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.form.TagForm;
 import com.seven.Blog.pojo.Tag;
@@ -45,7 +46,7 @@ public class BTagControllerV1 {
      */
     @GetMapping("/options")
     public ServerResponse queryTagOptions() {
-        List<Tag> list = tagService.queryTagOptions();
+        List<TagDTO> list = tagService.queryTagOptions();
         return ServerResponse.success(list);
     }
 
@@ -60,7 +61,7 @@ public class BTagControllerV1 {
     }
 
     /**
-     * 新建一个标签
+     * 新建标签
      * @param tagForm
      * @param result
      * @return

@@ -6,13 +6,19 @@
         id, name, color, status
     </sql>
 
-    <select id="queryTags" parameterType="Integer" resultType="Tag">
+    <select id="queryTags" parameterType="Integer" resultType="com.seven.Blog.dto.TagDTO">
         select
         <include refid="Base_Column_List"/>
         from tag
         <if test="status != null">
             where status = #{status}
         </if>
+    </select>
+
+    <select id="queryTagOptions" resultType="com.seven.Blog.dto.TagDTO">
+        select id as value, name as label
+        from tag
+        where status = 1
     </select>
 
     <select id="queryTagById" parameterType="Integer" resultType="Tag">

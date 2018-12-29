@@ -163,24 +163,15 @@
         </foreach>
     </insert>
 
-    <select id="queryArticleTagIdByArticleId" parameterType="Integer" resultType="Integer">
-        select id from
+    <select id="queryTagIdByArticleId" parameterType="Integer" resultType="Integer">
+        select tag_id from
         article_tag
         where article_id = #{articleId}
     </select>
-
-    <update id="updateArticleTag" parameterType="Map">
-        update article_tag
-        set tag_id = #{tag}
-        where id = #{id}
-    </update>
-
-    <update id="updateTest" parameterType="Map">
-        <foreach collection="ids, tags" item="id, tag" separator=";">
-            update article_tag
-            set tag_id = #{tag}
-            where id = #{id}
-        </foreach>
-    </update>
+    
+    <delete id="deleteArticleTagByArticleId" parameterType="Integer">
+        delete from article_tag
+        where article_id = #{articleId}
+    </delete>
 
 </mapper>

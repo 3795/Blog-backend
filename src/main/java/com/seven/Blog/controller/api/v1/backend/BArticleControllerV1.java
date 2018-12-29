@@ -156,8 +156,4 @@ public class BArticleControllerV1 {
         return ServerResponse.success(result);
     }
 
-    @GetMapping("/test")
-    public ServerResponse test(@RequestParam("tags") List<Integer> tags) {
-        return ServerResponse.success(tags);
-    }
 }

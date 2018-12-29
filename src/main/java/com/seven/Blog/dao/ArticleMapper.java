@@ -57,12 +57,8 @@ public interface ArticleMapper {
     int insertArticleTag(@Param("articleId") Integer articleId,
                          @Param("tags") List<Integer> tags);
 
-    List<Integer> queryArticleTagIdByArticleId(@Param("articleId") Integer articleId);
+    List<Integer> queryTagIdByArticleId(@Param("articleId") Integer articleId);
 
-    int updateArticleTag(@Param("id") Integer id,
-                         @Param("tag") Integer tag);
-
-    int updateTest(@Param("ids") List<Integer> ids,
-                   @Param("tags") List<Integer> tags);
+    int deleteArticleTagByArticleId(@Param("articleId") Integer articleId);
 
 }

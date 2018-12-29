@@ -1,6 +1,7 @@
 package com.seven.Blog.service;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.pojo.Tag;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface TagService {
 
     PageInfo queryTags(Integer status, int pageNum, int pageSize);
 
-    List<Tag> queryTagOptions();
+    List<TagDTO> queryTagOptions();
 
     Tag queryTagById(Integer id);
 
