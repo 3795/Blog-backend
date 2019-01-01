@@ -21,7 +21,7 @@ public interface TagMapper {
 
     List<TagDTO> queryTagOptions();
 
-    Tag queryTagById(int id);
+    TagDTO queryTagById(int id);
 
     int insertTag(Tag tag);
 
@@ -31,4 +31,5 @@ public interface TagMapper {
 
     int deleteTag(int id);
 
+    List<TagDTO> queryEnableTags();
 }

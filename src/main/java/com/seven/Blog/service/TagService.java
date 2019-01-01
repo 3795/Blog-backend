@@ -15,9 +15,11 @@ public interface TagService {
 
     PageInfo queryTags(Integer status, int pageNum, int pageSize);
 
+    List<TagDTO> queryTags();
+
     List<TagDTO> queryTagOptions();
 
-    Tag queryTagById(Integer id);
+    TagDTO queryTagById(Integer id);
 
     boolean insertTag(Tag tag);
 

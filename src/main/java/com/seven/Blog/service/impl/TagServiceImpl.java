@@ -33,13 +33,18 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<TagDTO> queryTags() {
+        return tagMapper.queryEnableTags();
+    }
+
+    @Override
     public List<TagDTO> queryTagOptions() {
         return tagMapper.queryTagOptions();
     }
 
     @Override
-    public Tag queryTagById(Integer id) {
-        Tag tag = tagMapper.queryTagById(id);
+    public TagDTO queryTagById(Integer id) {
+        TagDTO tag = tagMapper.queryTagById(id);
         if (tag == null) {
             throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
         }

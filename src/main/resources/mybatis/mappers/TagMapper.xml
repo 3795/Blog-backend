@@ -21,11 +21,15 @@
         where status = 1
     </select>
 
-    <select id="queryTagById" parameterType="Integer" resultType="Tag">
+    <select id="queryTagById" parameterType="Integer" resultType="com.seven.Blog.dto.TagDTO">
         select
         <include refid="Base_Column_List"/>
         from tag
         where id = #{id}
+    </select>
+
+    <select id="queryEnableTags" resultType="com.seven.Blog.dto.TagDTO">
+        select id, name, color from tag where status = 1
     </select>
     
     <insert id="insertTag" parameterType="Tag">
