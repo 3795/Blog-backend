@@ -1,5 +1,6 @@
 package com.seven.Blog.controller.api.v1.frontend;
 
+import com.github.pagehelper.PageInfo;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.service.TagService;
@@ -36,7 +37,7 @@ public class FTagControllerV1 {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id值查找标签")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "ID值", paramType = "path")
+            @ApiImplicitParam(name = "id", value = "ID值", required = true, paramType = "path")
     })
     public ServerResponse queryTagById(@PathVariable("id") Integer id) {
         TagDTO tag = tagService.queryTagById(id);
@@ -45,10 +46,16 @@ public class FTagControllerV1 {
 
     @GetMapping("/article")
     @ApiOperation(value = "根据标签查找文章")
-    @ApiImplicitParams({})
-    public ServerResponse queryArticlesById(@RequestParam("id") Integer id) {
-        List<ArticleDTO> list = tagService.queryArticlesById(id);
-        return ServerResponse.success(list);
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "ID值", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "页码", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页显示数量", paramType = "query")
+    })
+    public ServerResponse queryArticlesById(@RequestParam("id") Integer id,
+                                            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
+        PageInfo pageInfo = tagService.queryArticlesById(id, pageNum, pageSize);
+        return ServerResponse.success(pageInfo);
     }
 
 }

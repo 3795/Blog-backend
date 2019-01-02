@@ -30,5 +30,5 @@ public interface TagService {
 
     boolean deleteTag(Integer id);
 
-    List<ArticleDTO> queryArticlesById(Integer id);
+    PageInfo queryArticlesById(Integer id, int pageNum, int pageSize);
 }

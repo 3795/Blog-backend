@@ -89,7 +89,9 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<ArticleDTO> queryArticlesById(Integer id) {
-        return tagMapper.queryArticlesById(id);
+    public PageInfo queryArticlesById(Integer id, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleDTO> list = tagMapper.queryArticlesById(id);
+        return new PageInfo<>(list);
     }
 }
