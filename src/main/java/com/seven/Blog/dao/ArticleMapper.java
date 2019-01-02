@@ -1,6 +1,7 @@
 package com.seven.Blog.dao;
 
 import com.seven.Blog.dto.ArticleDTO;
+import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.pojo.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -61,4 +62,5 @@ public interface ArticleMapper {
 
     int deleteArticleTagByArticleId(@Param("articleId") Integer articleId);
 
+    List<TagDTO> queryTagsById(Integer id);
 }

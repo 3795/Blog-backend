@@ -1,5 +1,6 @@
 package com.seven.Blog.dao;
 
+import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.pojo.Tag;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,4 +33,6 @@ public interface TagMapper {
     int deleteTag(int id);
 
     List<TagDTO> queryEnableTags();
+
+    List<ArticleDTO> queryArticlesById(Integer id);
 }

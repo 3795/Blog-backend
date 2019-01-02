@@ -6,6 +6,7 @@ import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.ArticleMapper;
 import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.dto.CategoryDTO;
+import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.enums.ResponseCodeEnum;
 import com.seven.Blog.pojo.Article;
 import com.seven.Blog.service.ArticleService;
@@ -45,6 +46,8 @@ public class ArticleServiceImpl implements ArticleService {
         if (articleDTO == null) {
             throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
         }
+        List<TagDTO> tags = articleMapper.queryTagsById(id);
+        articleDTO.setTags(tags);
         return articleDTO;
     }
 

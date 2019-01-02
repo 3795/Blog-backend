@@ -3,6 +3,7 @@ package com.seven.Blog.dto;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -37,4 +38,5 @@ public class ArticleDTO {
 
     private Date updateTime;
 
+    private List<TagDTO> tags;
 }

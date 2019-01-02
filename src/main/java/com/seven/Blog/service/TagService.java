@@ -1,6 +1,7 @@
 package com.seven.Blog.service;
 
 import com.github.pagehelper.PageInfo;
+import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.pojo.Tag;
 
@@ -28,4 +29,6 @@ public interface TagService {
     boolean updateStatus(Integer id);
 
     boolean deleteTag(Integer id);
+
+    List<ArticleDTO> queryArticlesById(Integer id);
 }

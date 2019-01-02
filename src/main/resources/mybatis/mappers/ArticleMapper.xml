@@ -174,4 +174,11 @@
         where article_id = #{articleId}
     </delete>
 
+    <select id="queryTagsById" parameterType="Integer" resultType="com.seven.Blog.dto.TagDTO">
+        select id, name, color
+        from tag
+        where id in
+        (select tag_id from article_tag where article_id = #{id})
+    </select>
+
 </mapper>

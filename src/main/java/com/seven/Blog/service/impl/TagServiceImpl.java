@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seven.Blog.Exception.SystemException;
 import com.seven.Blog.dao.TagMapper;
+import com.seven.Blog.dto.ArticleDTO;
 import com.seven.Blog.dto.TagDTO;
 import com.seven.Blog.enums.CommonStatusEnum;
 import com.seven.Blog.enums.ResponseCodeEnum;
@@ -85,5 +86,10 @@ public class TagServiceImpl implements TagService {
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
         return true;
+    }
+
+    @Override
+    public List<ArticleDTO> queryArticlesById(Integer id) {
+        return tagMapper.queryArticlesById(id);
     }
 }
