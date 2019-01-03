@@ -1,5 +1,6 @@
 package cn.ntshare.Blog.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -9,6 +10,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Created By Seven.wk
@@ -16,6 +18,8 @@ import springfox.documentation.spring.web.plugins.Docket;
  * Created At 2018/12/27
  */
 @Configuration
+@ConditionalOnProperty(value = "spring.profiles.active", havingValue = "dev")
+@EnableSwagger2
 public class Swagger2Config {
 
     @Bean
