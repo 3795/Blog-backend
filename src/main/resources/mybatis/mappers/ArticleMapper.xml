@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.seven.Blog.dao.ArticleMapper">
-    <resultMap id="BaseResultMap" type="com.seven.Blog.pojo.Article">
+<mapper namespace="cn.ntshare.Blog.dao.ArticleMapper">
+    <resultMap id="BaseResultMap" type="cn.ntshare.Blog.pojo.Article">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
@@ -18,14 +18,14 @@
         id, title, img, summary, content, category_id, create_time, update_time, status
     </sql>
 
-    <select id="selectAll" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="selectAll" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, content, category_id as categoryId, create_time as createTime, update_time as updateTime, a.status ,c.name as categoryName
         from article a, category c
         where a.category_id = c.id
         order by create_time desc
     </select>
 
-    <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="selectById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, content, category_id as categoryId,
         create_time as createTime, update_time as updateTime,
         a.status ,c.name as categoryName, a.type
@@ -34,7 +34,7 @@
         and a.id = #{id}
     </select>
 
-    <select id="selectBriefInfoByTypeAndStatus" parameterType="Map" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="selectBriefInfoByTypeAndStatus" parameterType="Map" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, create_time as createTime, a.type ,c.name as categoryName
         from article a, category c
         where a.category_id = c.id
@@ -86,7 +86,7 @@
         where id = #{id}
     </delete>
 
-    <select id="selectPublished" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="selectPublished" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, create_time as createTime, c.name as categoryName
         from article a, category c
         where a.category_id = c.id
@@ -95,7 +95,7 @@
         order by create_time desc
     </select>
 
-    <select id="search" parameterType="String" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="search" parameterType="String" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, create_time as createTime, c.name as categoryName
         from article a, category c
         where a.category_id = c.id
@@ -105,7 +105,7 @@
         order by create_time desc
     </select>
 
-    <select id="selectPublishedByCategories" parameterType="List" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="selectPublishedByCategories" parameterType="List" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, create_time as createTime, c.name as categoryName
         from article a, category c
         where a.category_id = c.id
@@ -118,7 +118,7 @@
         order by create_time desc
     </select>
 
-    <select id="selectPublishedByCategoryId" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="selectPublishedByCategoryId" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, create_time as createTime, c.name as categoryName
         from article a, category c
         where a.category_id = c.id
@@ -128,7 +128,7 @@
         order by create_time desc
     </select>
 
-    <select id="queryBriefInfoById" parameterType="Integer" resultType="com.seven.Blog.dto.ArticleDTO">
+    <select id="queryBriefInfoById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, category_id as categoryId, create_time as createTime, update_time as updateTime, c.name as categoryName
         from article a, category c
         where a.category_id = c.id
@@ -174,7 +174,7 @@
         where article_id = #{articleId}
     </delete>
 
-    <select id="queryTagsById" parameterType="Integer" resultType="com.seven.Blog.dto.TagDTO">
+    <select id="queryTagsById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.TagDTO">
         select id, name, color
         from tag
         where id in

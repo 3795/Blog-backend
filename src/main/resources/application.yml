@@ -9,7 +9,7 @@ server:
     path: /blog/v1
 
 mybatis:
-  type-aliases-package: com.seven.Blog.pojo
+  type-aliases-package: cn.ntshare.Blog.pojo
   mapper-locations: classpath:mybatis/mappers/*.xml
 pagehelper:
   reasonable: true

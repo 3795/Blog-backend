@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.seven.Blog.dao.NavigationMapper">
-    <resultMap id="BaseResultMap" type="com.seven.Blog.pojo.Navigation">
+<mapper namespace="cn.ntshare.Blog.dao.NavigationMapper">
+    <resultMap id="BaseResultMap" type="cn.ntshare.Blog.pojo.Navigation">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="priority" property="priority" jdbcType="INTEGER"/>
@@ -12,20 +12,20 @@
         id, name, priority, link, status
     </sql>
 
-    <select id="selectAll" resultType="com.seven.Blog.dto.NavigationDTO">
+    <select id="selectAll" resultType="cn.ntshare.Blog.dto.NavigationDTO">
         select
         <include refid="Base_Column_List"/>
         from navigation
     </select>
 
-    <select id="selectById" parameterType="Integer" resultType="com.seven.Blog.dto.NavigationDTO">
+    <select id="selectById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.NavigationDTO">
         select
         <include refid="Base_Column_List"/>
         from navigation
         where id = #{id}
     </select>
 
-    <select id="selectByStatus" parameterType="Integer" resultType="com.seven.Blog.dto.NavigationDTO">
+    <select id="selectByStatus" parameterType="Integer" resultType="cn.ntshare.Blog.dto.NavigationDTO">
         select
         <include refid="Base_Column_List"/>
         from navigation
@@ -58,7 +58,7 @@
         where id = #{id}
     </delete>
 
-    <select id="selectItem" resultType="com.seven.Blog.dto.NavigationDTO">
+    <select id="selectItem" resultType="cn.ntshare.Blog.dto.NavigationDTO">
         select name, link
         from navigation
         where status = 1
