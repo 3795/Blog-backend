@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created By Seven.wk
@@ -48,6 +49,10 @@ public class ArticleServiceImpl implements ArticleService {
         }
         List<TagDTO> tags = articleMapper.queryTagsById(id);
         articleDTO.setTags(tags);
+
+        // 增加文章浏览量
+        articleMapper.increasePageViews(id);
+
         return articleDTO;
     }
 
@@ -67,9 +72,19 @@ public class ArticleServiceImpl implements ArticleService {
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
 
+        // 添加标签关联
         result = articleMapper.insertArticleTag(article.getId(), tags);
         if (result < 1) {
             log.warn("insert article_tag error!");
+            throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
+        }
+
+        // 添加文章浏览量
+        Random random = new Random();
+        int pageViews = random.nextInt(25) + 5;
+        result = articleMapper.insertArticlePageViews(article.getId(), pageViews);
+        if (result != 1) {
+            log.warn("insert article_pageviews error!");
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
 
@@ -124,6 +139,13 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 删除文章与标签之间的关联
         articleMapper.deleteArticleTagByArticleId(id);
+
+        // 删除浏览量记录
+        result = articleMapper.deleteArticlePageViews(id);
+        if (result != 1) {
+            log.error("delete article_pageviews error!");
+            throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
+        }
 
         return true;
     }
@@ -186,4 +208,5 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return content;
     }
+
 }

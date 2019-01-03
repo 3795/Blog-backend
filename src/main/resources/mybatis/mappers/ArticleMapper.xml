@@ -28,9 +28,10 @@
     <select id="selectById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
         select a.id, title, img, summary, content, category_id as categoryId,
         create_time as createTime, update_time as updateTime,
-        a.status ,c.name as categoryName, a.type
-        from article a, category c
+        a.status ,c.name as categoryName, a.type, pageviews
+        from article a, category c, article_pageviews p
         where a.category_id = c.id
+        and p.article_id = #{id}
         and a.id = #{id}
     </select>
 
@@ -87,18 +88,20 @@
     </delete>
 
     <select id="selectPublished" resultType="cn.ntshare.Blog.dto.ArticleDTO">
-        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
-        from article a, category c
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName, pageviews
+        from article a, category c, article_pageviews p
         where a.category_id = c.id
+        and a.id = p.article_id
         and a.status = 1
         and a.type > 0
         order by create_time desc
     </select>
 
     <select id="search" parameterType="String" resultType="cn.ntshare.Blog.dto.ArticleDTO">
-        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
-        from article a, category c
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName, pageviews
+        from article a, category c, article_pageviews p
         where a.category_id = c.id
+        and a.id = p.article_id
         and title like concat ('%', #{keywords}, '%')
         and a.status = 1
         and a.type > 0
@@ -129,10 +132,12 @@
     </select>
 
     <select id="queryBriefInfoById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
-        select a.id, title, img, summary, category_id as categoryId, create_time as createTime, update_time as updateTime, c.name as categoryName
-        from article a, category c
+        select a.id, title, img, summary, category_id as categoryId, create_time as createTime, update_time as updateTime, c.name as categoryName, pageviews
+        from article a, category c, article_pageviews p
         where a.category_id = c.id
+        and a.id = p.article_id
         and a.id = #{id}
+
     </select>
     
     <select id="queryContentById" parameterType="Integer" resultType="String">
@@ -180,5 +185,22 @@
         where id in
         (select tag_id from article_tag where article_id = #{id})
     </select>
+
+    <insert id="insertArticlePageViews" parameterType="Map">
+        insert into
+        article_pageviews(article_id, pageviews)
+        values (#{articleId}, #{pageViews})
+    </insert>
+
+    <delete id="deleteArticlePageViews" parameterType="Integer">
+        delete from article_pageviews
+        where  article_id = #{articleId}
+    </delete>
+
+    <update id="increasePageViews" parameterType="Integer">
+        update article_pageviews
+        set pageviews = pageviews + 1
+        where article_id = #{articleId}
+    </update>
 
 </mapper>

@@ -39,4 +39,6 @@ public class ArticleDTO {
     private Date updateTime;
 
     private List<TagDTO> tags;
+
+    private Integer pageviews;
 }

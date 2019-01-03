@@ -63,4 +63,11 @@ public interface ArticleMapper {
     int deleteArticleTagByArticleId(@Param("articleId") Integer articleId);
 
     List<TagDTO> queryTagsById(Integer id);
+
+    int insertArticlePageViews(@Param("articleId") Integer articleId,
+                               @Param("pageViews") int pageViews);
+
+    int deleteArticlePageViews(@Param("articleId") Integer articleId);
+
+    int increasePageViews(@Param("articleId") Integer articleId);
 }
