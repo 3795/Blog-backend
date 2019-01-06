@@ -64,4 +64,8 @@
         and a.status = 1
     </select>
 
+    <select id="count" resultType="Integer">
+        select count(1) from tag
+    </select>
+
 </mapper>

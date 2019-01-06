@@ -93,4 +93,9 @@ public class TagServiceImpl implements TagService {
         List<ArticleDTO> list = tagMapper.queryArticlesById(id);
         return new PageInfo<>(list);
     }
+
+    @Override
+    public int count() {
+        return tagMapper.count();
+    }
 }

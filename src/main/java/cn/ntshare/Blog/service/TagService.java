@@ -30,4 +30,6 @@ public interface TagService {
     boolean deleteTag(Integer id);
 
     PageInfo queryArticlesById(Integer id, int pageNum, int pageSize);
+
+    int count();
 }

@@ -35,4 +35,6 @@ public interface TagMapper {
     List<TagDTO> queryEnableTags();
 
     List<ArticleDTO> queryArticlesById(Integer id);
+
+    int count();
 }
