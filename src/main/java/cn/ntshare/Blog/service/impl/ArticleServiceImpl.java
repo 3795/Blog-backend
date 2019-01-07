@@ -9,6 +9,7 @@ import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.pojo.Article;
 import cn.ntshare.Blog.service.ArticleService;
 import cn.ntshare.Blog.service.CategoryService;
+import cn.ntshare.Blog.service.ImgRecordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ImgRecordService imgRecordService;
 
     @Override
     public PageInfo selectAll(int pageNum, int pageSize) {
@@ -88,6 +92,9 @@ public class ArticleServiceImpl implements ArticleService {
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
 
+        // 添加图片记录
+        imgRecordService.updateArticleIdByImg(article.getId(), article.getImg());
+
         return true;
     }
 
@@ -107,6 +114,10 @@ public class ArticleServiceImpl implements ArticleService {
             log.warn("update article_tag error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
+
+        // 更新图片记录
+        imgRecordService.updateImgByArticleId(article.getId(), article.getImg());
+
         return true;
     }
 
@@ -146,6 +157,9 @@ public class ArticleServiceImpl implements ArticleService {
             log.error("delete article_pageviews error!");
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
+
+        // 删除图片记录
+        imgRecordService.deleteArticleId(id);
 
         return true;
     }

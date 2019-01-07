@@ -35,18 +35,31 @@ public class FileUtil {
      * 上传文件
      * @param file
      * @return
-     * @throws IOException
      */
-    public static String uploadImg(MultipartFile file) throws IOException {
+    public static String uploadImg(MultipartFile file) {
         String imgName = getImgName(file.getOriginalFilename());
         File destination = new File(sysPath + imgName);
-        FileUtils.copyInputStreamToFile(file.getInputStream(), destination);
-        if (FTPUtil.uploadFile(destination)) {
+        try {
+            FileUtils.copyInputStreamToFile(file.getInputStream(), destination);
+            if (FTPUtil.uploadImg(destination)) {
+                return PropertiesUtil.getProperty("imgServerName") + imgName;
+            } else {
+                throw new SystemException(ResponseCodeEnum.FILE_UPLOAD_FAILED);
+            }
+        } catch(Exception e) {
+            throw new SystemException(ResponseCodeEnum.FILE_UPLOAD_FAILED);
+        } finally {
             destination.delete();
-            return PropertiesUtil.getProperty("imgServerName") + imgName;
         }
-        destination.delete();
-        throw new SystemException(ResponseCodeEnum.FILE_UPLOAD_FAILED);
+    }
+
+    /**
+     * 删除FTP服务器上的图片
+     * @param imgName
+     * @return
+     */
+    public static Boolean deleteImg(String imgName) {
+        return FTPUtil.deleteImg(imgName);
     }
 
 }

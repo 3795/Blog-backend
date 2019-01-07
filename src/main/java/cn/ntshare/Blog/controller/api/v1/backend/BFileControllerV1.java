@@ -5,11 +5,11 @@ import cn.ntshare.Blog.service.FileService;
 import cn.ntshare.Blog.util.FileUtil;
 import cn.ntshare.Blog.vo.ServerResponse;
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RequestMapping("/backend")
 @RestController
+@Api(tags = "文件管理接口")
 public class BFileControllerV1 {
 
     @Autowired
@@ -30,6 +31,7 @@ public class BFileControllerV1 {
      * @return
      */
     @PostMapping("/uploadImg")
+    @ApiOperation("文件上传接口")
     public ServerResponse upload(@RequestParam("file") MultipartFile file) {
         String imgPath = fileService.uploadImg(file);
         return ServerResponse.success(imgPath);
@@ -41,6 +43,7 @@ public class BFileControllerV1 {
      * @return
      */
     @PostMapping("/edUploadImg")
+    @ApiOperation("Editor编辑器图片上传接口")
     public String editorUpload(@RequestParam(value = "editormd-image-file") MultipartFile file) {
         JSONObject jsonObject = new JSONObject();
         if (!file.isEmpty()) {
@@ -60,5 +63,18 @@ public class BFileControllerV1 {
             jsonObject.put("url", "");
         }
         return jsonObject.toString();
+    }
+
+    /**
+     * 删除FTP服务器中的图片
+     * @param imgName
+     * @return
+     */
+    @PostMapping("/deleteImg")
+    @ApiOperation("删除图片接口")
+    @ApiImplicitParam(name = "imgName", value = "图片名称", required = true, paramType = "query")
+    public ServerResponse deleteImg(@RequestParam("imgName") String imgName) {
+        fileService.deleteImg(imgName);
+        return ServerResponse.success(ResponseCodeEnum.FILE_DELETE_SUCCESS);
     }
 }

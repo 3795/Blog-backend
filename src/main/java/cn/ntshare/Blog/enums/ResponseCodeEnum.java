@@ -24,7 +24,9 @@ public enum ResponseCodeEnum {
     FILE_CANNOT_BE_EMPTY(20, "文件不能为空"),
     FILE_UPLOAD_SUCCESS(21, "文件上传成功"),
     FILE_UPLOAD_FAILED(22, "文件上传失败"),
-    CONN_FTP_FAIL(24, "连接FTP服务器失败"),
+    CONN_FTP_FAILED(24, "连接FTP服务器失败"),
+    FILE_DELETE_SUCCESS(25, "文件删除成功"),
+    FILE_DELETE_FAILED(26, "文件删除失败"),
 
     INSERT_FAILED(30, "添加失败"),
     INSERT_SUCCESS(31, "添加成功"),

@@ -15,7 +15,7 @@
         </if>
     </select>
 
-    <insert id="insertCarouselImg" parameterType="CarouselImg">
+    <insert id="insertCarouselImg" parameterType="CarouselImg" keyProperty="id" useGeneratedKeys="true">
         insert into
         carousel_img(img, link, status)
         values (#{img}, #{link}, #{status})

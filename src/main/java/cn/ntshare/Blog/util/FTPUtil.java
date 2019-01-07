@@ -41,9 +41,19 @@ public class FTPUtil {
      * @return
      * @throws IOException
      */
-    public static boolean uploadFile(File file) throws IOException {
+    public static boolean uploadImg(File file) {
         FTPUtil ftpUtil = new FTPUtil(ip, pt, user, pwd);
-        return ftpUtil.uploadFile("images", file);
+        return ftpUtil.uploadFile("/images", file);
+    }
+
+    /**
+     * 删除FTP服务器上的文件
+     * @param imgName
+     * @return
+     */
+    public static boolean deleteImg(String imgName) {
+        FTPUtil ftpUtil = new FTPUtil(ip, pt, user, pwd);
+        return ftpUtil.deleteFile("/images", imgName);
     }
 
     /**
@@ -53,22 +63,53 @@ public class FTPUtil {
      * @return
      * @throws IOException
      */
-    public boolean uploadFile(String path, File file) throws IOException {
+    public boolean uploadFile(String path, File file){
         FileInputStream fileInputStream = null;
-        if(connectServer(this.host, this.port, this.username, this.password)) {
-            ftpClient.changeWorkingDirectory(path);
-            ftpClient.setBufferSize(2048);
-            ftpClient.setControlEncoding("UTF-8");
-            ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);      //设置文件格式为二进制格式
-            ftpClient.enterLocalPassiveMode();
-            fileInputStream = new FileInputStream(file);
-            ftpClient.storeFile(file.getName(), fileInputStream);
-            ftpClient.disconnect();
-            fileInputStream.close();
-            log.info("文件 {} 上传成功", file.getName());
-            return true;
+        try {
+            if(connectServer(this.host, this.port, this.username, this.password)) {
+                ftpClient.changeWorkingDirectory(path);
+                ftpClient.setBufferSize(2048);
+                ftpClient.setControlEncoding("UTF-8");
+                ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);      //设置文件格式为二进制格式
+                ftpClient.enterLocalPassiveMode();
+                fileInputStream = new FileInputStream(file);
+                ftpClient.storeFile(file.getName(), fileInputStream);
+                ftpClient.disconnect();
+                fileInputStream.close();
+                log.info("文件 {} 上传成功", file.getName());
+                return true;
+            }
+        } catch (IOException e) {
+            throw new SystemException(ResponseCodeEnum.CONN_FTP_FAILED);
         }
-        throw new SystemException(ResponseCodeEnum.CONN_FTP_FAIL);
+        throw new SystemException(ResponseCodeEnum.CONN_FTP_FAILED);
+    }
+
+    /**
+     * 删除FTP服务器中的文件
+     * @param path
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public boolean deleteFile(String path, String fileName){
+        try {
+            if(connectServer(this.host, this.port, this.username, this.password)) {
+                ftpClient.changeWorkingDirectory(path);
+                if (ftpClient.deleteFile(fileName)) {
+                    ftpClient.disconnect();
+                    log.info("文件 {} 删除成功", fileName);
+                    return true;
+                } else {
+                    ftpClient.disconnect();
+                    log.info("文件 {} 删除失败", fileName);
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            throw new SystemException(ResponseCodeEnum.CONN_FTP_FAILED);
+        }
+        throw new SystemException(ResponseCodeEnum.CONN_FTP_FAILED);
     }
 
     /**

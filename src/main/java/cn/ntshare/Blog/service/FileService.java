@@ -9,6 +9,18 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface FileService {
 
+    /**
+     * 上传图片
+     * @param file
+     * @return
+     */
     String uploadImg(MultipartFile file);
+
+    /**
+     * 删除图片
+     * @param imgName
+     * @return
+     */
+    Boolean deleteImg(String imgName);
 
 }

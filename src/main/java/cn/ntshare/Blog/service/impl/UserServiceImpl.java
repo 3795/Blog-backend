@@ -7,6 +7,7 @@ import cn.ntshare.Blog.dto.UserDTO;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.pojo.User;
 import cn.ntshare.Blog.service.FileService;
+import cn.ntshare.Blog.service.ImgRecordService;
 import cn.ntshare.Blog.service.UserService;
 import cn.ntshare.Blog.util.CookieUtil;
 import cn.ntshare.Blog.util.JsonUtil;
@@ -34,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private ImgRecordService imgRecordService;
 
     @Override
     public UserDTO checkLoginInfo(String account, String password) {
@@ -93,7 +97,11 @@ public class UserServiceImpl implements UserService {
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
 
+        // 更新缓存
         this.updateCache(id, request);
+
+        // 更新图片记录
+        imgRecordService.updateImgByUserId(id, avatar);
 
         return avatar;
     }

@@ -5,11 +5,13 @@ import cn.ntshare.Blog.dao.CarouselImgMapper;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.pojo.CarouselImg;
 import cn.ntshare.Blog.service.CarouselImgService;
+import cn.ntshare.Blog.service.ImgRecordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,9 @@ public class CarouselImgServiceImpl implements CarouselImgService {
     @Autowired
     private CarouselImgMapper carouselImgMapper;
 
+    @Autowired
+    private ImgRecordService imgRecordService;
+
     @Override
     public PageInfo queryCarouselImgByStatus(Integer status, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -33,6 +38,7 @@ public class CarouselImgServiceImpl implements CarouselImgService {
     }
 
     @Override
+    @Transactional
     public boolean insertCarouselImg(CarouselImg carouselImg) {
         int result = carouselImgMapper.insertCarouselImg(carouselImg);
 
@@ -40,6 +46,9 @@ public class CarouselImgServiceImpl implements CarouselImgService {
             log.warn("insert carousel_img error!");
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
+
+        // 更新图片记录
+        imgRecordService.updateCarouselImgIdByImg(carouselImg.getId(), carouselImg.getImg());
 
         return true;
     }
@@ -52,6 +61,9 @@ public class CarouselImgServiceImpl implements CarouselImgService {
             log.warn("delete carousel_img error!");
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
+
+        // 删除对应的图片记录
+        imgRecordService.deleteCarouselImgId(id);
 
         return true;
     }
