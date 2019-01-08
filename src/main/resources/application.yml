@@ -3,6 +3,11 @@ spring:
     active: dev
   jackson:
     default-property-inclusion: non_null
+  mail:
+      host: smtp.qq.com
+      username: xxx@qq.com
+      password: xxx
+      default-encoding: UTF-8
 server:
   port: 8100
   servlet:

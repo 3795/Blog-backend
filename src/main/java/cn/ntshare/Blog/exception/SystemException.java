@@ -1,4 +1,4 @@
-package cn.ntshare.Blog.Exception;
+package cn.ntshare.Blog.exception;
 
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import lombok.Getter;

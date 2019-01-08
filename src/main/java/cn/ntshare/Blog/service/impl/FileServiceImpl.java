@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.service.impl;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.service.FileService;
 import cn.ntshare.Blog.service.ImgRecordService;
@@ -8,8 +8,6 @@ import cn.ntshare.Blog.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * Created By Seven.wk

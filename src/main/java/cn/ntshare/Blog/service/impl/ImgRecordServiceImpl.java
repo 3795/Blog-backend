@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.service.impl;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.dao.ImgRecordMapper;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.pojo.ImgRecord;
@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -118,6 +120,21 @@ public class ImgRecordServiceImpl implements ImgRecordService {
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
         return true;
+    }
+
+    @Override
+    public List<ImgRecord> queryDiscardImg() {
+        return imgRecordMapper.queryDiscardImg();
+    }
+
+    @Override
+    public Integer deleteRecord(List<Integer> ids) {
+        if (ids.size() == 0) {
+            return 0;
+        }
+        int result = imgRecordMapper.deleteRecord(ids);
+        log.info("共删除 {} 条记录", result);
+        return result;
     }
 
     /**

@@ -1,5 +1,9 @@
 package cn.ntshare.Blog.service;
 
+import cn.ntshare.Blog.pojo.ImgRecord;
+
+import java.util.List;
+
 /**
  * Created By Seven.wk
  * Description: 图片上传记录
@@ -67,4 +71,17 @@ public interface ImgRecordService {
      * @return
      */
     Boolean deleteArticleId(Integer articleId);
+
+    /**
+     * 查询废弃的图片
+     * @return
+     */
+    List<ImgRecord> queryDiscardImg();
+
+    /**
+     * 删除图片记录
+     * @param ids
+     * @return
+     */
+    Integer deleteRecord(List<Integer> ids);
 }

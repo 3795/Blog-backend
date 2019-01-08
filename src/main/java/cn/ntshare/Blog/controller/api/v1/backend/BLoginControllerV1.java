@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.controller.api.v1.backend;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.dto.UserDTO;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;

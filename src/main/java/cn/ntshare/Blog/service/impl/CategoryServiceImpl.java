@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.service.impl;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.dao.CategoryMapper;
 import cn.ntshare.Blog.dto.CategoryDTO;
 import cn.ntshare.Blog.dto.CategoryInfo;

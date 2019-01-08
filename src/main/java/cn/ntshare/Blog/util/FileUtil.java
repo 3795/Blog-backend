@@ -1,17 +1,17 @@
 package cn.ntshare.Blog.util;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.List;
 
 /**
  * Created By Seven.wk
- * Description: 文件名称工具类
+ * Description: 文件工具类
  * Created At 2018/08/08
  */
 @Slf4j
@@ -54,12 +54,23 @@ public class FileUtil {
     }
 
     /**
-     * 删除FTP服务器上的图片
+     * 删除FTP服务器中的单个图片
      * @param imgName
      * @return
      */
     public static Boolean deleteImg(String imgName) {
         return FTPUtil.deleteImg(imgName);
+    }
+
+    /**
+     * 删除多个图片
+     * @param imgNames
+     */
+    public static void deleteImgs(List<String> imgNames) {
+        if (imgNames.size() == 0) {
+            return;
+        }
+        FTPUtil.deleteImgs(imgNames);
     }
 
 }

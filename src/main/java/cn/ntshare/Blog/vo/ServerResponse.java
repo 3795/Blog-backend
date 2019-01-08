@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.vo;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import lombok.Getter;
 import lombok.ToString;

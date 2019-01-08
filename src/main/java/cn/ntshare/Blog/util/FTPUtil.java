@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.util;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
@@ -8,6 +8,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created By Seven.wk
@@ -28,7 +29,7 @@ public class FTPUtil {
     private static final String user = PropertiesUtil.getProperty("ftp.username");
     private static final String pwd = PropertiesUtil.getProperty("ftp.password");
 
-    public FTPUtil(String host,int port,String username,String password) {
+    private FTPUtil(String host, int port, String username, String password) {
         this.host = host;
         this.port = port;
         this.username = username;
@@ -47,7 +48,7 @@ public class FTPUtil {
     }
 
     /**
-     * 删除FTP服务器上的文件
+     * 删除FTP服务器上的单个文件
      * @param imgName
      * @return
      */
@@ -57,14 +58,23 @@ public class FTPUtil {
     }
 
     /**
+     * 删除多个文件
+     * @param imgNames
+     */
+    public static void deleteImgs(List<String> imgNames) {
+        FTPUtil ftpUtil = new FTPUtil(ip, pt, user, pwd);
+        ftpUtil.deleteFiles("/images", imgNames);
+    }
+
+    /**
      * 上传文件到FTP服务器
      * @param path
      * @param file
      * @return
      * @throws IOException
      */
-    public boolean uploadFile(String path, File file){
-        FileInputStream fileInputStream = null;
+    private boolean uploadFile(String path, File file){
+        FileInputStream fileInputStream;
         try {
             if(connectServer(this.host, this.port, this.username, this.password)) {
                 ftpClient.changeWorkingDirectory(path);
@@ -92,7 +102,7 @@ public class FTPUtil {
      * @return
      * @throws IOException
      */
-    public boolean deleteFile(String path, String fileName){
+    private boolean deleteFile(String path, String fileName){
         try {
             if(connectServer(this.host, this.port, this.username, this.password)) {
                 ftpClient.changeWorkingDirectory(path);
@@ -111,6 +121,33 @@ public class FTPUtil {
         }
         throw new SystemException(ResponseCodeEnum.CONN_FTP_FAILED);
     }
+
+    /**
+     * 删除多个文件
+     * @param path
+     * @param imgNames
+     */
+    private void deleteFiles(String path, List<String> imgNames) {
+        try {
+            if(connectServer(this.host, this.port, this.username, this.password)) {
+                int count = 0;
+                ftpClient.changeWorkingDirectory(path);
+                for (String s : imgNames) {
+                    if (ftpClient.deleteFile(s)) {
+                        log.info("文件 {} 删除成功", s);
+                        count ++;
+                    } else {
+                        log.info("文件 {} 删除失败", s);
+                    }
+                }
+                log.info("共删除 {} 张图片", count);
+                ftpClient.disconnect();
+            }
+        } catch (IOException e) {
+            throw new SystemException(ResponseCodeEnum.CONN_FTP_FAILED);
+        }
+    }
+
 
     /**
      * 连接到FTP服务器

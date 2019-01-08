@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.service.impl;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.dao.CarouselImgMapper;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.pojo.CarouselImg;

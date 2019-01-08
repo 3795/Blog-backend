@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.handler;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.vo.ServerResponse;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package cn.ntshare.Blog.service.impl;
 
-import cn.ntshare.Blog.Exception.SystemException;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.dao.NavigationMapper;
 import cn.ntshare.Blog.dto.NavigationDTO;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;

@@ -61,4 +61,20 @@
         </if>
     </update>
 
+    <select id="queryDiscardImg" resultType="ImgRecord">
+        select DISTINCT id, img
+        from img_record
+        where article_id = 0
+        and carousel_img_id = 0
+        and user_id = 0
+    </select>
+    
+    <delete id="deleteRecord" parameterType="List">
+        delete from img_record
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>
