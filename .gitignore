@@ -27,3 +27,4 @@
 */test/*
 src/main/resources/application-prod.yml
 src/main/resources/system-prod.properties
+**/BTestControllerV1.java

@@ -37,6 +37,10 @@ public enum ResponseCodeEnum {
 
     WRONG_PASSWORD(36, "旧密码错误"),
 
+    SMS_SEND_ERROR(40, "发送短信时出错了"),
+    SMS_SEND_SUCCESS(41, "短信发送成功"),
+    SMS_SEND_FAILED(42, "短信发送失败"),
+
     PAGE_NOT_FOUND(404, "页面不存在"),
     SERVER_ERROR(500, "出了小问题，紧急抢救中..."),
     ;

@@ -23,6 +23,11 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
     loginUsername: admin
     loginPassword: admin
+  mail:
+    host: smtp.qq.com
+    username: xxx@qq.com
+    password: xxx
+    default-encoding: UTF-8
 logging:
   level:
     cn:
