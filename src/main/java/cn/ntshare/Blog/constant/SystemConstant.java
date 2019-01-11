@@ -13,6 +13,8 @@ public class SystemConstant {
 
     public static final String COOKIE_DOMAIN_NAME = PropertiesUtil.getProperty("cookie.domain.name", "localhost");
 
+    public static final Integer COOKIE_MAX_TIME = Integer.parseInt(PropertiesUtil.getProperty("cookie.max.age", "86400"));
+
     public static final String LOGIN_TOKEN = "authToken";
 
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -22,4 +24,6 @@ public class SystemConstant {
     public static final String SMS_TOKEN = "smsToken";
 
     public static final Integer SMS_EXPIRE_TIME = Integer.parseInt(PropertiesUtil.getProperty("sms.expire.time", "180"));
+
+    public static final Integer MINUTE = 60;
 }

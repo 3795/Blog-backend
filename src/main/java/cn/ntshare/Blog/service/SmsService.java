@@ -1,5 +1,6 @@
 package cn.ntshare.Blog.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -16,4 +17,12 @@ public interface SmsService {
      * @return
      */
     Boolean sendCaptchaSms(HttpServletResponse response, String phoneNumber, String captchaCode);
+
+    /**
+     * 验证短信验证码
+     * @param request
+     * @param captchaCode
+     * @return
+     */
+    Boolean verifyCaptchaCode(HttpServletRequest request, String captchaCode);
 }

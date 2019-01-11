@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ntshare.Blog.dao.IpRecordMapper">
+
+    <sql id="base_sql">
+        id, ip, count, last_time, status
+    </sql>
+
+    <select id="query" resultType="IpRecord">
+        select
+        <include refid="base_sql"/>
+        from ip_record
+    </select>
+
+    <select id="queryByIp" parameterType="String" resultType="IpRecord">
+        select
+        <include refid="base_sql"/>
+        from ip_record
+        where ip = #{ip}
+    </select>
+
+    <insert id="insert" parameterType="IpRecord">
+        insert into
+        ip_record(ip, count, last_time, status)
+        values(#{ip}, #{count}, #{lastTime}, #{status})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from ip_record
+        where id = #{id}
+    </delete>
+    
+    <update id="updateStatus" parameterType="Integer">
+        update ip_record
+        set status = (status+1)%2
+        where id = #{id}
+    </update>
+
+    <update id="increaseCount" parameterType="String">
+        update ip_record
+        set count = count + 1, last_time = now()
+        where ip = #{ip}
+    </update>
+
+</mapper>

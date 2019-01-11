@@ -15,19 +15,19 @@ public class CaptchaUtil {
 
     /**
      * 生成验证码
-     * @param width     验证码宽度
-     * @param height    验证码高度
+     * @param length     验证码长度
+     * @param width    验证码宽度
      * @return
      */
-    public static CaptchaBO createCaptcha(int width, int height) {
-        BufferedImage captchaImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    public static CaptchaBO createCaptcha(int length, int width) {
+        BufferedImage captchaImage = new BufferedImage(length, width, BufferedImage.TYPE_INT_RGB);
 
         Graphics graphics = captchaImage.createGraphics();
         Random random = new Random();
 
         // 填充验证码背景色
         graphics.setColor(getRandColor(200, 250));
-        graphics.fillRect(0, 0, width, height);
+        graphics.fillRect(0, 0, length, width);
 
         // 设置字体形式
         graphics.setFont(new Font("Times New Roman", Font.ITALIC, 20));
@@ -35,8 +35,8 @@ public class CaptchaUtil {
         // 设置干扰条纹的颜色
         graphics.setColor(getRandColor(160, 200));
         for (int i=0; i<155; i++) {
-            int x = random.nextInt(width);
-            int y = random.nextInt(height);
+            int x = random.nextInt(length);
+            int y = random.nextInt(width);
             int x1 = random.nextInt(12);
             int y1 = random.nextInt(12);
             graphics.drawLine(x, y, x1, y1);
@@ -48,7 +48,7 @@ public class CaptchaUtil {
             String rand = String.valueOf(random.nextInt(10));
             sRand += rand;
             graphics.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
-            graphics.drawString(rand, 13 * i + width/4, height/2 + 6);
+            graphics.drawString(rand, 13 * i + length/4, width/2 + 6);
         }
         graphics.dispose();
 

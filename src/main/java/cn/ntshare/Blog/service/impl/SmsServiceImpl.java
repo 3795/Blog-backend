@@ -10,6 +10,7 @@ import cn.ntshare.Blog.util.RedisPoolUtil;
 import cn.ntshare.Blog.util.SmsUtil;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -27,13 +28,36 @@ public class SmsServiceImpl implements SmsService {
         // 写入Redis
         RedisPoolUtil.setExpireTime(key, captchaCode, SystemConstant.SMS_EXPIRE_TIME);
         // 写入Cookie
-        CookieUtil.writeCookie(response, SystemConstant.SMS_TOKEN, key);
+        CookieUtil.writeCookie(response, SystemConstant.SMS_TOKEN, key, SystemConstant.SMS_EXPIRE_TIME);
 
         // 发送短信
         if (!SmsUtil.sendCaptchaSms(phoneNumber, captchaCode)) {
             throw new SystemException(ResponseCodeEnum.SMS_SEND_FAILED);
         }
 
+        // 将手机号写入redis防刷
+        RedisPoolUtil.setExpireTime(phoneNumber, "1", SystemConstant.MINUTE);
+
         return true;
     }
+
+    @Override
+    public Boolean verifyCaptchaCode(HttpServletRequest request, String captchaCode) {
+        String key = CookieUtil.readCookie(request, SystemConstant.SMS_TOKEN);
+        if (key == null) {
+            throw new SystemException(ResponseCodeEnum.SMS_CODE_EXPIRED);
+        }
+
+        String value = RedisPoolUtil.get(key);
+        if (value == null) {
+            throw new SystemException(ResponseCodeEnum.SMS_CODE_EXPIRED);
+        }
+
+        if (!value.equals(captchaCode)) {
+            throw new SystemException(ResponseCodeEnum.SMS_CODE_ERROR);
+        }
+
+        return true;
+    }
+
 }

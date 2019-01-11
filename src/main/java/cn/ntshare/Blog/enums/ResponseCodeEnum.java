@@ -40,6 +40,15 @@ public enum ResponseCodeEnum {
     SMS_SEND_ERROR(40, "发送短信时出错了"),
     SMS_SEND_SUCCESS(41, "短信发送成功"),
     SMS_SEND_FAILED(42, "短信发送失败"),
+    SMS_CODE_EXPIRED(44, "短信验证码已过期"),
+    SMS_CODE_ERROR(46, "短信验证码错误"),
+
+
+    NO_ACCESS(50, "拒绝访问"),
+    IP_NOT_VERIFIED(52, "需要异地登录验证"),
+    REQUEST_TOO_FREQUENTLY(54, "请求太频繁，请稍后再试"),
+    INVALID_TOKEN(56, "Token已过期，请刷新重试"),
+
 
     PAGE_NOT_FOUND(404, "页面不存在"),
     SERVER_ERROR(500, "出了小问题，紧急抢救中..."),

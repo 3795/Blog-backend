@@ -37,6 +37,7 @@ public class CookieUtil {
 
     /**
      * 向客户端写入Cookie
+     * 默认有效时间是 24 * 60 * 60 秒
      * @param response
      * @param token
      * @param value
@@ -46,7 +47,24 @@ public class CookieUtil {
         cookie.setDomain(SystemConstant.COOKIE_DOMAIN_NAME);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(Integer.parseInt(PropertiesUtil.getProperty("cookie.max.age", "86400")));
+        cookie.setMaxAge(SystemConstant.COOKIE_MAX_TIME);
+        response.addCookie(cookie);
+    }
+
+    /**
+     * 向客户端写入Cookie
+     * 有效时间为seconds
+     * @param response
+     * @param token
+     * @param value
+     * @param seconds
+     */
+    public static void writeCookie(HttpServletResponse response, String token, String value, Integer seconds) {
+        Cookie cookie = new Cookie(token, value);
+        cookie.setDomain(SystemConstant.COOKIE_DOMAIN_NAME);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(seconds);
         response.addCookie(cookie);
     }
 
