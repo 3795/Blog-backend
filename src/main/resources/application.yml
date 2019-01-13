@@ -12,6 +12,8 @@ server:
 mybatis:
   type-aliases-package: cn.ntshare.Blog.pojo
   mapper-locations: classpath:mybatis/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 pagehelper:
   reasonable: true
   support-methods-arguments: true

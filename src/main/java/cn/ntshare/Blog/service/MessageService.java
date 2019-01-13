@@ -20,4 +20,9 @@ public interface MessageService {
     void delete(Integer id);
 
     Integer countByStatus(Integer status);
+
+    /**
+     * 清空已读消息
+     */
+    void empty();
 }

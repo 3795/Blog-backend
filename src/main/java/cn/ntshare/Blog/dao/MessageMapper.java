@@ -25,4 +25,6 @@ public interface MessageMapper {
     int delete(Integer id);
 
     Integer countByStatus(@Param("status") Integer status);
+
+    int empty();
 }

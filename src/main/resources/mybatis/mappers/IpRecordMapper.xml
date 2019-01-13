@@ -10,6 +10,7 @@
         select
         <include refid="base_sql"/>
         from ip_record
+        order by last_time desc
     </select>
 
     <select id="queryByIp" parameterType="String" resultType="IpRecord">

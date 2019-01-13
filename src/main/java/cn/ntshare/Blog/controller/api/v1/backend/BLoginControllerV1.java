@@ -3,13 +3,15 @@ package cn.ntshare.Blog.controller.api.v1.backend;
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.dto.UserDTO;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
-import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.service.IpRecordService;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.service.UserService;
 import cn.ntshare.Blog.util.*;
 import cn.ntshare.Blog.vo.ServerResponse;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +52,13 @@ public class BLoginControllerV1 {
      * @return
      */
     @PostMapping("/login")
+    @ApiOperation("用户登录接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "account", value = "账号", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "captchaCode", value = "验证码", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "phoneCaptchaCode", value = "短信验证码", paramType = "query")
+    })
     public ServerResponse login(@RequestParam("account") String account,
                                 @RequestParam("password") String password,
                                 @RequestParam("captchaCode") String captchaCode,
@@ -61,28 +70,28 @@ public class BLoginControllerV1 {
         // 校验图片验证码
         if(session.getAttribute(SystemConstant.CAPTCHA_CODE) == null ||
                 !session.getAttribute(SystemConstant.CAPTCHA_CODE).equals(captchaCode)) {
-            throw new SystemException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
+            return ServerResponse.error(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
         }
 
         // 验证账号和密码
         UserDTO user = userService.checkLoginInfo(account, password);
 
         String ip = IPAddressUtil.getIpAdrress(request);
-
         // 第一次请求
         if (phoneCaptchaCode == null) {
             // 如果没有记录
             if (!ipRecordService.isExists(ip)) {
                 String phoneToken = RandomUtil.getUniqueKey();
                 RedisPoolUtil.setExpireTime(phoneToken, user.getPhone(), 10 * SystemConstant.MINUTE);
-                String[] data = {user.getPhone(), phoneToken};
+                String phone = user.getPhone().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+                String[] data = {phone, phoneToken};
                 return ServerResponse.success(ResponseCodeEnum.IP_NOT_VERIFIED, data);
             } else {
                 // 有记录就增加一次访问量
                 ipRecordService.increaseCount(ip);
             }
         } else {
-            // 验证验证码的正确性
+            // 验证短信验证码的正确性
             smsService.verifyCaptchaCode(request, phoneCaptchaCode);
             // 添加一条IP记录
             ipRecordService.insert(ip);
@@ -99,4 +108,5 @@ public class BLoginControllerV1 {
         log.info("用户：{} 登录成功", user.getUsername());
         return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS);
     }
+
 }

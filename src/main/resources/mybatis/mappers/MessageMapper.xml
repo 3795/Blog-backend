@@ -13,6 +13,7 @@
         <if test="status != null">
             where status = #{status}
         </if>
+        order by create_time desc
     </select>
 
     <insert id="insert" parameterType="Message">
@@ -39,4 +40,8 @@
         </if>
     </select>
 
+    <delete id="empty">
+        delete from message
+        where status = 1
+    </delete>
 </mapper>

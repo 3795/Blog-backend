@@ -57,4 +57,11 @@ public class BMessageControllerV1 {
         return ServerResponse.success(ResponseCodeEnum.DELETE_SUCCESS);
     }
 
+    @PostMapping("/empty")
+    @ApiOperation("删除已读消息")
+    public ServerResponse empty() {
+        messageService.empty();
+        return ServerResponse.success(ResponseCodeEnum.DELETE_SUCCESS);
+    }
+
 }

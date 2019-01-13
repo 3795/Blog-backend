@@ -59,4 +59,9 @@ public class MessageServiceImpl implements MessageService {
     public Integer countByStatus(Integer status) {
         return messageMapper.countByStatus(status);
     }
+
+    @Override
+    public void empty() {
+        messageMapper.empty();
+    }
 }
