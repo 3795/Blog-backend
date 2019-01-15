@@ -1,0 +1,48 @@
+package cn.ntshare.Blog.pojo;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.Calendar;
+import java.util.Date;
+
+/**
+ * Created By Seven.wk
+ * Description: 系统统计数据实体
+ * Created At 2019/01/15
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class Statistics {
+
+    private Integer id;
+
+    // 浏览量
+    private Integer views;
+
+    private Date day;
+
+    private String month;
+
+    private Integer year;
+
+    public Statistics(Integer views) {
+        this.views = views;
+        this.day = new Date();
+    }
+
+    public Statistics(Integer views, String month) {
+        this.views = views;
+        this.month = month;
+    }
+
+    public Statistics(Integer views, Integer year) {
+        this.views = views;
+        this.year = year;
+    }
+
+}

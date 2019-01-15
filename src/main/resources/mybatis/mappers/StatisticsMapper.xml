@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ntshare.Blog.dao.StatisticsMapper">
+    <sql id="baseSql">
+        id, views, day, month, year
+    </sql>
+
+    <select id="query" resultType="Statistics">
+        select
+        <include refid="baseSql"/>
+        from statistics
+    </select>
+    
+    <insert id="insert" parameterType="Statistics">
+        insert into statistics(views, day, month, year)
+        values(#{views}, #{day}, #{month}, #{year})
+    </insert>
+</mapper>
