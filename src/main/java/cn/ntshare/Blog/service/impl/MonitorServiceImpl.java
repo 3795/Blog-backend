@@ -1,10 +1,7 @@
 package cn.ntshare.Blog.service.impl;
 
 import cn.ntshare.Blog.dto.MonitorDTO;
-import cn.ntshare.Blog.service.ArticleService;
-import cn.ntshare.Blog.service.CategoryService;
-import cn.ntshare.Blog.service.MonitorService;
-import cn.ntshare.Blog.service.TagService;
+import cn.ntshare.Blog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +22,16 @@ public class MonitorServiceImpl implements MonitorService {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private StatisticsService statisticsService;
+
     @Override
     public MonitorDTO queryData() {
         int articleCount = articleService.countAll();
         int categoryCount = categoryService.count();
         int tagCount = tagService.count();
-        return new MonitorDTO(articleCount, categoryCount, tagCount);
+        int todayViews = statisticsService.queryTodayViews().getViews();
+        int yesterdayViews = statisticsService.queryYesterdayViews().getViews();
+        return new MonitorDTO(articleCount, categoryCount, tagCount, todayViews, yesterdayViews);
     }
 }

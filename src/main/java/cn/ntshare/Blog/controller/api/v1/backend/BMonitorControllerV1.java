@@ -23,9 +23,9 @@ public class BMonitorControllerV1 {
     @Autowired
     private MonitorService monitorService;
 
-    @GetMapping
+    @GetMapping("/cardData")
     @ApiOperation("查询基础数据")
-    public ServerResponse queryData() {
+    public ServerResponse queryCardData() {
         MonitorDTO monitorDTO = monitorService.queryData();
         return ServerResponse.success(monitorDTO);
     }

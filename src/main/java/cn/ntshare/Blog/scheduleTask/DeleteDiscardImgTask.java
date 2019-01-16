@@ -2,6 +2,7 @@ package cn.ntshare.Blog.scheduleTask;
 
 import cn.ntshare.Blog.pojo.ImgRecord;
 import cn.ntshare.Blog.service.ImgRecordService;
+import cn.ntshare.Blog.service.MessageService;
 import cn.ntshare.Blog.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,13 @@ import java.util.stream.Collectors;
  */
 @Component
 @Slf4j
-public class DeleteDiscardImg {
+public class DeleteDiscardImgTask {
 
     @Autowired
     private ImgRecordService imgRecordService;
+
+    @Autowired
+    private MessageService messageService;
 
     /**
      * 每天凌晨1点执行
@@ -47,6 +51,7 @@ public class DeleteDiscardImg {
                 .map(ImgRecord::getId)
                 .collect(Collectors.toList());
 
-        imgRecordService.deleteRecord(ids);
+        Integer count = imgRecordService.deleteRecord(ids);
+        messageService.insert("定时任务", "删除冗余图片成功，共删除 " + count + "张图片！");
     }
 }

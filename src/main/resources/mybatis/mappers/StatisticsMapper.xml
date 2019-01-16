@@ -15,4 +15,23 @@
         insert into statistics(views, day, month, year)
         values(#{views}, #{day}, #{month}, #{year})
     </insert>
+
+    <update id="increaseDailyViews" parameterType="String">
+        update statistics
+        set views = views + 1
+        where day = #{today}
+    </update>
+
+    <select id="queryDailyViews" parameterType="String" resultType="Statistics">
+        select views, day
+        from statistics
+        where day = #{day}
+    </select>
+
+    <update id="increaseMonthlyViews" parameterType="Map">
+        update statistics
+        set views = views + #{views}
+        where month = #{month}
+    </update>
+
 </mapper>

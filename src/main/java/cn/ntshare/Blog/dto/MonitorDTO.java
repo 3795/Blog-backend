@@ -16,15 +16,26 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MonitorDTO {
 
+    // 文章总数
     private Integer articleCount;
 
+    // 分类总数
     private Integer categoryCount;
 
+    // 标签总数
     private Integer tagCount;
 
-    public MonitorDTO(Integer articleCount, Integer categoryCount, Integer tagCount) {
+    // 今日访问量
+    private Integer todayViews;
+
+    // 昨日访问量
+    private Integer yesterdayViews;
+
+    public MonitorDTO(Integer articleCount, Integer categoryCount, Integer tagCount, Integer todayViews, Integer yesterdayViews) {
         this.articleCount = articleCount;
         this.categoryCount = categoryCount;
         this.tagCount = tagCount;
+        this.todayViews = todayViews;
+        this.yesterdayViews = yesterdayViews;
     }
 }

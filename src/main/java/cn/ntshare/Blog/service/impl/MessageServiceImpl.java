@@ -33,7 +33,6 @@ public class MessageServiceImpl implements MessageService {
         int result = messageMapper.insert(new Message(title, content));
         if (result != 1) {
             log.error("insert message error");
-            throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
     }
 

@@ -19,15 +19,15 @@ public interface ArticleService {
 
     PageInfo selectBriefInfoByTypeAndStatus(Integer type, Integer status, int pageNum, int pageSize);
 
-    boolean insert(Article article, List<Integer> tags);
+    void insert(Article article, List<Integer> tags);
 
-    boolean update(Article article, List<Integer> tags);
+    void update(Article article, List<Integer> tags);
 
-    boolean updateStatus(Integer id, Integer status);
+    void updateStatus(Integer id, Integer status);
 
-    boolean updateType(Integer id, Integer type);
+    void updateType(Integer id, Integer type);
 
-    boolean delete(Integer id);
+    void delete(Integer id);
 
     PageInfo selectPublished(int pageNum, int pageSize);
 

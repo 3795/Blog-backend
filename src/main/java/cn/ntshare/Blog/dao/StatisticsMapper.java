@@ -2,6 +2,7 @@ package cn.ntshare.Blog.dao;
 
 import cn.ntshare.Blog.pojo.Statistics;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +16,33 @@ import java.util.List;
 @Repository
 public interface StatisticsMapper {
 
+    /**
+     * 查询所有的访问量记录
+     * @return
+     */
     List<Statistics> query();
 
+    /**
+     * 新增一条记录
+     * @param statistics
+     * @return
+     */
     int insert(Statistics statistics);
+
+    /**
+     * 增加每日访问量数据
+     * @param today      当天日期
+     * @return
+     */
+    int increaseDailyViews(@Param("today") String today);
+
+    /**
+     * 根据某一天的日期来查询访问量
+     * @param day       年-月-日，如：2019-01-01
+     * @return
+     */
+    Statistics queryDailyViews(@Param("day") String day);
+
+    int increaseMonthlyViews(@Param("month") String month,
+                             @Param("views") Integer views);
 }

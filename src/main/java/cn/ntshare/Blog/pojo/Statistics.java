@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -33,6 +32,11 @@ public class Statistics {
     public Statistics(Integer views) {
         this.views = views;
         this.day = new Date();
+    }
+
+    public Statistics(Integer views, Date day) {
+        this.views = views;
+        this.day = day;
     }
 
     public Statistics(Integer views, String month) {

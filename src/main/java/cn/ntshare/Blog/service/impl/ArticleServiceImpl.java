@@ -10,6 +10,7 @@ import cn.ntshare.Blog.pojo.Article;
 import cn.ntshare.Blog.service.ArticleService;
 import cn.ntshare.Blog.service.CategoryService;
 import cn.ntshare.Blog.service.ImgRecordService;
+import cn.ntshare.Blog.service.StatisticsService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ImgRecordService imgRecordService;
 
+    @Autowired
+    private StatisticsService statisticsService;
+
     @Override
     public PageInfo selectAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -54,8 +58,12 @@ public class ArticleServiceImpl implements ArticleService {
         List<TagDTO> tags = articleMapper.queryTagsById(id);
         articleDTO.setTags(tags);
 
+        // todo 此处应开启异步线程
         // 增加文章浏览量
         articleMapper.increasePageViews(id);
+
+        // 增加访问量
+        statisticsService.increaseDailyViews();
 
         return articleDTO;
     }
@@ -69,7 +77,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
-    public boolean insert(Article article, List<Integer> tags) {
+    public void insert(Article article, List<Integer> tags) {
         int result = articleMapper.insert(article);
         if (result != 1) {
             log.warn("insert article error!");
@@ -95,12 +103,11 @@ public class ArticleServiceImpl implements ArticleService {
         // 添加图片记录
         imgRecordService.updateArticleIdByImg(article.getId(), article.getImg());
 
-        return true;
     }
 
     @Override
     @Transactional
-    public boolean update(Article article, List<Integer> tags) {
+    public void update(Article article, List<Integer> tags) {
         int result = articleMapper.update(article);
         if (result != 1) {
             log.warn("update article error!");
@@ -118,30 +125,27 @@ public class ArticleServiceImpl implements ArticleService {
         // 更新图片记录
         imgRecordService.updateImgByArticleId(article.getId(), article.getImg());
 
-        return true;
     }
 
     @Override
-    public boolean updateStatus(Integer id, Integer status) {
+    public void updateStatus(Integer id, Integer status) {
         int result = articleMapper.updateStatus(id, status);
         if (result != 1) {
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
-        return true;
     }
 
     @Override
-    public boolean updateType(Integer id, Integer type) {
+    public void updateType(Integer id, Integer type) {
         int result = articleMapper.updateType(id, type);
         if (result != 1) {
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
-        return true;
     }
 
     @Override
     @Transactional
-    public boolean delete(Integer id) {
+    public void delete(Integer id) {
         int result = articleMapper.delete(id);
         if (result != 1) {
             log.error("delete article error!");
@@ -161,7 +165,6 @@ public class ArticleServiceImpl implements ArticleService {
         // 删除图片记录
         imgRecordService.deleteArticleId(id);
 
-        return true;
     }
 
     @Override
