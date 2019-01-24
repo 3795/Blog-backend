@@ -1,16 +1,16 @@
 package cn.ntshare.Blog.service.impl;
 
-import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.dao.ArticleMapper;
 import cn.ntshare.Blog.dto.ArticleDTO;
 import cn.ntshare.Blog.dto.CategoryDTO;
 import cn.ntshare.Blog.dto.TagDTO;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
+import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.pojo.Article;
 import cn.ntshare.Blog.service.ArticleService;
+import cn.ntshare.Blog.service.AsyncService;
 import cn.ntshare.Blog.service.CategoryService;
 import cn.ntshare.Blog.service.ImgRecordService;
-import cn.ntshare.Blog.service.StatisticsService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService {
     private ImgRecordService imgRecordService;
 
     @Autowired
-    private StatisticsService statisticsService;
+    private AsyncService asyncService;
 
     @Override
     public PageInfo selectAll(int pageNum, int pageSize) {
@@ -58,12 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
         List<TagDTO> tags = articleMapper.queryTagsById(id);
         articleDTO.setTags(tags);
 
-        // todo 此处应开启异步线程
-        // 增加文章浏览量
-        articleMapper.increasePageViews(id);
-
-        // 增加访问量
-        statisticsService.increaseDailyViews();
+        asyncService.increasePageViews(id);
 
         return articleDTO;
     }
@@ -224,6 +219,11 @@ public class ArticleServiceImpl implements ArticleService {
             throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
         }
         return content;
+    }
+
+    @Override
+    public void increasePageViews(Integer id) {
+        articleMapper.increasePageViews(id);
     }
 
 }

@@ -42,4 +42,10 @@ public interface ArticleService {
     ArticleDTO queryBriefInfoById(Integer id);
 
     String queryContentById(Integer id);
+
+    /**
+     * 增加文章浏览量
+     * @param id
+     */
+    void increasePageViews(Integer id);
 }
