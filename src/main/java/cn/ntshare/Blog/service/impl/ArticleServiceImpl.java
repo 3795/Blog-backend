@@ -1,5 +1,6 @@
 package cn.ntshare.Blog.service.impl;
 
+import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.dao.ArticleMapper;
 import cn.ntshare.Blog.dto.ArticleDTO;
 import cn.ntshare.Blog.dto.CategoryDTO;
@@ -11,6 +12,8 @@ import cn.ntshare.Blog.service.ArticleService;
 import cn.ntshare.Blog.service.AsyncService;
 import cn.ntshare.Blog.service.CategoryService;
 import cn.ntshare.Blog.service.ImgRecordService;
+import cn.ntshare.Blog.util.JsonUtil;
+import cn.ntshare.Blog.util.RedisPoolUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -51,13 +54,25 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDTO selectById(Integer id) {
-        ArticleDTO articleDTO = articleMapper.selectById(id);
-        if (articleDTO == null) {
-            throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
-        }
-        List<TagDTO> tags = articleMapper.queryTagsById(id);
-        articleDTO.setTags(tags);
+        ArticleDTO articleDTO;
+        // 优先读取缓存
+        String articleStr = RedisPoolUtil.get(SystemConstant.ARTICLE_CACHE_PREFIX + id.toString());
+        if (articleStr == null) {
+            articleDTO = articleMapper.selectById(id);
+            if (articleDTO == null) {
+                throw new SystemException(ResponseCodeEnum.PAGE_NOT_FOUND);
+            }
+            List<TagDTO> tags = articleMapper.queryTagsById(id);
+            articleDTO.setTags(tags);
 
+            // 将文章内容写入redis缓存
+            articleStr = JsonUtil.obj2String(articleDTO);
+            RedisPoolUtil.setExpireTime(SystemConstant.ARTICLE_CACHE_PREFIX + id.toString(), articleStr, 180*SystemConstant.MINUTE);
+        } else {
+            articleDTO = JsonUtil.string2Obj(articleStr, ArticleDTO.class);
+        }
+
+        // 异步增加浏览量和访问量
         asyncService.increasePageViews(id);
 
         return articleDTO;
@@ -225,5 +240,4 @@ public class ArticleServiceImpl implements ArticleService {
     public void increasePageViews(Integer id) {
         articleMapper.increasePageViews(id);
     }
-
 }

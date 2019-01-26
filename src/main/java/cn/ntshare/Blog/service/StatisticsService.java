@@ -1,6 +1,7 @@
 package cn.ntshare.Blog.service;
 
 import cn.ntshare.Blog.pojo.Statistics;
+import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 
 /**
  * Created By Seven.wk
@@ -40,6 +41,12 @@ public interface StatisticsService {
     Statistics queryYesterdayViews();
 
     /**
+     * 查询本月访问量
+     * @return
+     */
+    Statistics queryMonthViews();
+
+    /**
      * 新增每月统计记录
      * @param statistics
      */
@@ -50,6 +57,5 @@ public interface StatisticsService {
      * @param statistics
      */
     Boolean insertAnnualStatistics(Statistics statistics);
-
 
 }

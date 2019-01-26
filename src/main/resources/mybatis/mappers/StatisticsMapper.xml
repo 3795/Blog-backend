@@ -34,4 +34,10 @@
         where month = #{month}
     </update>
 
+    <select id="queryMonthViews" parameterType="String" resultType="Statistics">
+        select views
+        from statistics
+        where month = #{month}
+    </select>
+
 </mapper>

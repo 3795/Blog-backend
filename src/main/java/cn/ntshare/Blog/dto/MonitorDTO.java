@@ -31,11 +31,16 @@ public class MonitorDTO {
     // 昨日访问量
     private Integer yesterdayViews;
 
-    public MonitorDTO(Integer articleCount, Integer categoryCount, Integer tagCount, Integer todayViews, Integer yesterdayViews) {
+    // 本月访问量
+    private Integer monthViews;
+
+    public MonitorDTO(Integer articleCount, Integer categoryCount, Integer tagCount,
+                      Integer todayViews, Integer yesterdayViews, Integer monthViews) {
         this.articleCount = articleCount;
         this.categoryCount = categoryCount;
         this.tagCount = tagCount;
         this.todayViews = todayViews;
         this.yesterdayViews = yesterdayViews;
+        this.monthViews = monthViews;
     }
 }

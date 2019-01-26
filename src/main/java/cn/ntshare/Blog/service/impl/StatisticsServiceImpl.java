@@ -60,6 +60,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
+    public Statistics queryMonthViews() {
+        return statisticsMapper.queryMonthViews(CalendarUtil.getCurrentMonth());
+    }
+
+    @Override
     public Boolean insertMonthlyStatistics(Statistics statistics) {
         int result = statisticsMapper.insert(statistics);
         if (result != 1) {

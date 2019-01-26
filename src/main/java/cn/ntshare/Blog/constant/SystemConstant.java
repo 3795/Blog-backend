@@ -26,4 +26,6 @@ public class SystemConstant {
     public static final Integer SMS_EXPIRE_TIME = Integer.parseInt(PropertiesUtil.getProperty("sms.expire.time", "180"));
 
     public static final Integer MINUTE = 60;
+
+    public static final String ARTICLE_CACHE_PREFIX = "articleId:";
 }

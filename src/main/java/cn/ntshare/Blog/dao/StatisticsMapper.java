@@ -43,6 +43,19 @@ public interface StatisticsMapper {
      */
     Statistics queryDailyViews(@Param("day") String day);
 
+    /**
+     * 增加月访问量
+     * @param month
+     * @param views
+     * @return
+     */
     int increaseMonthlyViews(@Param("month") String month,
                              @Param("views") Integer views);
+
+    /**
+     * 查询某一个月的月访问量
+     * @param currentMonth      年-月，如：2019-01
+     * @return
+     */
+    Statistics queryMonthViews(@Param("month") String currentMonth);
 }

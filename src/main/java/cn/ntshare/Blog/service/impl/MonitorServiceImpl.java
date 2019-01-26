@@ -32,6 +32,7 @@ public class MonitorServiceImpl implements MonitorService {
         int tagCount = tagService.count();
         int todayViews = statisticsService.queryTodayViews().getViews();
         int yesterdayViews = statisticsService.queryYesterdayViews().getViews();
-        return new MonitorDTO(articleCount, categoryCount, tagCount, todayViews, yesterdayViews);
+        int monthViews = statisticsService.queryMonthViews().getViews();
+        return new MonitorDTO(articleCount, categoryCount, tagCount, todayViews, yesterdayViews, monthViews);
     }
 }
