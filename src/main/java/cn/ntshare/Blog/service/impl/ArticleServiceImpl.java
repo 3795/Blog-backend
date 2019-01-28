@@ -135,6 +135,22 @@ public class ArticleServiceImpl implements ArticleService {
         // 更新图片记录
         imgRecordService.updateImgByArticleId(article.getId(), article.getImg());
 
+        // 更新redis记录
+        Integer articleId = article.getId();
+        String articleStr = RedisPoolUtil.get(SystemConstant.ARTICLE_CACHE_PREFIX + articleId.toString());
+        if (articleStr != null) {
+            ArticleDTO articleDTO = JsonUtil.string2Obj(articleStr, ArticleDTO.class);
+            if (articleDTO != null) {
+                articleDTO.setTitle(article.getTitle());
+                articleDTO.setSummary(article.getSummary());
+                articleDTO.setContent(article.getContent());
+                articleStr = JsonUtil.obj2String(articleDTO);
+                RedisPoolUtil.setExpireTime(SystemConstant.ARTICLE_CACHE_PREFIX + articleId.toString(), articleStr, 180*SystemConstant.MINUTE);
+                log.info("文章缓存更新成功, ID = " + articleId);
+            } else {
+                log.error("文章反序列失败，ID = " + articleId);
+            }
+        }
     }
 
     @Override
