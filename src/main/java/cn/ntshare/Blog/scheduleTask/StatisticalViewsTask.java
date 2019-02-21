@@ -47,7 +47,7 @@ public class StatisticalViewsTask {
      */
     @Scheduled(cron = "0 0 0 1 * *")
     public void insertMonthlyViews() {
-        String month = CalendarUtil.getNextMonth();
+        String month = CalendarUtil.getCurrentMonth();
         Statistics statistics = new Statistics(0, month);
         if (statisticsService.insertMonthlyStatistics(statistics)) {
             messageService.insert("添加访问量记录", "下一月访问量记录添加成功, 月份为 " + month);
