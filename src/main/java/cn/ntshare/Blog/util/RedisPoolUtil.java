@@ -4,6 +4,9 @@ import cn.ntshare.Blog.bo.RedisPool;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created By Seven.wk
  * Description: RedisPool工具
@@ -74,6 +77,33 @@ public class RedisPoolUtil {
         Long result = jedis.del(key);
         RedisPool.returnResource(jedis);
         return result;
+    }
+
+    /**
+     * 向集合中存放值
+     * @param key
+     * @param strings
+     * @return
+     */
+    public static Long setList (String key, String... strings) {
+        Jedis jedis = RedisPool.getJedis();
+        Long result = jedis.lpush(key, strings);
+        RedisPool.returnResource(jedis);
+        return result;
+    }
+
+    /**
+     * 获取集合中所有的值
+     * @param key
+     * @return
+     */
+    public static List<String> getList(String key) {
+        List<String> list = new ArrayList<>();
+        Jedis jedis = RedisPool.getJedis();
+        while (jedis.exists(key)) {
+            list.add(jedis.lpop(key));
+        }
+        return list;
     }
 
 }

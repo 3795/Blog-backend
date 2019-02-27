@@ -28,4 +28,10 @@ public class SystemConstant {
     public static final Integer MINUTE = 60;
 
     public static final String ARTICLE_CACHE_PREFIX = "articleId:";
+
+    public static final String INDEX_LINKS = "indexLinks";
+
+    public static final String WEB_URL = PropertiesUtil.getProperty("web.url");
+
+    public static final String BAIDU_LINK_SUBMISSION_URL = PropertiesUtil.getProperty("baidu.link.submission.url");
 }

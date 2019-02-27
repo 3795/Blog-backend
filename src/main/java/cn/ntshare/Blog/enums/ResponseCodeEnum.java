@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ResponseCodeEnum {
-    ERROR(10, "Error"),
-    SUCCESS(11, "Success"),
+    ERROR(10, "失败"),
+    SUCCESS(11, "成功"),
 
     PERMISSION_DENIED(12, "请登录系统"),
     LOGIN_SUCCESS(13, "登录成功"),
@@ -48,6 +48,8 @@ public enum ResponseCodeEnum {
     IP_NOT_VERIFIED(52, "需要异地登录验证"),
     REQUEST_TOO_FREQUENTLY(54, "请求太频繁，请稍后再试"),
     INVALID_TOKEN(56, "Token已过期，请刷新重试"),
+
+    HTTP_REQUEST_FAILED(58, "HTTP请求发送失败"),
 
 
     PAGE_NOT_FOUND(404, "页面不存在"),

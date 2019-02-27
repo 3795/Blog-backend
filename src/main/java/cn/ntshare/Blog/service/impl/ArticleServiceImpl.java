@@ -88,6 +88,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public void insert(Article article, List<Integer> tags) {
+        // 新增文章数据
         int result = articleMapper.insert(article);
         if (result != 1) {
             log.warn("insert article error!");
@@ -112,6 +113,11 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 添加图片记录
         imgRecordService.updateArticleIdByImg(article.getId(), article.getImg());
+
+        // 将文章url写入redis
+        String url = SystemConstant.WEB_URL + "/article/" + article.getId();
+        RedisPoolUtil.setList(SystemConstant.INDEX_LINKS, url);
+
 
     }
 
