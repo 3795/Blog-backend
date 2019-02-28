@@ -7,7 +7,7 @@ import cn.ntshare.Blog.form.UserForm;
 import cn.ntshare.Blog.pojo.User;
 import cn.ntshare.Blog.service.UserService;
 import cn.ntshare.Blog.util.CookieUtil;
-import cn.ntshare.Blog.util.RedisPoolUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import cn.ntshare.Blog.vo.ServerResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -84,7 +84,7 @@ public class BUserControllerV1 {
                                  HttpServletResponse response) {
         String loginToken = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
         CookieUtil.delCookie(request, response, SystemConstant.LOGIN_TOKEN);
-        RedisPoolUtil.del(loginToken);
+        RedisUtil.del(loginToken);
         return ServerResponse.success(ResponseCodeEnum.LOGOUT_SUCCESS);
     }
 

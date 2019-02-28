@@ -4,7 +4,7 @@ import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.dto.BaiduLinkSubmissionDTO;
 import cn.ntshare.Blog.service.MessageService;
 import cn.ntshare.Blog.util.HttpUtil;
-import cn.ntshare.Blog.util.RedisPoolUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,7 +29,7 @@ public class SubmitLinkTask {
      */
     @Scheduled(cron = "0 30 23 * * *")
     public void task() {
-        List<String> urls = RedisPoolUtil.getList(SystemConstant.INDEX_LINKS);
+        List<String> urls = RedisUtil.getList(SystemConstant.INDEX_LINKS);
         if (urls.size() == 0) {
             log.info("无链接需要向百度搜索提交");
         } else {

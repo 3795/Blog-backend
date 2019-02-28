@@ -6,7 +6,7 @@ import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.util.CookieUtil;
 import cn.ntshare.Blog.util.RandomUtil;
-import cn.ntshare.Blog.util.RedisPoolUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import cn.ntshare.Blog.util.SmsUtil;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class SmsServiceImpl implements SmsService {
 
         String key = RandomUtil.getUniqueKey();
         // 写入Redis
-        RedisPoolUtil.setExpireTime(key, captchaCode, SystemConstant.SMS_EXPIRE_TIME);
+        RedisUtil.setExpireTime(key, captchaCode, SystemConstant.SMS_EXPIRE_TIME);
         // 写入Cookie
         CookieUtil.writeCookie(response, SystemConstant.SMS_TOKEN, key, SystemConstant.SMS_EXPIRE_TIME);
 
@@ -36,7 +36,7 @@ public class SmsServiceImpl implements SmsService {
         }
 
         // 将手机号写入redis防刷
-        RedisPoolUtil.setExpireTime(phoneNumber, "1", SystemConstant.MINUTE);
+        RedisUtil.setExpireTime(phoneNumber, "1", SystemConstant.MINUTE);
 
         return true;
     }
@@ -48,7 +48,7 @@ public class SmsServiceImpl implements SmsService {
             throw new SystemException(ResponseCodeEnum.SMS_CODE_EXPIRED);
         }
 
-        String value = RedisPoolUtil.get(key);
+        String value = RedisUtil.get(key);
         if (value == null) {
             throw new SystemException(ResponseCodeEnum.SMS_CODE_EXPIRED);
         }

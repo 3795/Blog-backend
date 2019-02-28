@@ -13,7 +13,7 @@ import cn.ntshare.Blog.service.AsyncService;
 import cn.ntshare.Blog.service.CategoryService;
 import cn.ntshare.Blog.service.ImgRecordService;
 import cn.ntshare.Blog.util.JsonUtil;
-import cn.ntshare.Blog.util.RedisPoolUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleDTO selectById(Integer id) {
         ArticleDTO articleDTO;
         // 优先读取缓存
-        String articleStr = RedisPoolUtil.get(SystemConstant.ARTICLE_CACHE_PREFIX + id.toString());
+        String articleStr = RedisUtil.get(SystemConstant.ARTICLE_CACHE_PREFIX + id.toString());
         if (articleStr == null) {
             articleDTO = articleMapper.selectById(id);
             if (articleDTO == null) {
@@ -67,7 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
 
             // 将文章内容写入redis缓存
             articleStr = JsonUtil.obj2String(articleDTO);
-            RedisPoolUtil.setExpireTime(SystemConstant.ARTICLE_CACHE_PREFIX + id.toString(), articleStr, 180*SystemConstant.MINUTE);
+            RedisUtil.setExpireTime(SystemConstant.ARTICLE_CACHE_PREFIX + id.toString(), articleStr, 180*SystemConstant.MINUTE);
         } else {
             articleDTO = JsonUtil.string2Obj(articleStr, ArticleDTO.class);
         }
@@ -116,7 +116,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 将文章url写入redis
         String url = SystemConstant.WEB_URL + "/article/" + article.getId();
-        RedisPoolUtil.setList(SystemConstant.INDEX_LINKS, url);
+        RedisUtil.setList(SystemConstant.INDEX_LINKS, url);
 
 
     }
@@ -143,7 +143,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 更新redis记录
         Integer articleId = article.getId();
-        String articleStr = RedisPoolUtil.get(SystemConstant.ARTICLE_CACHE_PREFIX + articleId.toString());
+        String articleStr = RedisUtil.get(SystemConstant.ARTICLE_CACHE_PREFIX + articleId.toString());
         if (articleStr != null) {
             ArticleDTO articleDTO = JsonUtil.string2Obj(articleStr, ArticleDTO.class);
             if (articleDTO != null) {
@@ -151,7 +151,7 @@ public class ArticleServiceImpl implements ArticleService {
                 articleDTO.setSummary(article.getSummary());
                 articleDTO.setContent(article.getContent());
                 articleStr = JsonUtil.obj2String(articleDTO);
-                RedisPoolUtil.setExpireTime(SystemConstant.ARTICLE_CACHE_PREFIX + articleId.toString(), articleStr, 180*SystemConstant.MINUTE);
+                RedisUtil.setExpireTime(SystemConstant.ARTICLE_CACHE_PREFIX + articleId.toString(), articleStr, 180*SystemConstant.MINUTE);
                 log.info("文章缓存更新成功, ID = " + articleId);
             } else {
                 log.error("文章反序列失败，ID = " + articleId);

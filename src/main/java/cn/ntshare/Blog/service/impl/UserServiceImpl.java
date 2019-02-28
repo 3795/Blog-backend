@@ -12,7 +12,7 @@ import cn.ntshare.Blog.service.UserService;
 import cn.ntshare.Blog.util.CookieUtil;
 import cn.ntshare.Blog.util.JsonUtil;
 import cn.ntshare.Blog.util.MD5Util;
-import cn.ntshare.Blog.util.RedisPoolUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO queryUserInfo(HttpServletRequest request) {
         String key = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
-        String userJson = RedisPoolUtil.get(key);
+        String userJson = RedisUtil.get(key);
         UserDTO userDTO = JsonUtil.string2Obj(userJson, UserDTO.class);
         if (userDTO == null) {
             log.error("反序列化UserDTO对象失败，对象为空");
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer queryUserId(HttpServletRequest request) {
         String token = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
-        String userJson = RedisPoolUtil.get(token);
+        String userJson = RedisUtil.get(token);
         UserDTO userDTO = JsonUtil.string2Obj(userJson, UserDTO.class);
         if (userDTO == null) {
             log.error("反序列化User对象失败，User对象为空");
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
         String token = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
         UserDTO userDTO = this.queryUserById(id);
         String userJson = JsonUtil.obj2String(userDTO);
-        RedisPoolUtil.setExpireTime(token, userJson, SystemConstant.REDIS_EXPIRE_TIME);
+        RedisUtil.setExpireTime(token, userJson, SystemConstant.REDIS_EXPIRE_TIME);
         log.info("用户ID：{}缓存信息更新成功", id);
         return true;
     }

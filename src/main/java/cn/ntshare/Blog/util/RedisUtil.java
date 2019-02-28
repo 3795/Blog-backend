@@ -13,7 +13,7 @@ import java.util.List;
  * Created At 2018/11/10
  */
 @Slf4j
-public class RedisPoolUtil {
+public class RedisUtil {
 
     /**
      * 设置key的有效期

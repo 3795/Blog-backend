@@ -82,7 +82,7 @@ public class BLoginControllerV1 {
             // 如果没有记录
             if (!ipRecordService.isExists(ip)) {
                 String phoneToken = RandomUtil.getUniqueKey();
-                RedisPoolUtil.setExpireTime(phoneToken, user.getPhone(), 10 * SystemConstant.MINUTE);
+                RedisUtil.setExpireTime(phoneToken, user.getPhone(), 10 * SystemConstant.MINUTE);
                 String phone = user.getPhone().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
                 String[] data = {phone, phoneToken};
                 return ServerResponse.success(ResponseCodeEnum.IP_NOT_VERIFIED, data);
@@ -103,7 +103,7 @@ public class BLoginControllerV1 {
 
         // 写入Redis
         String userJson = JsonUtil.obj2String(user);
-        RedisPoolUtil.setExpireTime(key, userJson, SystemConstant.REDIS_EXPIRE_TIME);
+        RedisUtil.setExpireTime(key, userJson, SystemConstant.REDIS_EXPIRE_TIME);
 
         log.info("用户：{} 登录成功", user.getUsername());
         return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS);

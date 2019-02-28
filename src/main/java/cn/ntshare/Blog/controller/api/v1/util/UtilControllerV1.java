@@ -6,7 +6,7 @@ import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.util.CaptchaUtil;
 import cn.ntshare.Blog.util.RandomUtil;
-import cn.ntshare.Blog.util.RedisPoolUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import cn.ntshare.Blog.vo.ServerResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -55,13 +55,13 @@ public class UtilControllerV1 {
     @ApiImplicitParam(name = "phoneToken", value = "手机号码Token", required = true, paramType = "query")
     public ServerResponse sendSms(HttpServletResponse response,
                                   @RequestParam("phoneToken") String phoneToken) {
-        String phone = RedisPoolUtil.get(phoneToken);
+        String phone = RedisUtil.get(phoneToken);
         if (phone == null) {
             return ServerResponse.error(ResponseCodeEnum.INVALID_TOKEN);
         }
 
         // 进行防刷验证
-        String value = RedisPoolUtil.get(phone);
+        String value = RedisUtil.get(phone);
         if (value == null) {
             String code = RandomUtil.getRandomNumber(6);
             smsService.sendCaptchaSms(response, phone, code);
@@ -69,10 +69,10 @@ public class UtilControllerV1 {
         } else {
             int count = Integer.parseInt(value) + 1;
             if (count < 6) {
-                RedisPoolUtil.setExpireTime(phone, String.valueOf(count), SystemConstant.MINUTE);
+                RedisUtil.setExpireTime(phone, String.valueOf(count), SystemConstant.MINUTE);
             } else {
                 log.warn("短信接口被异常请求，请求号码：{}，请求次数：{}", phone, count);
-                RedisPoolUtil.setExpireTime(phone, String.valueOf(count), 5 * SystemConstant.MINUTE);
+                RedisUtil.setExpireTime(phone, String.valueOf(count), 5 * SystemConstant.MINUTE);
             }
             return ServerResponse.error(ResponseCodeEnum.REQUEST_TOO_FREQUENTLY);
         }
