@@ -33,7 +33,7 @@ public class Swagger2Config {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("seven.wk", "http://www.ntshare.cn", "seven.wk@foxmail.com");
+        Contact contact = new Contact("seven.wk", "https://www.ntshare.cn", "seven.wk@foxmail.com");
         return new ApiInfoBuilder()
                 .title("Blog项目API文档")
                 .description("Blog项目API文档")
