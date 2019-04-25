@@ -35,6 +35,6 @@ logging:
         Blog:
           dao: debug
 log:
-  path: D:/Develop/JavaEE/Blog/logs
+  path: D:/Develop/Blog/logs
 
 
