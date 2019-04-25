@@ -75,9 +75,7 @@ public class CookieUtil {
      * @param response
      * @param token
      */
-    public static void delCookie(HttpServletRequest request,
-                                 HttpServletResponse response,
-                                 String token) {
+    public static void delCookie(HttpServletRequest request, HttpServletResponse response, String token) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

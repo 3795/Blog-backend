@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -21,8 +22,7 @@ public class PropertiesUtil {
         String fileName = "system-dev.properties";
         properties = new Properties();
         try {
-            properties.load(new InputStreamReader(PropertiesUtil.class
-                    .getClassLoader().getResourceAsStream(fileName), "UTF-8"));
+            properties.load(new InputStreamReader(Objects.requireNonNull(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName)), "UTF-8"));
         } catch (IOException e) {
             log.error("配置文件读取失败", e);
         }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created By Seven.wk
@@ -37,7 +38,7 @@ public class FileUtil {
      * @return
      */
     public static String uploadImg(MultipartFile file) {
-        String imgName = getImgName(file.getOriginalFilename());
+        String imgName = getImgName(Objects.requireNonNull(file.getOriginalFilename()));
         File destination = new File(sysPath + imgName);
         try {
             FileUtils.copyInputStreamToFile(file.getInputStream(), destination);
