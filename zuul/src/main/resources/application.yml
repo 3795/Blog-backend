@@ -7,3 +7,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8101/eureka/
+zuul:
+  prefix: /blog/v1
+  routes:
+    frontend:
+      path: /frontend/**
+      serviceId: blog-frontend

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: blog-frontend
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+server:
+  port: 8102
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8101/eureka/
