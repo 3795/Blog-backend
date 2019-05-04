@@ -4,3 +4,5 @@ frontend/frontend.iml
 eureka/target/classes/META-INF/eureka.kotlin_module
 zuul/target/classes/application.yml
 eureka/target/
+logPath_IS_UNDEFINED/
+logs/
