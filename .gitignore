@@ -6,3 +6,6 @@ zuul/target/classes/application.yml
 eureka/target/
 logPath_IS_UNDEFINED/
 logs/
+target/
+src/main/resources/system-prod.properties
+src/main/resources/application-prod.yml
