@@ -31,4 +31,4 @@ logging:
         blog:
           dao: debug
 log:
-  path: D:/Develop/Blog/logs/frontend
+  path: D:/Develop/Java/Blog/logs/frontend
