@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ntshare.blog.dao.ArticleMapper">
+    <resultMap id="BaseResultMap" type="cn.ntshare.blog.pojo.Article">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <!--INTEGER 和 DATE-->
+        <result column="status" property="status" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, title, img, summary, content, category_id, create_time, update_time, status
+    </sql>
+
+    <select id="selectAll" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, content, category_id as categoryId, create_time as createTime, update_time as updateTime, a.status ,c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        order by create_time desc
+    </select>
+
+    <select id="selectById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, content, category_id as categoryId,
+        create_time as createTime, update_time as updateTime,
+        a.status ,c.name as categoryName, a.type, pageviews
+        from article a, category c, article_pageviews p
+        where a.category_id = c.id
+        and p.article_id = #{id}
+        and a.id = #{id}
+    </select>
+
+    <select id="selectBriefInfoByTypeAndStatus" parameterType="Map" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, create_time as createTime, a.type ,c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        <if test="type != null and type == 1">
+            and a.type > 0
+        </if>
+        <if test="type != null and (type > 1 or type == 0)">
+            and a.type = #{type}
+        </if>
+        and a.status = #{status}
+        order by create_time desc
+    </select>
+
+    <insert id="insert" parameterType="Article" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        article(title, img, summary, content, category_id, type, create_time, update_time)
+        values(#{title}, #{img}, #{summary},
+        #{content}, #{categoryId}, #{type}, now(), now());
+
+    </insert>
+
+    <update id="update" parameterType="Article">
+        update article
+        set title = #{title},
+        img = #{img},
+        summary = #{summary},
+        content = #{content},
+        category_id = #{categoryId},
+        type = #{type},
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="Map">
+        update article
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateType" parameterType="Map">
+        update article
+        set type = #{type}
+        where id = #{id}
+    </update>
+
+
+    <delete id="delete" parameterType="Integer">
+        delete from article
+        where id = #{id}
+    </delete>
+
+    <select id="selectPublished" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName, pageviews
+        from article a, category c, article_pageviews p
+        where a.category_id = c.id
+        and a.id = p.article_id
+        and a.status = 1
+        and a.type > 0
+        order by create_time desc
+    </select>
+
+    <select id="search" parameterType="String" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName, pageviews
+        from article a, category c, article_pageviews p
+        where a.category_id = c.id
+        and a.id = p.article_id
+        and title like concat ('%', #{keywords}, '%')
+        and a.status = 1
+        and a.type > 0
+        order by create_time desc
+    </select>
+
+    <select id="selectPublishedByCategories" parameterType="List" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and a.category_id in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and a.status = 1
+        and a.type > 0
+        order by create_time desc
+    </select>
+
+    <select id="selectPublishedByCategoryId" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, create_time as createTime, c.name as categoryName
+        from article a, category c
+        where a.category_id = c.id
+        and a.category_id = #{id}
+        and a.status = 1
+        and a.type > 0
+        order by create_time desc
+    </select>
+
+    <select id="queryBriefInfoById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+        select a.id, title, img, summary, category_id as categoryId, create_time as createTime, update_time as updateTime, c.name as categoryName, pageviews
+        from article a, category c, article_pageviews p
+        where a.category_id = c.id
+        and a.id = p.article_id
+        and a.id = #{id}
+
+    </select>
+    
+    <select id="queryContentById" parameterType="Integer" resultType="String">
+        select content
+        from article
+        where id = #{id}
+    </select>
+
+    <select id="count" resultType="Integer">
+        select count(1) from article
+    </select>
+
+    <select id="countByStatus" parameterType="Map" resultType="Integer">
+        select count(1)
+        from article
+        where status = #{status}
+        <if test="type != null">
+            and type = #{type}
+        </if>
+    </select>
+
+    <insert id="insertArticleTag" parameterType="Map">
+        insert into
+        article_tag(article_id, tag_id)
+        values
+        <foreach collection="tags" item="item" index="index" separator=",">
+            (#{articleId}, #{item})
+        </foreach>
+    </insert>
+
+    <select id="queryTagIdByArticleId" parameterType="Integer" resultType="Integer">
+        select tag_id from
+        article_tag
+        where article_id = #{articleId}
+    </select>
+    
+    <delete id="deleteArticleTagByArticleId" parameterType="Integer">
+        delete from article_tag
+        where article_id = #{articleId}
+    </delete>
+
+    <select id="queryTagsById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.TagDTO">
+        select id, name, color
+        from tag
+        where id in
+        (select tag_id from article_tag where article_id = #{id})
+    </select>
+
+    <insert id="insertArticlePageViews" parameterType="Map">
+        insert into
+        article_pageviews(article_id, pageviews)
+        values (#{articleId}, #{pageViews})
+    </insert>
+
+    <delete id="deleteArticlePageViews" parameterType="Integer">
+        delete from article_pageviews
+        where  article_id = #{articleId}
+    </delete>
+
+    <update id="increasePageViews" parameterType="Integer">
+        update article_pageviews
+        set pageviews = pageviews + 1
+        where article_id = #{articleId}
+    </update>
+
+</mapper>

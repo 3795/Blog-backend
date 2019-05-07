@@ -3,9 +3,20 @@ spring:
     name: blog-frontend
   profiles:
     active: dev
+  jackson:
+    default-property-inclusion: non_null
 server:
   port: 8102
 eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8101/eureka/
+mybatis:
+  type-aliases-package: cn.ntshare.blog.pojo
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  auto-dialect: mysql

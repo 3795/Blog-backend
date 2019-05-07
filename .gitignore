@@ -6,3 +6,6 @@ zuul/target/classes/application.yml
 eureka/target/
 logPath_IS_UNDEFINED/
 logs/
+file/target/
+frontend/src/test/
+common/target/
