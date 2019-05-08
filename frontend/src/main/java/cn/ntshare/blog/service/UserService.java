@@ -12,8 +12,4 @@ import javax.servlet.http.HttpServletRequest;
 public interface UserService {
 
     UserDTO queryUserById(Integer id);
-
-    UserDTO queryUserInfo(HttpServletRequest request);
-
-    Integer queryUserId(HttpServletRequest request);
 }

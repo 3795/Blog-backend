@@ -7,3 +7,5 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8101/eureka
+log:
+  path: D:/Develop/Java/Blog/logs/file

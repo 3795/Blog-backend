@@ -22,21 +22,6 @@ public interface ArticleMapper {
 
     ArticleDTO selectById(Integer id);
 
-    List<ArticleDTO> selectBriefInfoByTypeAndStatus(@Param("type") Integer type,
-                                                    @Param("status") Integer status);
-
-    int insert(Article article);
-
-    int update(Article article);
-
-    int updateStatus(@Param("id") Integer id,
-                     @Param("status") Integer status);
-
-    int updateType(@Param("id") Integer id,
-                   @Param("type") Integer type);
-
-    int delete(Integer id);
-
     List<ArticleDTO> selectPublished();
 
     List<ArticleDTO> search(String keywords);
@@ -49,24 +34,10 @@ public interface ArticleMapper {
 
     String queryContentById(Integer id);
 
-    int count();
-
     int countByStatus(@Param("status") Integer status,
                       @Param("type") Integer type);
 
-    int insertArticleTag(@Param("articleId") Integer articleId,
-                         @Param("tags") List<Integer> tags);
-
-    List<Integer> queryTagIdByArticleId(@Param("articleId") Integer articleId);
-
-    int deleteArticleTagByArticleId(@Param("articleId") Integer articleId);
-
     List<TagDTO> queryTagsById(Integer id);
-
-    int insertArticlePageViews(@Param("articleId") Integer articleId,
-                               @Param("pageViews") int pageViews);
-
-    int deleteArticlePageViews(@Param("articleId") Integer articleId);
 
     int increasePageViews(@Param("articleId") Integer articleId);
 }

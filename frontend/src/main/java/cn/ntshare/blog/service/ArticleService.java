@@ -17,15 +17,11 @@ public interface ArticleService {
 
     ArticleDTO selectById(Integer id);
 
-    PageInfo selectBriefInfoByTypeAndStatus(Integer type, Integer status, int pageNum, int pageSize);
-
     PageInfo selectPublished(int pageNum, int pageSize);
 
     PageInfo search(String keywords, int pageNum, int pageSize);
 
     PageInfo selectPublishedByCate(Integer categoryId, int pageNum, int pageSize);
-
-    int countAll();
 
     int countByStatusAndType(Integer status, Integer type);
 

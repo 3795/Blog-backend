@@ -40,13 +40,6 @@ public class NavigationServiceImpl implements NavigationService {
     }
 
     @Override
-    public PageInfo selectByStatus(int status, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<NavigationDTO> navigationDTOList = navigationMapper.selectByStatus(status);
-        return new PageInfo<>(navigationDTOList);
-    }
-
-    @Override
     public List<NavigationDTO> selectItem() {
         return navigationMapper.selectItem();
     }

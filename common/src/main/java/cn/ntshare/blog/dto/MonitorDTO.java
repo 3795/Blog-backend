@@ -1,5 +1,6 @@
 package cn.ntshare.blog.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * Created At 2019/5/7
  */
 @Data
+@AllArgsConstructor
 public class MonitorDTO {
     // 文章总数
     private Integer articleCount;

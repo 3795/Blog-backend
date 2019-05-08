@@ -10,6 +10,13 @@ eureka:
 zuul:
   prefix: /blog/v1
   routes:
+    backend:
+      path: /backend/**
+      serviceId: blog-backend
+      sensitive-headers:
+      custom-sensitive-headers: true
     frontend:
-      path: /frontend/**
+      path: /**
       serviceId: blog-frontend
+log:
+  path: D:/Develop/Java/Blog/logs/zuul

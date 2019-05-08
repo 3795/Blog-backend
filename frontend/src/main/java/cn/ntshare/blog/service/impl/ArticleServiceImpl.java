@@ -72,13 +72,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageInfo selectBriefInfoByTypeAndStatus(Integer type, Integer status, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<ArticleDTO> articleDTOList = articleMapper.selectBriefInfoByTypeAndStatus(type, status);
-        return new PageInfo<>(articleDTOList);
-    }
-
-    @Override
     public PageInfo selectPublished(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<ArticleDTO> articleDTOList = articleMapper.selectPublished();
@@ -107,11 +100,6 @@ public class ArticleServiceImpl implements ArticleService {
             articleDTOList = articleMapper.selectPublishedByCategoryId(category.getId());
         }
         return new PageInfo<>(articleDTOList);
-    }
-
-    @Override
-    public int countAll() {
-        return articleMapper.count();
     }
 
     @Override

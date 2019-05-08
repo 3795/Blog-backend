@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ntshare.blog.dao.ImgRecordMapper">
+
+    <insert id="insert" parameterType="String">
+        insert into
+        img_record(img)
+        values (#{img})
+    </insert>
+
+    <update id="updateIdByImg" parameterType="ImgRecord">
+        update img_record
+        <set>
+            <if test="carouselImgId != 0">
+                carousel_img_id = #{carouselImgId}
+            </if>
+            <if test="articleId != 0">
+                article_id = #{articleId}
+            </if>
+            <if test="userId != 0">
+                user_id = #{userId}
+            </if>
+        </set>
+        where img = #{img}
+    </update>
+
+    <select id="checkImgChangeById" parameterType="ImgRecord" resultType="Integer">
+        select count(1)
+        from img_record
+        where img = #{img}
+        <if test="carouselImgId != 0">
+            and carousel_img_id = #{carouselImgId}
+        </if>
+        <if test="articleId != 0">
+            and article_id = #{articleId}
+        </if>
+    </select>
+
+    <update id="deleteId" parameterType="ImgRecord">
+        update img_record
+        <set>
+            <if test="carouselImgId != 0">
+                carousel_img_id = 0
+            </if>
+            <if test="articleId != 0">
+                article_id = 0
+            </if>
+            <if test="userId != 0">
+                user_id = 0
+            </if>
+        </set>
+        where
+        <if test="carouselImgId != 0">
+            carousel_img_id = #{carouselImgId}
+        </if>
+        <if test="articleId != 0">
+            article_id = #{articleId}
+        </if>
+        <if test="userId != 0">
+            user_id = #{userId}
+        </if>
+    </update>
+
+    <select id="queryDiscardImg" resultType="ImgRecord">
+        select DISTINCT id, img
+        from img_record
+        where article_id = 0
+        and carousel_img_id = 0
+        and user_id = 0
+    </select>
+    
+    <delete id="deleteRecord" parameterType="List">
+        delete from img_record
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -12,11 +12,7 @@ import java.util.List;
  */
 public interface TagService {
 
-    PageInfo queryTags(Integer status, int pageNum, int pageSize);
-
     List<TagDTO> queryTags();
-
-    List<TagDTO> queryTagOptions();
 
     TagDTO queryTagById(Integer id);
 

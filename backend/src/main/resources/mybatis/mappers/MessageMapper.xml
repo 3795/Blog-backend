@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ntshare.blog.dao.MessageMapper">
+
+    <sql id="baseSql">
+        id, title, content, create_time, status
+    </sql>
+
+    <select id="queryByStatus" parameterType="Integer" resultType="Message">
+        select
+        <include refid="baseSql"/>
+        from message
+        <if test="status != null">
+            where status = #{status}
+        </if>
+        order by create_time desc
+    </select>
+
+    <insert id="insert" parameterType="Message">
+        insert into
+        message(title, content, create_time, status)
+        values(#{title}, #{content}, #{createTime}, #{status})
+    </insert>
+    
+    <update id="updateStatus" parameterType="Integer">
+        update message
+        set status = (status+1)%2
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from message
+        where id = #{id}
+    </delete>
+
+    <select id="countByStatus" parameterType="Integer" resultType="Integer">
+        select count(1) from message
+        <if test="status != null">
+            where status = #{status}
+        </if>
+    </select>
+
+    <delete id="empty">
+        delete from message
+        where status = 1
+    </delete>
+</mapper>

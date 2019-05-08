@@ -1,6 +1,7 @@
 package cn.ntshare.blog.pojo;
 
 import cn.ntshare.blog.enums.CommonStatusEnum;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import java.util.Date;
  * Description: IP记录
  * Created At 2019/4/25
  */
+@Data
 public class IpRecord {
 
     private Integer id;

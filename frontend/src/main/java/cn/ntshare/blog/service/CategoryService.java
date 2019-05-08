@@ -17,10 +17,6 @@ public interface CategoryService {
 
     CategoryDTO selectById(Integer id);
 
-    PageInfo selectByStatus(int status, int pageNum, int pageSize);
-
-    List<CategoryDTO> selectFirstLevel();
-
     List<Integer> selectChildrenId(Integer id);
 
     CategoryInfo selectParentAndChildren(Integer id);

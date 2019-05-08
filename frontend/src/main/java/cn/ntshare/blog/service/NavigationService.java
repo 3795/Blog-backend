@@ -16,7 +16,5 @@ public interface NavigationService {
 
     NavigationDTO selectById(Integer id);
 
-    PageInfo selectByStatus(int status, int pageNum, int pageSize);
-
     List<NavigationDTO> selectItem();
 }

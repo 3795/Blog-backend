@@ -9,3 +9,6 @@ logs/
 file/target/
 frontend/src/test/
 common/target/
+backend/target/
+backend/src/test/
+zuul/target/

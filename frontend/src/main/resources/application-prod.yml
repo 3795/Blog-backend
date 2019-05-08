@@ -22,13 +22,7 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   druid:
-    loginUsername: admin
-    loginPassword: admin
-logging:
-  level:
-    cn:
-      ntshare:
-        blog:
-          dao: debug
+    loginUsername: ntshare
+    loginPassword: ntshare
 log:
   path: D:/Develop/Blog/logs/frontend

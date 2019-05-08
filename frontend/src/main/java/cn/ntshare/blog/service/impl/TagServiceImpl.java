@@ -25,20 +25,8 @@ public class TagServiceImpl implements TagService {
     private TagMapper tagMapper;
 
     @Override
-    public PageInfo queryTags(Integer status, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<TagDTO> tagList = tagMapper.queryTags(status);
-        return new PageInfo<>(tagList);
-    }
-
-    @Override
     public List<TagDTO> queryTags() {
         return tagMapper.queryEnableTags();
-    }
-
-    @Override
-    public List<TagDTO> queryTagOptions() {
-        return tagMapper.queryTagOptions();
     }
 
     @Override

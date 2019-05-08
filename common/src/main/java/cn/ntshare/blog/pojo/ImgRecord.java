@@ -1,13 +1,17 @@
 package cn.ntshare.blog.pojo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created By Q.Hao
  * Description: 图片上传记录
  * Created At 2019/4/25
  */
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class ImgRecord {
 
     private Integer id;

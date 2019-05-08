@@ -48,19 +48,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageInfo selectByStatus(int status, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<CategoryDTO> categoryList = categoryMapper.selectByStatus(status);
-        return new PageInfo<>(categoryList);
-    }
-
-    @Override
-    public List<CategoryDTO> selectFirstLevel() {
-        return categoryMapper.selectFirstLevel();
-    }
-
-
-    @Override
     public List<Integer> selectChildrenId(Integer id) {
         return categoryMapper.selectChildrenId(id);
     }
