@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.ntshare.Blog.dao.TagMapper">
+<mapper namespace="cn.ntshare.blog.dao.TagMapper">
 
     <sql id="Base_Column_List">
         id, name, color, status
     </sql>
 
-    <select id="queryTags" parameterType="Integer" resultType="cn.ntshare.Blog.dto.TagDTO">
+    <select id="queryTags" parameterType="Integer" resultType="cn.ntshare.blog.dto.TagDTO">
         select
         <include refid="Base_Column_List"/>
         from tag
@@ -15,20 +15,20 @@
         </if>
     </select>
 
-    <select id="queryTagOptions" resultType="cn.ntshare.Blog.dto.TagDTO">
+    <select id="queryTagOptions" resultType="cn.ntshare.blog.dto.TagDTO">
         select id as value, name as label
         from tag
         where status = 1
     </select>
 
-    <select id="queryTagById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.TagDTO">
+    <select id="queryTagById" parameterType="Integer" resultType="cn.ntshare.blog.dto.TagDTO">
         select
         <include refid="Base_Column_List"/>
         from tag
         where id = #{id}
     </select>
 
-    <select id="queryEnableTags" resultType="cn.ntshare.Blog.dto.TagDTO">
+    <select id="queryEnableTags" resultType="cn.ntshare.blog.dto.TagDTO">
         select id, name, color from tag where status = 1
     </select>
     
@@ -55,7 +55,7 @@
         where id = #{id}
     </delete>
 
-    <select id="queryArticlesById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.ArticleDTO">
+    <select id="queryArticlesById" parameterType="Integer" resultType="cn.ntshare.blog.dto.ArticleDTO">
         select a.id, title, img, summary, category_id as categoryId, create_time as createTime, update_time as updateTime, c.name as categoryName
         from article a, category c
         where a.category_id = c.id

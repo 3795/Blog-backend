@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.ntshare.Blog.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="cn.ntshare.Blog.pojo.User">
+<mapper namespace="cn.ntshare.blog.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.ntshare.blog.pojo.User">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="account" property="account" jdbcType="VARCHAR"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
@@ -16,7 +16,7 @@
         id, account, username, avatar, email, phone, signature
     </sql>
 
-    <select id="selectByAccountAndPassword" resultType="cn.ntshare.Blog.dto.UserDTO" parameterType="Map">
+    <select id="selectByAccountAndPassword" resultType="cn.ntshare.blog.dto.UserDTO" parameterType="Map">
         select
         <include refid="Base_Column_List"/>
         from user
@@ -24,7 +24,7 @@
         and password = #{password}
     </select>
 
-    <select id="selectById" parameterType="Integer" resultType="cn.ntshare.Blog.dto.UserDTO">
+    <select id="selectById" parameterType="Integer" resultType="cn.ntshare.blog.dto.UserDTO">
         select 
         <include refid="Base_Column_List"/>
         from user
