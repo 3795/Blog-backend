@@ -1,0 +1,16 @@
+server:
+  port: 8101
+spring:
+  application:
+    name: eureka
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+logging:
+  path: D:/Develop/Java/Blog/logs/eureka
+

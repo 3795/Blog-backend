@@ -12,3 +12,13 @@ common/target/
 backend/target/
 backend/src/test/
 zuul/target/
+blog-backend/src/test/
+blog-backend/target/classes/application.yml
+blog-backend/target/
+blog-common/target/
+blog-eureka/target/
+blog-file/src/test/
+blog-file/target/
+blog-frontend/target/
+blog-zuul/target/
+target/
