@@ -1,6 +1,6 @@
 spring:
   application:
-    name: zuul
+    name: blog-zuul
   profiles:
     active: dev
 server:

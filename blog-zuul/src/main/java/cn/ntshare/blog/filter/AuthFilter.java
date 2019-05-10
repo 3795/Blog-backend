@@ -45,8 +45,7 @@ public class AuthFilter extends ZuulFilter {
             } else return !(prefix + "/login").equalsIgnoreCase(request.getRequestURI());
         }
         // File模块路径
-//        return Pattern.matches("/blog/v1/file/.*", request.getRequestURI());
-        return false;
+        return Pattern.matches("/blog/v1/file/.*", request.getRequestURI());
     }
 
     @Override
