@@ -41,6 +41,7 @@ public class SmsServiceImpl implements SmsService {
         return true;
     }
 
+
     @Override
     public Boolean verifyCaptchaCode(HttpServletRequest request, String captchaCode) {
         String key = CookieUtil.readCookie(request, SystemConstant.SMS_TOKEN);

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,9 +31,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void insert(String title, String content) {
-        int result = messageMapper.insert(new Message(title, content));
+        int result = messageMapper.insert(new Message(title, content, new Date()));
         if (result != 1) {
             log.error("insert message error");
+            throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
     }
 

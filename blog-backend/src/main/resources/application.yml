@@ -5,6 +5,16 @@ spring:
     active: dev
   jackson:
     default-property-inclusion: non_null
+  rabbitmq:
+    host: 192.168.198.130
+    port: 5672
+    username: ntshare
+    password: ntshare
+    virtual-host: blog
+    # 开启发送确认
+    publisher-confirms: true
+    # 开启发送失败退回
+    publisher-returns: true
 server:
   port: 8104
 eureka:

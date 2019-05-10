@@ -5,6 +5,7 @@ import cn.ntshare.blog.constant.SystemConstant;
 import cn.ntshare.blog.dto.UserDTO;
 import cn.ntshare.blog.enums.ResponseCodeEnum;
 import cn.ntshare.blog.service.IpRecordService;
+import cn.ntshare.blog.service.RabbitService;
 import cn.ntshare.blog.service.SmsService;
 import cn.ntshare.blog.service.UserService;
 import cn.ntshare.blog.util.*;
@@ -32,6 +33,9 @@ public class LoginController {
 
     @Autowired
     private SmsService smsService;
+
+    @Autowired
+    private RabbitService rabbitService;
 
     /**
      * 用户登录接口

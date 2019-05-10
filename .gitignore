@@ -18,3 +18,5 @@ blog-frontend/src/main/resources/system-prod.properties
 blog-frontend/src/main/resources/application-prod.yml
 blog-file/src/main/resources/system-prod.properties
 blog-file/src/main/resources/application-prod.yml
+blog-message/src/main/resources/application-prod.yml
+blog-message/src/main/resources/system-prod.properties

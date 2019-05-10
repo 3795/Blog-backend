@@ -22,7 +22,6 @@ public class MailServiceImpl implements MailService {
     private String from;
 
     @Override
-    // todo 该方法会导致阻塞，后期用异步方式
     public Boolean sendMail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
 

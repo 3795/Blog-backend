@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: root
+  rabbitmq:
+    host: 192.168.198.130
+    port: 5672
+    username: ntshare
+    password: ntshare
+    virtual-host: blog
+    listener:
+      # 开启ACK
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+  mail:
+    host: smtp.qq.com
+    username: seven.wk@foxmail.com
+    password: fwtrhwnyafftbcfh
+logging:
+  level:
+    cn:
+      ntshare:
+        blog:
+          dao: debug
+  path: D:/Develop/Java/Blog/logs/message

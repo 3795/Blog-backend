@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: blog-message
+  profiles:
+    active: dev
+server:
+  port: 8105
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8101/eureka/
+mybatis:
+  type-aliases-package: cn.ntshare.blog.pojo
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
