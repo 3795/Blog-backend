@@ -5,6 +5,7 @@ import cn.ntshare.blog.pojo.ImgRecord;
 import cn.ntshare.blog.service.ImgRecordService;
 import cn.ntshare.blog.service.MessageService;
 import cn.ntshare.blog.util.FileUtil;
+import cn.ntshare.blog.vo.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -45,8 +46,14 @@ public class DeleteDiscardImgTask {
                 .map(s -> s.substring(s.lastIndexOf("/") + 1))
                 .collect(Collectors.toList());
 
-        // todo 远程调用fileservice
-        fileClient.deleteImgs(imgNames);
+        for (String img : imgNames) {
+            ServerResponse response = fileClient.deleteImg(img);
+            if (response.getCode()%2 != 1) {
+                log.error(response.getMsg());
+            } else {
+                log.info(response.getMsg());
+            }
+        }
 
         // 删除数据库中的记录
         List<Integer> ids = list.stream()

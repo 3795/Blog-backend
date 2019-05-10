@@ -1,7 +1,6 @@
 package cn.ntshare.blog.service.impl;
 
 import cn.ntshare.blog.client.FileClient;
-import cn.ntshare.blog.client.FileUploadClient;
 import cn.ntshare.blog.constant.SystemConstant;
 import cn.ntshare.blog.dao.UserMapper;
 import cn.ntshare.blog.dto.UserDTO;
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private FileUploadClient fileUploadClient;
+    private FileClient fileClient;
 
     @Autowired
     private ImgRecordService imgRecordService;
@@ -93,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public String updateAvatar(HttpServletRequest request, MultipartFile file) {
         Integer id = this.queryUserId(request);
-        ServerResponse response = fileUploadClient.upload(file);
+        ServerResponse response = fileClient.upload(file);
         if (response.getCode() != 11) {
             throw new SystemException(ResponseCodeEnum.FILE_UPLOAD_FAILED);
         }
