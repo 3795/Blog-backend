@@ -7,10 +7,14 @@ import cn.ntshare.Blog.util.HttpUtil;
 import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static cn.ntshare.Blog.constant.SystemConstant.redisLockKey;
+import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
 
 /**
  * Created By Seven.wk
@@ -24,11 +28,17 @@ public class SubmitLinkTask {
     @Autowired
     private MessageService messageService;
 
+    @Value("${server.port}")
+    public String redisLockValue;
+
     /**
      * 每天23点30分执行
      */
     @Scheduled(cron = "0 30 23 * * *")
     public void task() {
+        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+            return;
+        }
         List<String> urls = RedisUtil.getList(SystemConstant.INDEX_LINKS);
         if (urls.size() == 0) {
             log.info("无链接需要向百度搜索提交");

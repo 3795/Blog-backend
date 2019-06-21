@@ -28,6 +28,13 @@ spring:
     username: xxx@qq.com
     password: xxx
     default-encoding: UTF-8
+  redis:
+    host: 127.0.0.1
+    password: 123456
+    database: 0
+    port: 6379
+  session:
+    store-type: redis
 logging:
   level:
     cn:

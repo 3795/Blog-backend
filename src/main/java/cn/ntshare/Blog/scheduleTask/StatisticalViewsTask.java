@@ -4,12 +4,17 @@ import cn.ntshare.Blog.pojo.Statistics;
 import cn.ntshare.Blog.service.MessageService;
 import cn.ntshare.Blog.service.StatisticsService;
 import cn.ntshare.Blog.util.CalendarUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import static cn.ntshare.Blog.constant.SystemConstant.redisLockKey;
+import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
 
 /**
  * Created By Seven.wk
@@ -26,12 +31,18 @@ public class StatisticalViewsTask {
     @Autowired
     private MessageService messageService;
 
+    @Value("${server.port}")
+    public String redisLockValue;
+
     /**
      * 添加明天的访问量记录
      * 每天23点58分执行
      */
     @Scheduled(cron = "0 58 23 * * *")
     public void insertDailyViews() {
+        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+            return;
+        }
         Date tomorrow = CalendarUtil.getTomorrowDate();
         Statistics statistics = new Statistics(0, tomorrow);
         if (statisticsService.insertDailyStatistics(statistics)) {
@@ -39,6 +50,8 @@ public class StatisticalViewsTask {
         } else {
             log.error("明日访问量记录添加失败");
         }
+        messageService.insert("分布式锁", "Server " + redisLockValue + " 获得分布式锁并写入记录");
+        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
 
     /**
@@ -47,6 +60,9 @@ public class StatisticalViewsTask {
      */
     @Scheduled(cron = "0 0 0 1 * *")
     public void insertMonthlyViews() {
+        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+            return;
+        }
         String month = CalendarUtil.getCurrentMonth();
         Statistics statistics = new Statistics(0, month);
         if (statisticsService.insertMonthlyStatistics(statistics)) {
@@ -55,6 +71,7 @@ public class StatisticalViewsTask {
         } else {
             log.error("下一月访问量记录添加失败");
         }
+        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
 
     /**
@@ -64,8 +81,15 @@ public class StatisticalViewsTask {
      */
     @Scheduled(cron = "0 3 0 * * *")
     public void increaseMonthlyViews() {
+        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+            return;
+        }
         Integer views = statisticsService.queryYesterdayViews().getViews();
         statisticsService.increaseMonthlyViews(views);
         messageService.insert("访问量统计", "昨日访问量为 " + views);
+        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
+
+
+
 }

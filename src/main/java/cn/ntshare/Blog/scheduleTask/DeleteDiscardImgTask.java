@@ -4,13 +4,18 @@ import cn.ntshare.Blog.pojo.ImgRecord;
 import cn.ntshare.Blog.service.ImgRecordService;
 import cn.ntshare.Blog.service.MessageService;
 import cn.ntshare.Blog.util.FileUtil;
+import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cn.ntshare.Blog.constant.SystemConstant.redisLockKey;
+import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
 
 /**
  * Created By Seven.wk
@@ -27,11 +32,17 @@ public class DeleteDiscardImgTask {
     @Autowired
     private MessageService messageService;
 
+    @Value("${server.port}")
+    public String redisLockValue;
+
     /**
      * 每天凌晨1点执行
      */
     @Scheduled(cron = "0 0 1 * * *")
     public void task() {
+        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+            return;
+        }
         List<ImgRecord> list = imgRecordService.queryDiscardImg();
         if (list.size() == 0) {
             log.info("没有冗余图片需要删除");
@@ -53,5 +64,6 @@ public class DeleteDiscardImgTask {
 
         Integer count = imgRecordService.deleteRecord(ids);
         messageService.insert("定时任务", "删除冗余图片成功，共删除 " + count + "张图片！");
+        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
 }

@@ -85,7 +85,7 @@ public class RedisUtil {
      * @param strings
      * @return
      */
-    public static Long setList (String key, String... strings) {
+    public static Long setList(String key, String... strings) {
         Jedis jedis = RedisPool.getJedis();
         Long result = jedis.lpush(key, strings);
         RedisPool.returnResource(jedis);
@@ -105,5 +105,43 @@ public class RedisUtil {
         }
         return list;
     }
+
+    public static String set(String key, String value, String nxxx, String expx, long time) {
+        Jedis jedis = RedisPool.getJedis();
+        String result = jedis.set(key, value, nxxx, expx, time);
+        RedisPool.returnResource(jedis);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String result = get("test");
+        System.out.println(result);
+    }
+
+    /**
+     * 获取Redis分布式锁
+     * @param key
+     * @param value
+     * @param time      锁的时间，单位（s）
+     * @return
+     */
+    public static boolean getRedisLock(String key, String value, long time) {
+        String result = set(key, value, "nx", "ex", time);
+        return "OK".equals(result);
+    }
+
+    /**
+     * 删除Redis分布式锁
+     * @param key
+     * @param value
+     */
+    public static void delRedisLock(String key, String value) {
+        String result = get(key);
+        if (value.equals(result)) {
+            RedisUtil.del(key);
+            System.out.println("成功删除锁");
+        }
+    }
+
 
 }
