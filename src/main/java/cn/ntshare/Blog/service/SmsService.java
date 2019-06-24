@@ -19,6 +19,15 @@ public interface SmsService {
     Boolean sendCaptchaSms(HttpServletResponse response, String phoneNumber, String captchaCode);
 
     /**
+     * 发送短信
+     * @param smsType
+     * @param phoneNumber
+     * @param content
+     * @return
+     */
+    Boolean sendSms(Integer smsType, String phoneNumber, String content);
+
+    /**
      * 验证短信验证码
      * @param request
      * @param captchaCode

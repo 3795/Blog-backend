@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Message {
+public class Message implements Serializable {
+
+    private static final long serialVersionUID = 7611846606681472142L;
 
     private Integer id;
 
@@ -24,12 +27,13 @@ public class Message {
 
     private String content;
 
-    private Date createTime = new Date();
+    private Date createTime;
 
     private Integer status = 0;
 
     public Message(String title, String content) {
         this.title = title;
         this.content = content;
+        this.createTime = new Date();
     }
 }

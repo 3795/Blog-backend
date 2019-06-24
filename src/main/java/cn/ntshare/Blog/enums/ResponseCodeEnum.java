@@ -42,6 +42,7 @@ public enum ResponseCodeEnum {
     SMS_SEND_FAILED(42, "短信发送失败"),
     SMS_CODE_EXPIRED(44, "短信验证码已过期"),
     SMS_CODE_ERROR(46, "短信验证码错误"),
+    SMS_NOT_SUPPORT(48, "暂不支持该类型短信"),
 
 
     NO_ACCESS(50, "拒绝访问"),

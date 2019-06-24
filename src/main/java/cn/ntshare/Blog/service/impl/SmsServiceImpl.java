@@ -1,13 +1,17 @@
 package cn.ntshare.Blog.service.impl;
 
+import cn.ntshare.Blog.bo.SmsBO;
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
+import cn.ntshare.Blog.enums.SmsType;
 import cn.ntshare.Blog.exception.SystemException;
+import cn.ntshare.Blog.service.RabbitMqService;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.util.CookieUtil;
 import cn.ntshare.Blog.util.RandomUtil;
 import cn.ntshare.Blog.util.RedisUtil;
 import cn.ntshare.Blog.util.SmsUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class SmsServiceImpl implements SmsService {
 
+    @Autowired
+    private RabbitMqService rabbitMqService;
+
     @Override
     public Boolean sendCaptchaSms(HttpServletResponse response, String phoneNumber, String captchaCode) {
 
@@ -31,14 +38,24 @@ public class SmsServiceImpl implements SmsService {
         CookieUtil.writeCookie(response, SystemConstant.SMS_TOKEN, key, SystemConstant.SMS_EXPIRE_TIME);
 
         // 发送短信
-        if (!SmsUtil.sendCaptchaSms(phoneNumber, captchaCode)) {
-            throw new SystemException(ResponseCodeEnum.SMS_SEND_FAILED);
-        }
+        rabbitMqService.sendSms(new SmsBO(1, phoneNumber, captchaCode));
 
         // 将手机号写入redis防刷
         RedisUtil.setExpireTime(phoneNumber, "1", SystemConstant.MINUTE);
 
         return true;
+    }
+
+    @Override
+    public Boolean sendSms(Integer smsType, String phoneNumber, String content) {
+        if (SmsType.captcha.getType().equals(smsType)) {
+            if (!SmsUtil.sendCaptchaSms(phoneNumber, content)) {
+                throw new SystemException(ResponseCodeEnum.SMS_SEND_FAILED);
+            }
+            return true;
+        } else {
+            throw new SystemException(ResponseCodeEnum.SMS_NOT_SUPPORT);
+        }
     }
 
     @Override

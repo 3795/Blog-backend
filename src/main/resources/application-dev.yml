@@ -25,8 +25,8 @@ spring:
     loginPassword: admin
   mail:
     host: smtp.qq.com
-    username: xxx@qq.com
-    password: xxx
+    username:
+    password:
     default-encoding: UTF-8
   redis:
     host: 127.0.0.1
@@ -35,6 +35,16 @@ spring:
     port: 6379
   session:
     store-type: redis
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: blog
+    # 开启发送确认
+    publisher-confirms: true
+    # 开启发送失败退回
+    publisher-returns: true
+    username:
+    password:
 logging:
   level:
     cn:

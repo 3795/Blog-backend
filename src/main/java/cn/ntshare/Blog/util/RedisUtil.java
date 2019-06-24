@@ -113,11 +113,6 @@ public class RedisUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        String result = get("test");
-        System.out.println(result);
-    }
-
     /**
      * 获取Redis分布式锁
      * @param key

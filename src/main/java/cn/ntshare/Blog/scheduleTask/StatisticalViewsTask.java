@@ -1,7 +1,8 @@
 package cn.ntshare.Blog.scheduleTask;
 
+import cn.ntshare.Blog.pojo.Message;
 import cn.ntshare.Blog.pojo.Statistics;
-import cn.ntshare.Blog.service.MessageService;
+import cn.ntshare.Blog.service.RabbitMqService;
 import cn.ntshare.Blog.service.StatisticsService;
 import cn.ntshare.Blog.util.CalendarUtil;
 import cn.ntshare.Blog.util.RedisUtil;
@@ -28,11 +29,11 @@ public class StatisticalViewsTask {
     @Autowired
     private StatisticsService statisticsService;
 
-    @Autowired
-    private MessageService messageService;
-
     @Value("${server.port}")
     public String redisLockValue;
+
+    @Autowired
+    private RabbitMqService rabbitMqService;
 
     /**
      * 添加明天的访问量记录
@@ -50,7 +51,7 @@ public class StatisticalViewsTask {
         } else {
             log.error("明日访问量记录添加失败");
         }
-        messageService.insert("分布式锁", "Server " + redisLockValue + " 获得分布式锁并写入记录");
+        rabbitMqService.sendNotice(new Message("分布式锁", "Server " + redisLockValue + " 获得分布式锁并写入记录"));
         RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
 
@@ -66,7 +67,7 @@ public class StatisticalViewsTask {
         String month = CalendarUtil.getCurrentMonth();
         Statistics statistics = new Statistics(0, month);
         if (statisticsService.insertMonthlyStatistics(statistics)) {
-            messageService.insert("添加访问量记录", "下一月访问量记录添加成功, 月份为 " + month);
+            rabbitMqService.sendNotice(new Message("添加访问量记录", "下一月访问量记录添加成功, 月份为 " + month));
             log.info("下一月访问量记录添加成功");
         } else {
             log.error("下一月访问量记录添加失败");
@@ -86,10 +87,7 @@ public class StatisticalViewsTask {
         }
         Integer views = statisticsService.queryYesterdayViews().getViews();
         statisticsService.increaseMonthlyViews(views);
-        messageService.insert("访问量统计", "昨日访问量为 " + views);
+        rabbitMqService.sendNotice(new Message("访问量统计", "昨日访问量为 " + views));
         RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
-
-
-
 }

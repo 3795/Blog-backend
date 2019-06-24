@@ -2,7 +2,8 @@ package cn.ntshare.Blog.scheduleTask;
 
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.dto.BaiduLinkSubmissionDTO;
-import cn.ntshare.Blog.service.MessageService;
+import cn.ntshare.Blog.pojo.Message;
+import cn.ntshare.Blog.service.RabbitMqService;
 import cn.ntshare.Blog.util.HttpUtil;
 import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +26,11 @@ import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
 @Slf4j
 public class SubmitLinkTask {
 
-    @Autowired
-    private MessageService messageService;
-
     @Value("${server.port}")
     public String redisLockValue;
+
+    @Autowired
+    private RabbitMqService rabbitMqService;
 
     /**
      * 每天23点30分执行
@@ -45,7 +46,7 @@ public class SubmitLinkTask {
         } else {
             BaiduLinkSubmissionDTO result = HttpUtil.baiduLinkSubmission(urls);
             String content = "链接推送成功，成功推送 " + result.getSuccess() + " 条链接";
-            messageService.insert("百度搜索推送链接", content);
+            rabbitMqService.sendNotice(new Message("百度搜索推送链接", content));
             log.info("链接推送成功，成功推送 {} 条链接", result.getSuccess());
         }
     }

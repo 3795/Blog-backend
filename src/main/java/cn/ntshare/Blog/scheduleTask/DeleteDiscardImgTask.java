@@ -1,8 +1,9 @@
 package cn.ntshare.Blog.scheduleTask;
 
 import cn.ntshare.Blog.pojo.ImgRecord;
+import cn.ntshare.Blog.pojo.Message;
 import cn.ntshare.Blog.service.ImgRecordService;
-import cn.ntshare.Blog.service.MessageService;
+import cn.ntshare.Blog.service.RabbitMqService;
 import cn.ntshare.Blog.util.FileUtil;
 import cn.ntshare.Blog.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +30,11 @@ public class DeleteDiscardImgTask {
     @Autowired
     private ImgRecordService imgRecordService;
 
-    @Autowired
-    private MessageService messageService;
-
     @Value("${server.port}")
     public String redisLockValue;
+
+    @Autowired
+    private RabbitMqService rabbitMqService;
 
     /**
      * 每天凌晨1点执行
@@ -63,7 +64,7 @@ public class DeleteDiscardImgTask {
                 .collect(Collectors.toList());
 
         Integer count = imgRecordService.deleteRecord(ids);
-        messageService.insert("定时任务", "删除冗余图片成功，共删除 " + count + "张图片！");
+        rabbitMqService.sendNotice(new Message("定时任务", "删除冗余图片成功，共删除 " + count + "张图片！"));
         RedisUtil.delRedisLock(redisLockKey, redisLockValue);
     }
 }
