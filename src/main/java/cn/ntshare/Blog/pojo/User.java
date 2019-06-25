@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 用户实体类
@@ -14,7 +16,9 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 7042601099301493590L;
 
     private Integer id;
 

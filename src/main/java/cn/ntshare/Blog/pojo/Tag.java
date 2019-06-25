@@ -2,6 +2,8 @@ package cn.ntshare.Blog.pojo;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 标签pojo类
@@ -9,7 +11,9 @@ import lombok.*;
  */
 @Data
 @AllArgsConstructor
-public class Tag {
+public class Tag implements Serializable {
+
+    private static final long serialVersionUID = -5766651146179349331L;
 
     private Integer id;
 

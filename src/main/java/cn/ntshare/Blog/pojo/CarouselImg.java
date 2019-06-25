@@ -2,6 +2,8 @@ package cn.ntshare.Blog.pojo;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 轮播图片实体
@@ -12,7 +14,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CarouselImg {
+public class CarouselImg implements Serializable {
+
+    private static final long serialVersionUID = 8880871865468945038L;
 
     private Integer id;
 

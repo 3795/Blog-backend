@@ -2,6 +2,8 @@ package cn.ntshare.Blog.pojo;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 前端导航类实体
@@ -12,7 +14,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Navigation {
+public class Navigation implements Serializable {
+
+    private static final long serialVersionUID = 4696820801835961503L;
 
     private Integer id;
 

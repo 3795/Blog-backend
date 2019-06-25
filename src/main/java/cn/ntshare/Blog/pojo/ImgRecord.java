@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 图片上传记录实体
@@ -14,7 +16,9 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ImgRecord {
+public class ImgRecord implements Serializable {
+
+    private static final long serialVersionUID = -6081861999506770425L;
 
     private Integer id;
 

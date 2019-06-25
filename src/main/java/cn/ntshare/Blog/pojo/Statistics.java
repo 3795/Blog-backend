@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Statistics {
+public class Statistics implements Serializable {
+
+    private static final long serialVersionUID = -7017770222084768042L;
 
     private Integer id;
 

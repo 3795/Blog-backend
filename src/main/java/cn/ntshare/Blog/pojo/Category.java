@@ -2,6 +2,8 @@ package cn.ntshare.Blog.pojo;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created By Seven.wk
  * Description: 文章分类实体
@@ -12,7 +14,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Category {
+public class Category implements Serializable {
+
+    private static final long serialVersionUID = -392657309700013344L;
 
     private Integer id;
 

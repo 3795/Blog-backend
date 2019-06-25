@@ -2,6 +2,7 @@ package cn.ntshare.Blog.pojo;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Article {
+public class Article implements Serializable {
+
+    private static final long serialVersionUID = 3693581635584286115L;
 
     private Integer id;
 
