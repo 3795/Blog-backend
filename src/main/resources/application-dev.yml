@@ -36,15 +36,19 @@ spring:
   session:
     store-type: redis
   rabbitmq:
-    host:
+    host: 127.0.0.1
     port: 5672
-    virtual-host: blog
+    virtual-host: test
     # 开启发送确认
     publisher-confirms: true
     # 开启发送失败退回
     publisher-returns: true
-    username:
-    password:
+    username: root
+    password: root
+    listener:
+      simple:
+        # 消费方手动确认消费
+        acknowledge-mode: manual
 logging:
   level:
     cn:
