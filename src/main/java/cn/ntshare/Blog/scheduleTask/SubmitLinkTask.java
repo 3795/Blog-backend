@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static cn.ntshare.Blog.constant.SystemConstant.redisLockKey;
-import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
+import static cn.ntshare.Blog.constant.SystemConstant.REDIS_LOCK_KEY;
+import static cn.ntshare.Blog.constant.SystemConstant.REDIS_LOCK_TIME;
 
 /**
  * Created By Seven.wk
@@ -37,7 +37,7 @@ public class SubmitLinkTask {
      */
     @Scheduled(cron = "0 30 23 * * *")
     public void task() {
-        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+        if (!RedisUtil.getRedisLock(REDIS_LOCK_KEY, redisLockValue, REDIS_LOCK_TIME)) {
             return;
         }
         List<String> urls = RedisUtil.getList(SystemConstant.INDEX_LINKS);

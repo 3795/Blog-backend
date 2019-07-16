@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static cn.ntshare.Blog.constant.SystemConstant.redisLockKey;
-import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
+import static cn.ntshare.Blog.constant.SystemConstant.REDIS_LOCK_KEY;
+import static cn.ntshare.Blog.constant.SystemConstant.REDIS_LOCK_TIME;
 
 /**
  * Created By Seven.wk
@@ -41,7 +41,7 @@ public class DeleteDiscardImgTask {
      */
     @Scheduled(cron = "0 0 1 * * *")
     public void task() {
-        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+        if (!RedisUtil.getRedisLock(REDIS_LOCK_KEY, redisLockValue, REDIS_LOCK_TIME)) {
             return;
         }
         List<ImgRecord> list = imgRecordService.queryDiscardImg();
@@ -65,6 +65,6 @@ public class DeleteDiscardImgTask {
 
         Integer count = imgRecordService.deleteRecord(ids);
         rabbitMqService.sendNotice(new Message("定时任务", "删除冗余图片成功，共删除 " + count + "张图片！"));
-        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
+        RedisUtil.delRedisLock(REDIS_LOCK_KEY, redisLockValue);
     }
 }

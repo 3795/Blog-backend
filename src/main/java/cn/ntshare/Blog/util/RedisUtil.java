@@ -134,9 +134,19 @@ public class RedisUtil {
         String result = get(key);
         if (value.equals(result)) {
             RedisUtil.del(key);
-            System.out.println("成功删除锁");
         }
     }
 
-
+    /**
+     * 增加定长的值
+     * @param key
+     * @param value
+     * @return
+     */
+    public static Long incrBy(String key, Long value) {
+        Jedis jedis = RedisPool.getJedis();
+        Long result = jedis.incrBy(key, value);
+        RedisPool.returnResource(jedis);
+        return result;
+    }
 }

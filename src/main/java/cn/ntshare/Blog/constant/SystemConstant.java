@@ -47,7 +47,12 @@ public class SystemConstant {
     // 向百度搜索提交链接的URL
     public static final String BAIDU_LINK_SUBMISSION_URL = PropertiesUtil.getProperty("baidu.link.submission.url");
 
-    public static final String redisLockKey = "lock";
+    public static final String REDIS_LOCK_KEY = "lock";
 
-    public static final Integer redisLockTime = 30;
+    public static final Integer REDIS_LOCK_TIME = 30;
+
+    public static final String RUNTIME_DAYS = "runtime:days";
+
+    public static final String RUNTIME_SECONDS = "runtime:seconds";
+
 }

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static cn.ntshare.Blog.constant.SystemConstant.redisLockKey;
-import static cn.ntshare.Blog.constant.SystemConstant.redisLockTime;
+import static cn.ntshare.Blog.constant.SystemConstant.REDIS_LOCK_KEY;
+import static cn.ntshare.Blog.constant.SystemConstant.REDIS_LOCK_TIME;
 
 /**
  * Created By Seven.wk
@@ -41,7 +41,7 @@ public class StatisticalViewsTask {
      */
     @Scheduled(cron = "0 58 23 * * *")
     public void insertDailyViews() {
-        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+        if (!RedisUtil.getRedisLock(REDIS_LOCK_KEY, redisLockValue, REDIS_LOCK_TIME)) {
             return;
         }
         Date tomorrow = CalendarUtil.getTomorrowDate();
@@ -52,7 +52,7 @@ public class StatisticalViewsTask {
             log.error("明日访问量记录添加失败");
         }
         rabbitMqService.sendNotice(new Message("分布式锁", "Server " + redisLockValue + " 获得分布式锁并写入记录"));
-        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
+        RedisUtil.delRedisLock(REDIS_LOCK_KEY, redisLockValue);
     }
 
     /**
@@ -61,7 +61,7 @@ public class StatisticalViewsTask {
      */
     @Scheduled(cron = "0 0 0 1 * *")
     public void insertMonthlyViews() {
-        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+        if (!RedisUtil.getRedisLock(REDIS_LOCK_KEY, redisLockValue, REDIS_LOCK_TIME)) {
             return;
         }
         String month = CalendarUtil.getCurrentMonth();
@@ -72,7 +72,7 @@ public class StatisticalViewsTask {
         } else {
             log.error("下一月访问量记录添加失败");
         }
-        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
+        RedisUtil.delRedisLock(REDIS_LOCK_KEY, redisLockValue);
     }
 
     /**
@@ -82,12 +82,12 @@ public class StatisticalViewsTask {
      */
     @Scheduled(cron = "0 3 0 * * *")
     public void increaseMonthlyViews() {
-        if (!RedisUtil.getRedisLock(redisLockKey, redisLockValue, redisLockTime)) {
+        if (!RedisUtil.getRedisLock(REDIS_LOCK_KEY, redisLockValue, REDIS_LOCK_TIME)) {
             return;
         }
         Integer views = statisticsService.queryYesterdayViews().getViews();
         statisticsService.increaseMonthlyViews(views);
         rabbitMqService.sendNotice(new Message("访问量统计", "昨日访问量为 " + views));
-        RedisUtil.delRedisLock(redisLockKey, redisLockValue);
+        RedisUtil.delRedisLock(REDIS_LOCK_KEY, redisLockValue);
     }
 }

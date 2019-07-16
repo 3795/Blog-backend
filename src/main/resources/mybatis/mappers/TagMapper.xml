@@ -66,6 +66,7 @@
         and a.id in (select article_id from article_tag where tag_id = #{id})
         and a.type >0
         and a.status = 1
+        order by create_time desc
     </select>
 
     <select id="count" resultType="Integer">
