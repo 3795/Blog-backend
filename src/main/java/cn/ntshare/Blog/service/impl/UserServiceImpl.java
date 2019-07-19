@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
         String token = CookieUtil.readCookie(request, SystemConstant.LOGIN_TOKEN);
         UserDTO userDTO = this.queryUserById(id);
         String userJson = JsonUtil.obj2String(userDTO);
-        RedisUtil.setExpireTime(token, userJson, SystemConstant.REDIS_EXPIRE_TIME);
+        RedisUtil.setExpireTime(token, userJson, SystemConstant.LOGIN_EXPIRE_TIME);
         log.info("用户ID：{}缓存信息更新成功", id);
         return true;
     }

@@ -34,13 +34,13 @@ public class RuntimeTimeTask {
         RedisUtil.delRedisLock(REDIS_LOCK_KEY, redisLockValue);
     }
 
-    // 增加运行秒数，每30s增加一次
-    @Scheduled(cron = "0/30 * * * * *")
+    // 增加运行秒数，每10s增加一次
+    @Scheduled(cron = "0/10 * * * * *")
     public void increaseSecond() {
         if (!RedisUtil.getRedisLock(REDIS_LOCK_KEY, redisLockValue, REDIS_LOCK_TIME)) {
             return;
         }
-        RedisUtil.incrBy(SystemConstant.RUNTIME_SECONDS, 30L);
+        RedisUtil.incrBy(SystemConstant.RUNTIME_SECONDS, 10L);
         RedisUtil.delRedisLock(REDIS_LOCK_KEY, redisLockValue);
     }
 }

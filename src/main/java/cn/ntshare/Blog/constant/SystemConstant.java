@@ -25,7 +25,7 @@ public class SystemConstant {
     public static final String TIME_STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     // Redis存放数据的有效时间
-    public static final Integer REDIS_EXPIRE_TIME = Integer.parseInt(PropertiesUtil.getProperty("redis.expire.time", "1800"));
+    public static final Integer LOGIN_EXPIRE_TIME = Integer.parseInt(PropertiesUtil.getProperty("redis.expire.time", "1800"));
 
     // 短信验证Token
     public static final String SMS_TOKEN = "smsToken";
@@ -46,6 +46,11 @@ public class SystemConstant {
 
     // 向百度搜索提交链接的URL
     public static final String BAIDU_LINK_SUBMISSION_URL = PropertiesUtil.getProperty("baidu.link.submission.url");
+
+    // 允许同一个用户同时登录几个平台
+    public static final Integer ALLOW_LOGIN_NUMBER = Integer.parseInt(PropertiesUtil.getProperty("login.number", "1"));
+
+    public static final String LOGIN_LIST_PREFIX = "login_list:";
 
     public static final String REDIS_LOCK_KEY = "lock";
 

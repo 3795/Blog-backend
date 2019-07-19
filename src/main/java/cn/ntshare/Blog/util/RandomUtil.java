@@ -1,6 +1,7 @@
 package cn.ntshare.Blog.util;
 
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created By Seven.wk
@@ -28,7 +29,7 @@ public class RandomUtil {
      * @return
      */
     public static String getUniqueKey() {
-        return String.valueOf(System.currentTimeMillis()) + getRandomNumber(6);
+        return UUID.randomUUID().toString();
     }
 
 }

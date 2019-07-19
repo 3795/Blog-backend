@@ -3,8 +3,12 @@ package cn.ntshare.Blog.aspect;
 import cn.ntshare.Blog.exception.SystemException;
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
+import cn.ntshare.Blog.pojo.User;
 import cn.ntshare.Blog.util.CookieUtil;
+import cn.ntshare.Blog.util.JsonUtil;
 import cn.ntshare.Blog.util.RedisUtil;
+import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Aspect
 @Component
+@Slf4j
 public class AuthAspect {
 
     /**
@@ -46,8 +51,16 @@ public class AuthAspect {
             throw new SystemException(ResponseCodeEnum.PERMISSION_DENIED);
         }
 
-        // 登录状态，在管理系统的每一步操作都会重置token过期时间
-        RedisUtil.expire(token, SystemConstant.REDIS_EXPIRE_TIME);
+        // 登录状态，在管理系统的每一步操作都会重置过期时间
+        RedisUtil.expire(token, SystemConstant.LOGIN_EXPIRE_TIME);
+        User user = JsonUtil.string2Obj(userJson, User.class);
+        if (user != null) {
+            String loginListKey = SystemConstant.LOGIN_LIST_PREFIX + user.getId();
+            RedisUtil.expire(loginListKey, 2 * SystemConstant.LOGIN_EXPIRE_TIME);
+        } else {
+            log.error("反序列化UserDTO对象失败，对象为空");
+            throw new SystemException(ResponseCodeEnum.SERVER_ERROR);
+        }
 
         return joinPoint.proceed();
     }

@@ -97,13 +97,26 @@ public class BLoginControllerV1 {
             ipRecordService.insert(ip);
         }
 
-        // 写入Cookie
+        // 将Token令牌写入Cookie
         String key = RandomUtil.getUniqueKey();
         CookieUtil.writeCookie(response, SystemConstant.LOGIN_TOKEN, key);
 
-        // 写入Redis
+        // 维护用户登录状态队列
+        String loginListKey = SystemConstant.LOGIN_LIST_PREFIX + user.getId();
+        Long len = RedisUtil.llen(loginListKey);
+        if (len >= SystemConstant.ALLOW_LOGIN_NUMBER) {
+            // 踢出最先登录的用户
+            String oldKey = RedisUtil.lpop(loginListKey);
+            RedisUtil.del(oldKey);
+        }
+
+        // 加入最新登录用户的信息，重置队列过期时间
+        RedisUtil.rpush(loginListKey, key);
+        RedisUtil.expire(loginListKey, 2 * SystemConstant.LOGIN_EXPIRE_TIME);
+
+        // 将用户信息写入Redis
         String userJson = JsonUtil.obj2String(user);
-        RedisUtil.setExpireTime(key, userJson, SystemConstant.REDIS_EXPIRE_TIME);
+        RedisUtil.setExpireTime(key, userJson, SystemConstant.LOGIN_EXPIRE_TIME);
 
         log.info("用户：{} 登录成功", user.getUsername());
         return ServerResponse.success(ResponseCodeEnum.LOGIN_SUCCESS);

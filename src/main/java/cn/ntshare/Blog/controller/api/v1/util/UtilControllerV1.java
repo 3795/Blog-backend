@@ -39,13 +39,13 @@ public class UtilControllerV1 {
     @ApiOperation("图片验证码接口")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "length", value = "长度", paramType = "query"),
-            @ApiImplicitParam(name = "width", value = "宽度", paramType = "query")
+            @ApiImplicitParam(name = "height", value = "宽度", paramType = "query")
     })
     public void captcha(@RequestParam(value = "length", defaultValue = "80") Integer length,
-                        @RequestParam(value = "width", defaultValue = "35") Integer width,
+                        @RequestParam(value = "height", defaultValue = "35") Integer height,
                         HttpSession httpSession,
                         HttpServletResponse response) throws IOException {
-        CaptchaBO captcha = CaptchaUtil.createCaptcha(length, width);
+        CaptchaBO captcha = CaptchaUtil.createCaptcha(length, height);
         httpSession.setAttribute(SystemConstant.CAPTCHA_CODE, captcha.getCaptchaCode());
         ImageIO.write(captcha.getCaptchaImage(), "JPEG", response.getOutputStream());
     }

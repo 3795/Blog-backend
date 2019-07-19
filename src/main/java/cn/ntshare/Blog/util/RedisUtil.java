@@ -2,6 +2,7 @@ package cn.ntshare.Blog.util;
 
 import cn.ntshare.Blog.bo.RedisPool;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
@@ -148,5 +149,42 @@ public class RedisUtil {
         Long result = jedis.incrBy(key, value);
         RedisPool.returnResource(jedis);
         return result;
+    }
+
+    /**
+     * 返回给定列表的长度
+     * @param key
+     * @return
+     */
+    public static Long llen(String key) {
+        Jedis jedis = RedisPool.getJedis();
+        Long len = jedis.llen(key);
+        RedisPool.returnResource(jedis);
+        return len;
+    }
+
+    /**
+     * 将一个或多个值插入到队尾
+     * @param key
+     * @param value
+     * @return
+     */
+    public static Long rpush(String key, String ...value) {
+        Jedis jedis = RedisPool.getJedis();
+        Long result = jedis.rpush(key, value);
+        RedisPool.returnResource(jedis);
+        return result;
+    }
+
+    /**
+     * 移除队首的元素
+     * @param key
+     * @return
+     */
+    public static String lpop(String key) {
+        Jedis jedis = RedisPool.getJedis();
+        String value = jedis.lpop(key);
+        RedisPool.returnResource(jedis);
+        return value;
     }
 }
