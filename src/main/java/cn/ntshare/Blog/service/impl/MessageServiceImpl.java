@@ -40,7 +40,7 @@ public class MessageServiceImpl implements MessageService {
     public void updateStatus(Integer id) {
         int result = messageMapper.updateStatus(id);
         if (result != 1) {
-            log.error("update message error, id = {}", id);
+            log.error("updateName message error, id = {}", id);
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
     }

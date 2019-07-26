@@ -30,6 +30,8 @@ public class ImgRecord implements Serializable {
 
     private Integer userId = 0;
 
+    private Integer photoId = 0;
+
     public ImgRecord(String img) {
         this.img = img;
     }

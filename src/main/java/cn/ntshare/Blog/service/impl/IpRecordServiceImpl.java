@@ -72,7 +72,7 @@ public class IpRecordServiceImpl implements IpRecordService {
     public void updateStatus(Integer id) {
         int result = ipRecordMapper.updateStatus(id);
         if (result != 1) {
-            log.error("update ip_record error, id = {}", id);
+            log.error("updateName ip_record error, id = {}", id);
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
     }
@@ -81,7 +81,7 @@ public class IpRecordServiceImpl implements IpRecordService {
     public void increaseCount(String ip) {
         int result = ipRecordMapper.increaseCount(ip);
         if (result != 1) {
-            log.error("update ip_record error, ip = {}", ip);
+            log.error("updateName ip_record error, ip = {}", ip);
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
     }

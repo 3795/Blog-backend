@@ -47,6 +47,7 @@ public class UtilControllerV1 {
                         HttpServletResponse response) throws IOException {
         CaptchaBO captcha = CaptchaUtil.createCaptcha(length, height);
         httpSession.setAttribute(SystemConstant.CAPTCHA_CODE, captcha.getCaptchaCode());
+        response.setContentType("image/JPEG");
         ImageIO.write(captcha.getCaptchaImage(), "JPEG", response.getOutputStream());
     }
 

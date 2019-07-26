@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.ntshare.Blog.dao.PhotoTagMapper">
+    <cache eviction="LRU" size="100" readOnly="true" flushInterval="1800000">
+
+    </cache>
+
+    <sql id="Base_Column_List">
+        id, name, status, quantity, create_time
+    </sql>
+
+    <insert id="insert" parameterType="PhotoTag">
+        insert into photo_tag(name, status, quantity,create_time)
+        values (#{name}, #{status}, #{quantity}, now())
+    </insert>
+
+    <update id="update" parameterType="PhotoTag">
+        update photo_tag set name = #{name}
+        where id = #{id}
+    </update>
+
+    <update id="increaseQuantity" parameterType="Integer">
+        update photo_tag set quantity = quantity + 1
+        where id = #{id}
+    </update>
+
+    <update id="decreaseQuantity" parameterType="Integer">
+        update photo_tag set quantity = quantity - 1
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="Integer">
+        update photo_tag set status = (status + 1)%2
+        where id = #{id}
+    </update>
+
+    <select id="selectByStatus" parameterType="Integer" resultType="cn.ntshare.Blog.dto.PhotoTagDTO">
+        select id, name, quantity
+        from photo_tag
+        <if test="status != null">
+            where status = #{status}
+        </if>
+    </select>
+
+    <select id="selectAll" resultType="cn.ntshare.Blog.dto.PhotoTagDTO">
+        select
+        <include refid="Base_Column_List"/>
+        from photo_tag
+    </select>
+
+    <delete id="delete" parameterType="Integer">
+        delete from photo_tag where id = #{id}
+    </delete>
+
+</mapper>

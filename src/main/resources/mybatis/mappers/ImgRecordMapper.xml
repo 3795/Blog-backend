@@ -20,6 +20,9 @@
             <if test="userId != 0">
                 user_id = #{userId}
             </if>
+            <if test="photoId != 0">
+                photo_id = #{photoId}
+            </if>
         </set>
         where img = #{img}
     </update>
@@ -48,6 +51,9 @@
             <if test="userId != 0">
                 user_id = 0
             </if>
+            <if test="photoId != 0">
+                photo_id = 0
+            </if>
         </set>
         where
         <if test="carouselImgId != 0">
@@ -59,6 +65,9 @@
         <if test="userId != 0">
             user_id = #{userId}
         </if>
+        <if test="photoId != 0">
+            photo_id = #{photoId}
+        </if>
     </update>
 
     <select id="queryDiscardImg" resultType="ImgRecord">
@@ -67,6 +76,7 @@
         where article_id = 0
         and carousel_img_id = 0
         and user_id = 0
+        and photo_id = 0
     </select>
     
     <delete id="deleteRecord" parameterType="List">

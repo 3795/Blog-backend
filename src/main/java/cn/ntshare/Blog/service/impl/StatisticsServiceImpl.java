@@ -34,7 +34,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     public void increaseDailyViews() {
         int result = statisticsMapper.increaseDailyViews(CalendarUtil.getToday());
         if (result != 1) {
-            log.error("update statistics error");
+            log.error("updateName statistics error");
         }
     }
 
@@ -43,7 +43,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         String month = CalendarUtil.getCurrentMonth();
         int result = statisticsMapper.increaseMonthlyViews(month, views);
         if (result != 1) {
-            log.error("update statistics error");
+            log.error("updateName statistics error");
             return false;
         }
         return true;

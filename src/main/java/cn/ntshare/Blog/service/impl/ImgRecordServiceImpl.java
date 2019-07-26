@@ -40,7 +40,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         imgRecord.setCarouselImgId(carouselImgId);
         int result = imgRecordMapper.updateIdByImg(imgRecord);
         if (result != 1) {
-            log.warn("update img_record error!");
+            log.warn("updateName img_record error!");
             throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
         }
         return true;
@@ -64,7 +64,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         imgRecord.setCarouselImgId(id);
         int result = imgRecordMapper.deleteId(imgRecord);
         if (result != 1) {
-            log.warn("update img_record error!");
+            log.warn("updateName img_record error!");
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
         return true;
@@ -78,7 +78,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         int resultA = imgRecordMapper.deleteId(imgRecord);
         int resultB = imgRecordMapper.updateIdByImg(imgRecord);
         if (resultA != 1 || resultB != 1) {
-            log.warn("update img_record error!");
+            log.warn("updateName img_record error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
         return true;
@@ -90,7 +90,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         imgRecord.setArticleId(articleId);
         int result = imgRecordMapper.updateIdByImg(imgRecord);
         if (result != 1) {
-            log.warn("update img_record error!");
+            log.warn("updateName img_record error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
         return true;
@@ -116,7 +116,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         imgRecord.setArticleId(articleId);
         int result = imgRecordMapper.deleteId(imgRecord);
         if (result != 1) {
-            log.warn("update img_record error!");
+            log.warn("updateName img_record error!");
             throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
         }
         return true;
