@@ -71,4 +71,9 @@ public class PhotoTagServiceImpl implements PhotoTagService {
         List<PhotoTagDTO> photoTagDTOList = photoTagMapper.selectAll();
         return new PageInfo<>(photoTagDTOList);
     }
+
+    @Override
+    public String selectNameById(Integer photoTagId) {
+        return photoTagMapper.selectNameById(photoTagId);
+    }
 }

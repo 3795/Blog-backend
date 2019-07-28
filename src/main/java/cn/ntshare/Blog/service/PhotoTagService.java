@@ -18,4 +18,8 @@ public interface PhotoTagService {
     List<PhotoTagDTO> selectEnableTag();
 
     PageInfo selectAll(int pageNum, int pageSize);
+
+    String selectNameById(Integer photoTagId);
+
+    void increaseQuantity(Integer photoTagId);
 }

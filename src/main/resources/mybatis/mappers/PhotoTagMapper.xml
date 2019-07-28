@@ -53,4 +53,8 @@
         delete from photo_tag where id = #{id}
     </delete>
 
+    <select id="selectNameById" parameterType="Integer" resultType="String">
+        select name from photo_tag where id = #{id}
+    </select>
+
 </mapper>

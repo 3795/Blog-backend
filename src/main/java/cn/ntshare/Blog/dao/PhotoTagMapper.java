@@ -28,4 +28,5 @@ public interface PhotoTagMapper {
 
     int decreaseQuantity(Integer photoTagId);
 
+    String selectNameById(Integer photoTagId);
 }

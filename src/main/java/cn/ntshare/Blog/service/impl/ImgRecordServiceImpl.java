@@ -38,12 +38,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
     public Boolean updateCarouselImgIdByImg(Integer carouselImgId, String img) {
         ImgRecord imgRecord = new ImgRecord(img);
         imgRecord.setCarouselImgId(carouselImgId);
-        int result = imgRecordMapper.updateIdByImg(imgRecord);
-        if (result != 1) {
-            log.warn("updateName img_record error!");
-            throw new SystemException(ResponseCodeEnum.INSERT_FAILED);
-        }
-        return true;
+        return updateImgRecord(imgRecord);
     }
 
     @Override
@@ -51,7 +46,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         ImgRecord imgRecord = new ImgRecord(img);
         imgRecord.setCarouselImgId(carouselImgId);
         if (checkImgChangeById(imgRecord)) {
-            deleteCarouselImgId(carouselImgId);
+            deleteByCarouselImgId(carouselImgId);
             updateCarouselImgIdByImg(carouselImgId, img);
             return true;
         }
@@ -59,15 +54,17 @@ public class ImgRecordServiceImpl implements ImgRecordService {
     }
 
     @Override
-    public Boolean deleteCarouselImgId(Integer id) {
+    public Boolean deleteByCarouselImgId(Integer id) {
         ImgRecord imgRecord = new ImgRecord();
         imgRecord.setCarouselImgId(id);
-        int result = imgRecordMapper.deleteId(imgRecord);
-        if (result != 1) {
-            log.warn("updateName img_record error!");
-            throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
-        }
-        return true;
+        return deleteImgRecord(imgRecord);
+    }
+
+    @Override
+    public void updatePhotoIdByImg(Integer photoId, String img) {
+        ImgRecord imgRecord = new ImgRecord(img);
+        imgRecord.setPhotoId(photoId);
+        updateImgRecord(imgRecord);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         int resultA = imgRecordMapper.deleteId(imgRecord);
         int resultB = imgRecordMapper.updateIdByImg(imgRecord);
         if (resultA != 1 || resultB != 1) {
-            log.warn("updateName img_record error!");
+            log.warn("update img_record error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
         return true;
@@ -88,12 +85,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
     public Boolean updateArticleIdByImg(Integer articleId, String img) {
         ImgRecord imgRecord = new ImgRecord(img);
         imgRecord.setArticleId(articleId);
-        int result = imgRecordMapper.updateIdByImg(imgRecord);
-        if (result != 1) {
-            log.warn("updateName img_record error!");
-            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
-        }
-        return true;
+        return updateImgRecord(imgRecord);
     }
 
     @Override
@@ -102,7 +94,7 @@ public class ImgRecordServiceImpl implements ImgRecordService {
         imgRecord.setArticleId(articleId);
         // 检查是否更新图片
         if (checkImgChangeById(imgRecord)) {
-            deleteArticleId(articleId);
+            deleteByArticleId(articleId);
             updateArticleIdByImg(articleId, img);
             return true;
         }
@@ -111,15 +103,17 @@ public class ImgRecordServiceImpl implements ImgRecordService {
     }
 
     @Override
-    public Boolean deleteArticleId(Integer articleId) {
+    public Boolean deleteByArticleId(Integer articleId) {
         ImgRecord imgRecord = new ImgRecord();
         imgRecord.setArticleId(articleId);
-        int result = imgRecordMapper.deleteId(imgRecord);
-        if (result != 1) {
-            log.warn("updateName img_record error!");
-            throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
-        }
-        return true;
+        return deleteImgRecord(imgRecord);
+    }
+
+    @Override
+    public void deleteByPhotoId(Integer photoId) {
+        ImgRecord imgRecord = new ImgRecord();
+        imgRecord.setPhotoId(photoId);
+        deleteImgRecord(imgRecord);
     }
 
     @Override
@@ -145,5 +139,23 @@ public class ImgRecordServiceImpl implements ImgRecordService {
     private Boolean checkImgChangeById(ImgRecord imgRecord) {
         int result = imgRecordMapper.checkImgChangeById(imgRecord);
         return result != 1;
+    }
+
+    private Boolean deleteImgRecord(ImgRecord imgRecord) {
+        int result = imgRecordMapper.deleteId(imgRecord);
+        if (result != 1) {
+            log.warn("update img_record error!");
+            throw new SystemException(ResponseCodeEnum.DELETE_FAILED);
+        }
+        return true;
+    }
+
+    private Boolean updateImgRecord(ImgRecord imgRecord) {
+        int result = imgRecordMapper.updateIdByImg(imgRecord);
+        if (result != 1) {
+            log.warn("update img_record error!");
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+        return true;
     }
 }

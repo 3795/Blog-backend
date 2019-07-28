@@ -63,7 +63,7 @@ public class CarouselImgServiceImpl implements CarouselImgService {
         }
 
         // 删除对应的图片记录
-        imgRecordService.deleteCarouselImgId(id);
+        imgRecordService.deleteByCarouselImgId(id);
 
         return true;
     }

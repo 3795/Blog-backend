@@ -126,7 +126,7 @@ public class ArticleServiceImpl implements ArticleService {
     public void update(Article article, List<Integer> tags) {
         int result = articleMapper.update(article);
         if (result != 1) {
-            log.warn("updateName article error!");
+            log.warn("update article error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
 
@@ -134,7 +134,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.deleteArticleTagByArticleId(article.getId());
         result = articleMapper.insertArticleTag(article.getId(), tags);
         if (result < 1) {
-            log.warn("updateName article_tag error!");
+            log.warn("update article_tag error!");
             throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
         }
 
@@ -195,7 +195,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         // 删除图片记录
-        imgRecordService.deleteArticleId(id);
+        imgRecordService.deleteByArticleId(id);
 
     }
 

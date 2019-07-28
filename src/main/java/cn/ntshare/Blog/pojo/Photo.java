@@ -24,4 +24,13 @@ public class Photo implements Serializable {
     private Integer status;
 
     private Date createTime;
+
+    public Photo(String title, String img, Integer photoTagId, Integer status) {
+        this.title = title;
+        this.img = img;
+        this.photoTagId = photoTagId;
+        this.status = status;
+    }
+
+
 }

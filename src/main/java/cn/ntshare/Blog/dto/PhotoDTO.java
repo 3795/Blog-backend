@@ -15,6 +15,8 @@ public class PhotoDTO {
 
     private Integer photoTagId;
 
+    private String photoTagName;
+
     private Integer status;
 
     private Date createTime;

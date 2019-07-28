@@ -39,7 +39,14 @@ public interface ImgRecordService {
      * @param carouselImgId
      * @return
      */
-    Boolean deleteCarouselImgId(Integer carouselImgId);
+    Boolean deleteByCarouselImgId(Integer carouselImgId);
+
+    /**
+     * 根据图片链接关联图片ID
+     * @param photoId
+     * @param img
+     */
+    void updatePhotoIdByImg(Integer photoId, String img);
 
     /**
      * 更新用户头像记录
@@ -70,7 +77,13 @@ public interface ImgRecordService {
      * @param articleId
      * @return
      */
-    Boolean deleteArticleId(Integer articleId);
+    Boolean deleteByArticleId(Integer articleId);
+
+    /**
+     * 根据图片ID删除图片关联
+     * @param photoId
+     */
+    void deleteByPhotoId(Integer photoId);
 
     /**
      * 查询废弃的图片

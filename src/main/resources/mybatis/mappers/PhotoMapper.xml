@@ -24,5 +24,32 @@
         </if>
     </select>
 
+    <!--insert-->
+    <insert id="insert" parameterType="Photo" keyProperty="id" useGeneratedKeys="true">
+        insert into photo(title, img, photo_tag_id, status, create_time)
+        values (#{title}, #{img}, #{photoTagId}, #{status}, now())
+    </insert>
 
+    <!--update-->
+    <update id="update" parameterType="Photo">
+        update photo set title=#{title}, img=#{img}, photo_tag_id=#{photoTagId}, status = #{status}
+        where id = #{id}
+    </update>
+
+    <!--delete-->
+    <delete id="delete" parameterType="Integer">
+        delete from photo where id = #{id}
+    </delete>
+
+    <!--updateStatus-->
+    <update id="updateStatus" parameterType="Integer">
+        update photo set status = (status+1)%2 where id = #{id}
+    </update>
+
+    <select id="queryById" parameterType="Integer" resultType="Photo">
+      select
+      <include refid="base_column_list"/>
+      from photo
+      where id = #{id}
+    </select>
 </mapper>
