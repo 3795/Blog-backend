@@ -45,7 +45,6 @@ public class PhotoServiceImpl implements PhotoService {
 
         imgRecordService.updatePhotoIdByImg(photo.getId(), photo.getImg());
 
-        // todo 将增加数量和减少数量的方法提到service层中
         photoTagService.increaseQuantity(photo.getPhotoTagId());
     }
 
@@ -83,7 +82,7 @@ public class PhotoServiceImpl implements PhotoService {
 
         imgRecordService.deleteByPhotoId(id);
 
-        photoTagMapper.decreaseQuantity(photo.getPhotoTagId());
+        photoTagService.decreaseQuantity(photo.getPhotoTagId());
     }
 
     @Override

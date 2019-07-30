@@ -22,4 +22,6 @@ public interface PhotoTagService {
     String selectNameById(Integer photoTagId);
 
     void increaseQuantity(Integer photoTagId);
+
+    void decreaseQuantity(Integer photoTagId);
 }

@@ -76,4 +76,22 @@ public class PhotoTagServiceImpl implements PhotoTagService {
     public String selectNameById(Integer photoTagId) {
         return photoTagMapper.selectNameById(photoTagId);
     }
+
+    @Override
+    public void increaseQuantity(Integer photoTagId) {
+        int result = photoTagMapper.increaseQuantity(photoTagId);
+        if (result != 1) {
+            log.error("update photo_tag error, increaseQuantity failed");
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+    }
+
+    @Override
+    public void decreaseQuantity(Integer photoTagId) {
+        int result = photoTagMapper.decreaseQuantity(photoTagId);
+        if (result != 1) {
+            log.error("update photo_tag error, decreaseQuantity failed");
+            throw new SystemException(ResponseCodeEnum.UPDATE_FAILED);
+        }
+    }
 }
