@@ -3,6 +3,7 @@ package cn.ntshare.Blog.controller.api.v1.util;
 import cn.ntshare.Blog.bo.CaptchaBO;
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
+import cn.ntshare.Blog.service.CaptchaCodeService;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.util.CaptchaUtil;
 import cn.ntshare.Blog.util.RandomUtil;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,6 +37,9 @@ public class UtilControllerV1 {
     @Autowired
     private SmsService smsService;
 
+    @Resource(name = "captchaCodeService")
+    private CaptchaCodeService captchaCodeService;
+
     @GetMapping("/captcha")
     @ApiOperation("图片验证码接口")
     @ApiImplicitParams({
@@ -52,28 +57,28 @@ public class UtilControllerV1 {
     }
 
     @PostMapping("/sms")
-    @ApiOperation("短信验证码接口")
-    @ApiImplicitParam(name = "phoneToken", value = "手机号码Token", required = true, paramType = "query")
+    @ApiOperation("验证码接口，发送短信验证码或者邮件验证码")
+    @ApiImplicitParam(name = "phoneToken", value = "手机号码Token或者邮件Token", required = true, paramType = "query")
     public ServerResponse sendSms(HttpServletResponse response,
-                                  @RequestParam("phoneToken") String phoneToken) {
-        String phone = RedisUtil.get(phoneToken);
-        if (phone == null) {
+                                  @RequestParam("phoneToken") String token) {
+        String account = RedisUtil.get(token);
+        if (account == null) {
             return ServerResponse.error(ResponseCodeEnum.INVALID_TOKEN);
         }
 
         // 进行防刷验证
-        String value = RedisUtil.get(phone);
+        String value = RedisUtil.get(account);
         if (value == null) {
             String code = RandomUtil.getRandomNumber(6);
-            smsService.sendCaptchaSms(response, phone, code);
-            return ServerResponse.success(ResponseCodeEnum.SMS_SEND_SUCCESS);
+            captchaCodeService.sendCaptcha(response, account, code);
+            return ServerResponse.success(ResponseCodeEnum.CAPTCHA_SEND_SUCCESS);
         } else {
             int count = Integer.parseInt(value) + 1;
             if (count < 6) {
-                RedisUtil.setExpireTime(phone, String.valueOf(count), SystemConstant.MINUTE);
+                RedisUtil.setExpireTime(account, String.valueOf(count), SystemConstant.MINUTE);
             } else {
-                log.warn("短信接口被异常请求，请求号码：{}，请求次数：{}", phone, count);
-                RedisUtil.setExpireTime(phone, String.valueOf(count), 5 * SystemConstant.MINUTE);
+                log.warn("动态验证码接口被异常请求，请求号码：{}，请求次数：{}", account, count);
+                RedisUtil.setExpireTime(account, String.valueOf(count), 5 * SystemConstant.MINUTE);
             }
             return ServerResponse.error(ResponseCodeEnum.REQUEST_TOO_FREQUENTLY);
         }

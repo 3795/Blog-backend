@@ -30,8 +30,14 @@ public class SystemConstant {
     // 短信验证Token
     public static final String SMS_TOKEN = "smsToken";
 
-    // 短信有效期
+    // 邮箱验证Token
+    public static final String EMAIL_TOKEN = "emailToken";
+
+    // 短信验证码有效期
     public static final Integer SMS_EXPIRE_TIME = Integer.parseInt(PropertiesUtil.getProperty("sms.expire.time", "180"));
+
+    // 邮件验证码有效期
+    public static final Integer EMAIL_EXPIRE_TIME = 180;
 
     public static final Integer MINUTE = 60;
 
@@ -49,6 +55,9 @@ public class SystemConstant {
 
     // 允许同一个用户同时登录几个平台
     public static final Integer ALLOW_LOGIN_NUMBER = Integer.parseInt(PropertiesUtil.getProperty("login.number", "1"));
+
+    // 通过何种方式向用户发送登录验证码
+    public static final String LOGIN_SEND_METHOD = PropertiesUtil.getProperty("login.sendMethod", "email");
 
     public static final String LOGIN_LIST_PREFIX = "login_list:";
 

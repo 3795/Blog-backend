@@ -3,9 +3,12 @@ package cn.ntshare.Blog.controller.api.v1.backend;
 import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.dto.UserDTO;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
+import cn.ntshare.Blog.service.CaptchaCodeService;
 import cn.ntshare.Blog.service.IpRecordService;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.service.UserService;
+import cn.ntshare.Blog.service.impl.MailServiceImpl;
+import cn.ntshare.Blog.service.impl.SmsServiceImpl;
 import cn.ntshare.Blog.util.*;
 import cn.ntshare.Blog.vo.ServerResponse;
 import io.swagger.annotations.Api;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,6 +46,9 @@ public class BLoginControllerV1 {
 
     @Autowired
     private SmsService smsService;
+
+    @Resource(name = "captchaCodeService")
+    private CaptchaCodeService captchaCodeService;
 
     /**
      * 用户登录接口
@@ -76,15 +83,20 @@ public class BLoginControllerV1 {
         // 验证账号和密码
         UserDTO user = userService.checkLoginInfo(account, password);
 
+        // 从请求中得到IP地址
         String ip = IPAddressUtil.getIpAdrress(request);
+
+        String socialAccount;
+        if (SystemConstant.LOGIN_SEND_METHOD.equals("sms")) {
+            socialAccount = user.getPhone();
+        } else {
+            socialAccount = user.getEmail();
+        }
         // 第一次请求
         if (phoneCaptchaCode == null) {
             // 如果没有记录
             if (!ipRecordService.isExists(ip)) {
-                String phoneToken = RandomUtil.getUniqueKey();
-                RedisUtil.setExpireTime(phoneToken, user.getPhone(), 10 * SystemConstant.MINUTE);
-                String phone = user.getPhone().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
-                String[] data = {phone, phoneToken};
+                String[] data = captchaCodeService.createSendToken(socialAccount);
                 return ServerResponse.success(ResponseCodeEnum.IP_NOT_VERIFIED, data);
             } else {
                 // 有记录就增加一次访问量
@@ -92,7 +104,7 @@ public class BLoginControllerV1 {
             }
         } else {
             // 验证短信验证码的正确性
-            smsService.verifyCaptchaCode(request, phoneCaptchaCode);
+            captchaCodeService.verifyCaptchaCode(request, phoneCaptchaCode);
             // 添加一条IP记录
             ipRecordService.insert(ip);
         }

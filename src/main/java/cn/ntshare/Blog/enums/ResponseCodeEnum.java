@@ -47,11 +47,14 @@ public enum ResponseCodeEnum {
 
     NO_ACCESS(50, "拒绝访问"),
     IP_NOT_VERIFIED(52, "需要异地登录验证"),
+    CAPTCHA_SEND_SUCCESS(53, "动态验证码发送成功"),
     REQUEST_TOO_FREQUENTLY(54, "请求太频繁，请稍后再试"),
     INVALID_TOKEN(56, "Token已过期，请刷新重试"),
 
     HTTP_REQUEST_FAILED(58, "HTTP请求发送失败"),
 
+    EMAIL_CODE_EXPIRED(60, "邮件验证码已过期"),
+    EMAIL_CODE_ERROR(62, "邮件验证码错误"),
 
     PAGE_NOT_FOUND(404, "页面不存在"),
     SERVER_ERROR(500, "出了小问题，紧急抢救中..."),

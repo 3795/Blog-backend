@@ -5,6 +5,7 @@ import cn.ntshare.Blog.constant.SystemConstant;
 import cn.ntshare.Blog.enums.ResponseCodeEnum;
 import cn.ntshare.Blog.enums.SmsType;
 import cn.ntshare.Blog.exception.SystemException;
+import cn.ntshare.Blog.service.CaptchaCodeService;
 import cn.ntshare.Blog.service.RabbitMqService;
 import cn.ntshare.Blog.service.SmsService;
 import cn.ntshare.Blog.util.CookieUtil;
@@ -23,13 +24,21 @@ import javax.servlet.http.HttpServletResponse;
  * Created At 2019/01/09
  */
 @Service
-public class SmsServiceImpl implements SmsService {
+public class SmsServiceImpl implements SmsService, CaptchaCodeService {
 
     @Autowired
     private RabbitMqService rabbitMqService;
 
     @Override
-    public Boolean sendCaptchaSms(HttpServletResponse response, String phoneNumber, String captchaCode) {
+    public String[] createSendToken(String account) {
+        String phoneToken = RandomUtil.getUniqueKey();
+        RedisUtil.setExpireTime(phoneToken, account, 10 * SystemConstant.MINUTE);
+        String phone = account.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        return new String[]{phone, phoneToken};
+    }
+
+    @Override
+    public Boolean sendCaptcha(HttpServletResponse response, String phoneNumber, String captchaCode) {
 
         String key = RandomUtil.getUniqueKey();
         // 写入Redis
@@ -44,18 +53,6 @@ public class SmsServiceImpl implements SmsService {
         RedisUtil.setExpireTime(phoneNumber, "1", SystemConstant.MINUTE);
 
         return true;
-    }
-
-    @Override
-    public Boolean sendSms(Integer smsType, String phoneNumber, String content) {
-        if (SmsType.captcha.getType().equals(smsType)) {
-            if (!SmsUtil.sendCaptchaSms(phoneNumber, content)) {
-                throw new SystemException(ResponseCodeEnum.SMS_SEND_FAILED);
-            }
-            return true;
-        } else {
-            throw new SystemException(ResponseCodeEnum.SMS_NOT_SUPPORT);
-        }
     }
 
     @Override
@@ -77,4 +74,15 @@ public class SmsServiceImpl implements SmsService {
         return true;
     }
 
+    @Override
+    public Boolean sendSms(Integer smsType, String phoneNumber, String content) {
+        if (SmsType.captcha.getType().equals(smsType)) {
+            if (!SmsUtil.sendCaptchaSms(phoneNumber, content)) {
+                throw new SystemException(ResponseCodeEnum.SMS_SEND_FAILED);
+            }
+            return true;
+        } else {
+            throw new SystemException(ResponseCodeEnum.SMS_NOT_SUPPORT);
+        }
+    }
 }
