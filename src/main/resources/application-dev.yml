@@ -28,6 +28,18 @@ spring:
     username:
     password:
     default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: smtp.qq.com
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          auth: true
+          starttls:
+            enable: true
+            required: true
   redis:
     host: 127.0.0.1
     password: 123456
@@ -57,5 +69,4 @@ logging:
           dao: debug
 log:
   path: D:/Develop/Java/Blog/logs
-
 
