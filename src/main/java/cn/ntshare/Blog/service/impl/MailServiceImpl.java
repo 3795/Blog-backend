@@ -70,9 +70,7 @@ public class MailServiceImpl implements MailService, CaptchaCodeService {
                 "异地登录验证",
                 "您正尝试异地登录系统，你的验证码为 " + captchaCode + " ," +
                 "有效期为 " + (SystemConstant.EMAIL_EXPIRE_TIME/60) + "分钟");
-        // todo 测试及修复走消息队列失败的问题
-//        rabbitMqService.sendEmail(emailBO);
-        sendMail(emailBO.getTo(), emailBO.getSubject(), emailBO.getContent());
+        rabbitMqService.sendEmail(emailBO);
 
         // 将邮箱账号写入redis防刷
         RedisUtil.setExpireTime(account, "1", SystemConstant.MINUTE);
